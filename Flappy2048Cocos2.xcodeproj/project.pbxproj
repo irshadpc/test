@@ -139,8 +139,41 @@
 		F72026A4191C900C008A1EFB /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = F72026A3191C900C008A1EFB /* vec4.c */; };
 		F72026A9191C900C008A1EFB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F72026A8191C900C008A1EFB /* main.m */; };
 		F72026AC191C900C008A1EFB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F72026AB191C900C008A1EFB /* AppDelegate.m */; };
-		F72026AF191C900C008A1EFB /* HelloWorldLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F72026AE191C900C008A1EFB /* HelloWorldLayer.m */; };
-		F72026B2191C900C008A1EFB /* IntroLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F72026B1191C900C008A1EFB /* IntroLayer.m */; };
+		F72026BB191C9084008A1EFB /* MainScene.m in Sources */ = {isa = PBXBuildFile; fileRef = F72026BA191C9084008A1EFB /* MainScene.m */; };
+		F72026D7191C92D4008A1EFB /* bg-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = F72026BE191C92D4008A1EFB /* bg-hd.png */; };
+		F72026D8191C92D4008A1EFB /* bg-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F72026BF191C92D4008A1EFB /* bg-ipad.png */; };
+		F72026D9191C92D4008A1EFB /* block-content-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = F72026C0191C92D4008A1EFB /* block-content-hd.png */; };
+		F72026DA191C92D4008A1EFB /* block-content-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F72026C1191C92D4008A1EFB /* block-content-ipad.png */; };
+		F72026DB191C92D4008A1EFB /* block-frame-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = F72026C2191C92D4008A1EFB /* block-frame-hd.png */; };
+		F72026DC191C92D4008A1EFB /* block-frame-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F72026C3191C92D4008A1EFB /* block-frame-ipad.png */; };
+		F72026DD191C92D4008A1EFB /* ground-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = F72026C4191C92D4008A1EFB /* ground-hd.png */; };
+		F72026DE191C92D4008A1EFB /* ground-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F72026C5191C92D4008A1EFB /* ground-ipad.png */; };
+		F72026DF191C92D4008A1EFB /* ground-line-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = F72026C6191C92D4008A1EFB /* ground-line-hd.png */; };
+		F72026E0191C92D4008A1EFB /* ground-line-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F72026C7191C92D4008A1EFB /* ground-line-ipad.png */; };
+		F72026E1191C92D4008A1EFB /* logo-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = F72026C8191C92D4008A1EFB /* logo-hd.png */; };
+		F72026E2191C92D4008A1EFB /* logo-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F72026C9191C92D4008A1EFB /* logo-ipad.png */; };
+		F72026E3191C92D4008A1EFB /* sound-icon-png.png in Resources */ = {isa = PBXBuildFile; fileRef = F72026CA191C92D4008A1EFB /* sound-icon-png.png */; };
+		F72026E4191C92D4008A1EFB /* sound-off-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = F72026CB191C92D4008A1EFB /* sound-off-hd.png */; };
+		F72026E5191C92D4008A1EFB /* sound-off-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F72026CC191C92D4008A1EFB /* sound-off-ipad.png */; };
+		F72026E6191C92D4008A1EFB /* sound-on-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = F72026CD191C92D4008A1EFB /* sound-on-hd.png */; };
+		F72026E7191C92D4008A1EFB /* sound-on-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F72026CE191C92D4008A1EFB /* sound-on-ipad.png */; };
+		F72026E8191C92D4008A1EFB /* tap-left-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = F72026CF191C92D4008A1EFB /* tap-left-hd.png */; };
+		F72026E9191C92D4008A1EFB /* tap-left-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F72026D0191C92D4008A1EFB /* tap-left-ipad.png */; };
+		F72026EA191C92D4008A1EFB /* tap-right-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = F72026D1191C92D4008A1EFB /* tap-right-hd.png */; };
+		F72026EB191C92D4008A1EFB /* tap-right-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F72026D2191C92D4008A1EFB /* tap-right-ipad.png */; };
+		F72026EC191C92D4008A1EFB /* wing-content-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = F72026D3191C92D4008A1EFB /* wing-content-hd.png */; };
+		F72026ED191C92D4008A1EFB /* wing-content-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F72026D4191C92D4008A1EFB /* wing-content-ipad.png */; };
+		F72026EE191C92D4008A1EFB /* wing-frame-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = F72026D5191C92D4008A1EFB /* wing-frame-hd.png */; };
+		F72026EF191C92D4008A1EFB /* wing-frame-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F72026D6191C92D4008A1EFB /* wing-frame-ipad.png */; };
+		F72026F3191C9359008A1EFB /* Flappie.m in Sources */ = {isa = PBXBuildFile; fileRef = F72026F2191C9359008A1EFB /* Flappie.m */; };
+		F72026F6191C9406008A1EFB /* Square.m in Sources */ = {isa = PBXBuildFile; fileRef = F72026F5191C9406008A1EFB /* Square.m */; };
+		F72026FA191CAECF008A1EFB /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = F72026F9191CAECF008A1EFB /* Game.m */; };
+		F72026FE191CBA07008A1EFB /* flappy2048.plist in Resources */ = {isa = PBXBuildFile; fileRef = F72026FC191CBA07008A1EFB /* flappy2048.plist */; };
+		F72026FF191CBA07008A1EFB /* flappy2048.pvr in Resources */ = {isa = PBXBuildFile; fileRef = F72026FD191CBA07008A1EFB /* flappy2048.pvr */; };
+		F7202703191CC62B008A1EFB /* MenuLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F7202702191CC62B008A1EFB /* MenuLayer.m */; };
+		F7202706191CCBC3008A1EFB /* GameObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F7202705191CCBC3008A1EFB /* GameObject.m */; };
+		F7202709191CD8B8008A1EFB /* BackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F7202708191CD8B8008A1EFB /* BackgroundLayer.m */; };
+		F7A1AE1A191CE95A0039439A /* ColumnLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A1AE19191CE95A0039439A /* ColumnLayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -421,10 +454,51 @@
 		F72026A8191C900C008A1EFB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F72026AA191C900C008A1EFB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F72026AB191C900C008A1EFB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		F72026AD191C900C008A1EFB /* HelloWorldLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelloWorldLayer.h; sourceTree = "<group>"; };
-		F72026AE191C900C008A1EFB /* HelloWorldLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloWorldLayer.m; sourceTree = "<group>"; };
-		F72026B0191C900C008A1EFB /* IntroLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntroLayer.h; sourceTree = "<group>"; };
-		F72026B1191C900C008A1EFB /* IntroLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntroLayer.m; sourceTree = "<group>"; };
+		F72026B9191C9084008A1EFB /* MainScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainScene.h; path = Classes/MainScene.h; sourceTree = "<group>"; };
+		F72026BA191C9084008A1EFB /* MainScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainScene.m; path = Classes/MainScene.m; sourceTree = "<group>"; };
+		F72026BC191C927F008A1EFB /* GameConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameConfig.h; sourceTree = "<group>"; };
+		F72026BE191C92D4008A1EFB /* bg-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-hd.png"; sourceTree = "<group>"; };
+		F72026BF191C92D4008A1EFB /* bg-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-ipad.png"; sourceTree = "<group>"; };
+		F72026C0191C92D4008A1EFB /* block-content-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "block-content-hd.png"; sourceTree = "<group>"; };
+		F72026C1191C92D4008A1EFB /* block-content-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "block-content-ipad.png"; sourceTree = "<group>"; };
+		F72026C2191C92D4008A1EFB /* block-frame-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "block-frame-hd.png"; sourceTree = "<group>"; };
+		F72026C3191C92D4008A1EFB /* block-frame-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "block-frame-ipad.png"; sourceTree = "<group>"; };
+		F72026C4191C92D4008A1EFB /* ground-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ground-hd.png"; sourceTree = "<group>"; };
+		F72026C5191C92D4008A1EFB /* ground-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ground-ipad.png"; sourceTree = "<group>"; };
+		F72026C6191C92D4008A1EFB /* ground-line-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ground-line-hd.png"; sourceTree = "<group>"; };
+		F72026C7191C92D4008A1EFB /* ground-line-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ground-line-ipad.png"; sourceTree = "<group>"; };
+		F72026C8191C92D4008A1EFB /* logo-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-hd.png"; sourceTree = "<group>"; };
+		F72026C9191C92D4008A1EFB /* logo-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-ipad.png"; sourceTree = "<group>"; };
+		F72026CA191C92D4008A1EFB /* sound-icon-png.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sound-icon-png.png"; sourceTree = "<group>"; };
+		F72026CB191C92D4008A1EFB /* sound-off-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sound-off-hd.png"; sourceTree = "<group>"; };
+		F72026CC191C92D4008A1EFB /* sound-off-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sound-off-ipad.png"; sourceTree = "<group>"; };
+		F72026CD191C92D4008A1EFB /* sound-on-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sound-on-hd.png"; sourceTree = "<group>"; };
+		F72026CE191C92D4008A1EFB /* sound-on-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sound-on-ipad.png"; sourceTree = "<group>"; };
+		F72026CF191C92D4008A1EFB /* tap-left-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tap-left-hd.png"; sourceTree = "<group>"; };
+		F72026D0191C92D4008A1EFB /* tap-left-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tap-left-ipad.png"; sourceTree = "<group>"; };
+		F72026D1191C92D4008A1EFB /* tap-right-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tap-right-hd.png"; sourceTree = "<group>"; };
+		F72026D2191C92D4008A1EFB /* tap-right-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tap-right-ipad.png"; sourceTree = "<group>"; };
+		F72026D3191C92D4008A1EFB /* wing-content-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wing-content-hd.png"; sourceTree = "<group>"; };
+		F72026D4191C92D4008A1EFB /* wing-content-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wing-content-ipad.png"; sourceTree = "<group>"; };
+		F72026D5191C92D4008A1EFB /* wing-frame-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wing-frame-hd.png"; sourceTree = "<group>"; };
+		F72026D6191C92D4008A1EFB /* wing-frame-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wing-frame-ipad.png"; sourceTree = "<group>"; };
+		F72026F1191C9359008A1EFB /* Flappie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flappie.h; sourceTree = "<group>"; };
+		F72026F2191C9359008A1EFB /* Flappie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Flappie.m; sourceTree = "<group>"; };
+		F72026F4191C9406008A1EFB /* Square.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Square.h; sourceTree = "<group>"; };
+		F72026F5191C9406008A1EFB /* Square.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Square.m; sourceTree = "<group>"; };
+		F72026F8191CAECF008A1EFB /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
+		F72026F9191CAECF008A1EFB /* Game.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Game.m; sourceTree = "<group>"; };
+		F72026FB191CB2DC008A1EFB /* Macro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Macro.h; sourceTree = "<group>"; };
+		F72026FC191CBA07008A1EFB /* flappy2048.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = flappy2048.plist; path = Resources/flappy2048.plist; sourceTree = "<group>"; };
+		F72026FD191CBA07008A1EFB /* flappy2048.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; name = flappy2048.pvr; path = Resources/flappy2048.pvr; sourceTree = "<group>"; };
+		F7202701191CC62B008A1EFB /* MenuLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuLayer.h; sourceTree = "<group>"; };
+		F7202702191CC62B008A1EFB /* MenuLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuLayer.m; sourceTree = "<group>"; };
+		F7202704191CCBC3008A1EFB /* GameObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameObject.h; path = Classes/GameObject.h; sourceTree = "<group>"; };
+		F7202705191CCBC3008A1EFB /* GameObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameObject.m; path = Classes/GameObject.m; sourceTree = "<group>"; };
+		F7202707191CD8B8008A1EFB /* BackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundLayer.h; sourceTree = "<group>"; };
+		F7202708191CD8B8008A1EFB /* BackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundLayer.m; sourceTree = "<group>"; };
+		F7A1AE18191CE95A0039439A /* ColumnLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColumnLayer.h; sourceTree = "<group>"; };
+		F7A1AE19191CE95A0039439A /* ColumnLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColumnLayer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -485,12 +559,10 @@
 		F7202519191C900A008A1EFB /* Flappy2048Cocos2 */ = {
 			isa = PBXGroup;
 			children = (
+				F72026B8191C9060008A1EFB /* Classes */,
 				F72026AA191C900C008A1EFB /* AppDelegate.h */,
 				F72026AB191C900C008A1EFB /* AppDelegate.m */,
-				F72026AD191C900C008A1EFB /* HelloWorldLayer.h */,
-				F72026AE191C900C008A1EFB /* HelloWorldLayer.m */,
-				F72026B0191C900C008A1EFB /* IntroLayer.h */,
-				F72026B1191C900C008A1EFB /* IntroLayer.m */,
+				F72026BC191C927F008A1EFB /* GameConfig.h */,
 				F720251A191C900A008A1EFB /* Resources */,
 				F7202532191C900A008A1EFB /* libs */,
 				F72026A6191C900C008A1EFB /* Supporting Files */,
@@ -501,6 +573,9 @@
 		F720251A191C900A008A1EFB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F72026FC191CBA07008A1EFB /* flappy2048.plist */,
+				F72026FD191CBA07008A1EFB /* flappy2048.pvr */,
+				F72026BD191C92D4008A1EFB /* Images */,
 				F720251B191C900A008A1EFB /* Default.png */,
 				F720251D191C900A008A1EFB /* Default@2x.png */,
 				F720251F191C900A008A1EFB /* Default-568h@2x.png */,
@@ -879,6 +954,87 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		F72026B8191C9060008A1EFB /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F7202700191CC60D008A1EFB /* Layer */,
+				F72026F7191CAEAF008A1EFB /* GameLogic */,
+				F72026F0191C9306008A1EFB /* Object */,
+				F72026B9191C9084008A1EFB /* MainScene.h */,
+				F72026BA191C9084008A1EFB /* MainScene.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		F72026BD191C92D4008A1EFB /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				F72026BE191C92D4008A1EFB /* bg-hd.png */,
+				F72026BF191C92D4008A1EFB /* bg-ipad.png */,
+				F72026C0191C92D4008A1EFB /* block-content-hd.png */,
+				F72026C1191C92D4008A1EFB /* block-content-ipad.png */,
+				F72026C2191C92D4008A1EFB /* block-frame-hd.png */,
+				F72026C3191C92D4008A1EFB /* block-frame-ipad.png */,
+				F72026C4191C92D4008A1EFB /* ground-hd.png */,
+				F72026C5191C92D4008A1EFB /* ground-ipad.png */,
+				F72026C6191C92D4008A1EFB /* ground-line-hd.png */,
+				F72026C7191C92D4008A1EFB /* ground-line-ipad.png */,
+				F72026C8191C92D4008A1EFB /* logo-hd.png */,
+				F72026C9191C92D4008A1EFB /* logo-ipad.png */,
+				F72026CA191C92D4008A1EFB /* sound-icon-png.png */,
+				F72026CB191C92D4008A1EFB /* sound-off-hd.png */,
+				F72026CC191C92D4008A1EFB /* sound-off-ipad.png */,
+				F72026CD191C92D4008A1EFB /* sound-on-hd.png */,
+				F72026CE191C92D4008A1EFB /* sound-on-ipad.png */,
+				F72026CF191C92D4008A1EFB /* tap-left-hd.png */,
+				F72026D0191C92D4008A1EFB /* tap-left-ipad.png */,
+				F72026D1191C92D4008A1EFB /* tap-right-hd.png */,
+				F72026D2191C92D4008A1EFB /* tap-right-ipad.png */,
+				F72026D3191C92D4008A1EFB /* wing-content-hd.png */,
+				F72026D4191C92D4008A1EFB /* wing-content-ipad.png */,
+				F72026D5191C92D4008A1EFB /* wing-frame-hd.png */,
+				F72026D6191C92D4008A1EFB /* wing-frame-ipad.png */,
+			);
+			name = Images;
+			path = Resources/Images;
+			sourceTree = "<group>";
+		};
+		F72026F0191C9306008A1EFB /* Object */ = {
+			isa = PBXGroup;
+			children = (
+				F72026F1191C9359008A1EFB /* Flappie.h */,
+				F72026F2191C9359008A1EFB /* Flappie.m */,
+				F72026F4191C9406008A1EFB /* Square.h */,
+				F72026F5191C9406008A1EFB /* Square.m */,
+				F7202704191CCBC3008A1EFB /* GameObject.h */,
+				F7202705191CCBC3008A1EFB /* GameObject.m */,
+			);
+			name = Object;
+			sourceTree = "<group>";
+		};
+		F72026F7191CAEAF008A1EFB /* GameLogic */ = {
+			isa = PBXGroup;
+			children = (
+				F72026F8191CAECF008A1EFB /* Game.h */,
+				F72026F9191CAECF008A1EFB /* Game.m */,
+				F72026FB191CB2DC008A1EFB /* Macro.h */,
+			);
+			name = GameLogic;
+			sourceTree = "<group>";
+		};
+		F7202700191CC60D008A1EFB /* Layer */ = {
+			isa = PBXGroup;
+			children = (
+				F7202701191CC62B008A1EFB /* MenuLayer.h */,
+				F7202702191CC62B008A1EFB /* MenuLayer.m */,
+				F7202707191CD8B8008A1EFB /* BackgroundLayer.h */,
+				F7202708191CD8B8008A1EFB /* BackgroundLayer.m */,
+				F7A1AE18191CE95A0039439A /* ColumnLayer.h */,
+				F7A1AE19191CE95A0039439A /* ColumnLayer.m */,
+			);
+			name = Layer;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -932,15 +1088,42 @@
 			files = (
 				F720252C191C900A008A1EFB /* Icon.png in Resources */,
 				F720268A191C900C008A1EFB /* ChangeLog in Resources */,
+				F72026E7191C92D4008A1EFB /* sound-on-ipad.png in Resources */,
+				F72026E1191C92D4008A1EFB /* logo-hd.png in Resources */,
+				F72026EC191C92D4008A1EFB /* wing-content-hd.png in Resources */,
+				F72026DB191C92D4008A1EFB /* block-frame-hd.png in Resources */,
+				F72026E2191C92D4008A1EFB /* logo-ipad.png in Resources */,
 				F720251E191C900A008A1EFB /* Default@2x.png in Resources */,
+				F72026EB191C92D4008A1EFB /* tap-right-ipad.png in Resources */,
+				F72026E9191C92D4008A1EFB /* tap-left-ipad.png in Resources */,
+				F72026D7191C92D4008A1EFB /* bg-hd.png in Resources */,
+				F72026ED191C92D4008A1EFB /* wing-content-ipad.png in Resources */,
+				F72026FE191CBA07008A1EFB /* flappy2048.plist in Resources */,
+				F72026E4191C92D4008A1EFB /* sound-off-hd.png in Resources */,
 				F7202528191C900A008A1EFB /* Icon-Small.png in Resources */,
 				F7202524191C900A008A1EFB /* Icon-72.png in Resources */,
+				F72026EA191C92D4008A1EFB /* tap-right-hd.png in Resources */,
+				F72026E5191C92D4008A1EFB /* sound-off-ipad.png in Resources */,
+				F72026FF191CBA07008A1EFB /* flappy2048.pvr in Resources */,
 				F720251C191C900A008A1EFB /* Default.png in Resources */,
+				F72026EE191C92D4008A1EFB /* wing-frame-hd.png in Resources */,
+				F72026DA191C92D4008A1EFB /* block-content-ipad.png in Resources */,
+				F72026E8191C92D4008A1EFB /* tap-left-hd.png in Resources */,
+				F72026D9191C92D4008A1EFB /* block-content-hd.png in Resources */,
 				F7202526191C900A008A1EFB /* Icon-Small-50.png in Resources */,
 				F7202531191C900A008A1EFB /* iTunesArtwork in Resources */,
+				F72026DE191C92D4008A1EFB /* ground-ipad.png in Resources */,
 				F720252A191C900A008A1EFB /* Icon-Small@2x.png in Resources */,
+				F72026E6191C92D4008A1EFB /* sound-on-hd.png in Resources */,
 				F7202522191C900A008A1EFB /* Default-Landscape~ipad.png in Resources */,
+				F72026EF191C92D4008A1EFB /* wing-frame-ipad.png in Resources */,
+				F72026DD191C92D4008A1EFB /* ground-hd.png in Resources */,
+				F72026DF191C92D4008A1EFB /* ground-line-hd.png in Resources */,
 				F7202520191C900A008A1EFB /* Default-568h@2x.png in Resources */,
+				F72026E0191C92D4008A1EFB /* ground-line-ipad.png in Resources */,
+				F72026DC191C92D4008A1EFB /* block-frame-ipad.png in Resources */,
+				F72026E3191C92D4008A1EFB /* sound-icon-png.png in Resources */,
+				F72026D8191C92D4008A1EFB /* bg-ipad.png in Resources */,
 				F720252E191C900A008A1EFB /* Icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -960,6 +1143,7 @@
 				F7202694191C900C008A1EFB /* mat4.c in Sources */,
 				F7202570191C900A008A1EFB /* ccDeprecated.m in Sources */,
 				F720262B191C900B008A1EFB /* CCDirectorMac.m in Sources */,
+				F7202709191CD8B8008A1EFB /* BackgroundLayer.m in Sources */,
 				F7202585191C900B008A1EFB /* ccGLStateCache.m in Sources */,
 				F7202657191C900C008A1EFB /* TransformUtils.m in Sources */,
 				F72025A4191C900B008A1EFB /* CCNode+Debug.m in Sources */,
@@ -988,6 +1172,7 @@
 				F7202557191C900A008A1EFB /* CCActionTiledGrid.m in Sources */,
 				F720259E191C900B008A1EFB /* CCMenuItem.m in Sources */,
 				F7202539191C900A008A1EFB /* CCActionCamera.m in Sources */,
+				F7202706191CCBC3008A1EFB /* GameObject.m in Sources */,
 				F720266B191C900C008A1EFB /* CDXPropertyModifierAction.m in Sources */,
 				F720263B191C900B008A1EFB /* CCArray.m in Sources */,
 				F7202698191C900C008A1EFB /* plane.c in Sources */,
@@ -1000,7 +1185,6 @@
 				F720261C191C900B008A1EFB /* CCES2Renderer.m in Sources */,
 				F720258E191C900B008A1EFB /* CCLabelAtlas.m in Sources */,
 				F72025AA191C900B008A1EFB /* CCParallaxNode.m in Sources */,
-				F72026B2191C900C008A1EFB /* IntroLayer.m in Sources */,
 				F7202542191C900A008A1EFB /* CCActionGrid.m in Sources */,
 				F720258B191C900B008A1EFB /* CCGrid.m in Sources */,
 				F720269A191C900C008A1EFB /* quaternion.c in Sources */,
@@ -1015,6 +1199,7 @@
 				F720268E191C900C008A1EFB /* mat4stack.c in Sources */,
 				F72025EA191C900B008A1EFB /* CCSpriteFrameCache.m in Sources */,
 				F7202573191C900A008A1EFB /* CCDirector.m in Sources */,
+				F72026FA191CAECF008A1EFB /* Game.m in Sources */,
 				F7202563191C900A008A1EFB /* CCAtlasNode.m in Sources */,
 				F72026A9191C900C008A1EFB /* main.m in Sources */,
 				F7202627191C900B008A1EFB /* CCTouchHandler.m in Sources */,
@@ -1033,10 +1218,13 @@
 				F7202665191C900C008A1EFB /* CDOpenALSupport.m in Sources */,
 				F7202548191C900A008A1EFB /* CCActionInstant.m in Sources */,
 				F7202569191C900A008A1EFB /* CCClippingNode.m in Sources */,
+				F7202703191CC62B008A1EFB /* MenuLayer.m in Sources */,
 				F72025ED191C900B008A1EFB /* CCTexture2D.m in Sources */,
 				F7202602191C900B008A1EFB /* CCTMXTiledMap.m in Sources */,
+				F72026F6191C9406008A1EFB /* Square.m in Sources */,
 				F72025C3191C900B008A1EFB /* CCRenderTexture.m in Sources */,
 				F720254B191C900A008A1EFB /* CCActionInterval.m in Sources */,
+				F72026F3191C9359008A1EFB /* Flappie.m in Sources */,
 				F72025B9191C900B008A1EFB /* CCPhysicsDebugNode.m in Sources */,
 				F720253F191C900A008A1EFB /* CCActionEase.m in Sources */,
 				F720257C191C900A008A1EFB /* CCFontDefinition.m in Sources */,
@@ -1045,7 +1233,6 @@
 				F7202690191C900C008A1EFB /* matrix.c in Sources */,
 				F7202576191C900A008A1EFB /* CCDrawingPrimitives.m in Sources */,
 				F72025DE191C900B008A1EFB /* ccShaders.m in Sources */,
-				F72026AF191C900C008A1EFB /* HelloWorldLayer.m in Sources */,
 				F7202634191C900B008A1EFB /* CCWindow.m in Sources */,
 				F7202612191C900B008A1EFB /* cocos2d.m in Sources */,
 				F72025BF191C900B008A1EFB /* CCProgressTimer.m in Sources */,
@@ -1056,10 +1243,12 @@
 				F720256D191C900A008A1EFB /* CCConfiguration.m in Sources */,
 				F72025C9191C900B008A1EFB /* CCScheduler.m in Sources */,
 				F7202619191C900B008A1EFB /* CCDirectorIOS.m in Sources */,
+				F72026BB191C9084008A1EFB /* MainScene.m in Sources */,
 				F720259B191C900B008A1EFB /* CCMenu.m in Sources */,
 				F72026A4191C900C008A1EFB /* vec4.c in Sources */,
 				F7202566191C900A008A1EFB /* CCCamera.m in Sources */,
 				F7202560191C900A008A1EFB /* CCAnimationCache.m in Sources */,
+				F7A1AE1A191CE95A0039439A /* ColumnLayer.m in Sources */,
 				F7202582191C900B008A1EFB /* CCGLProgram.m in Sources */,
 				F7202672191C900C008A1EFB /* SimpleAudioEngine.m in Sources */,
 				F7202624191C900B008A1EFB /* CCTouchDispatcher.m in Sources */,
@@ -1126,6 +1315,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1145,6 +1335,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1169,6 +1360,7 @@
 				F72026B7191C900C008A1EFB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
