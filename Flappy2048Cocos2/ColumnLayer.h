@@ -13,6 +13,7 @@
 @protocol ColumnLayerDelegate;
 @interface ColumnLayer : CCLayer {
     NSMutableArray *_squareArray;
+    NSMutableArray *_valueArray;
     NSInteger _value;
     CCLayer *_parentLayer;
     float pos_x;
@@ -32,6 +33,7 @@
 -(void)moveToStatOfParent;
 -(void)mul4;
 -(void)layerDidTouched:(UITouch*)touch;
+-(void)setArrayValue:(NSArray*)values;
 @end
 
 @protocol ColumnLayerDelegate

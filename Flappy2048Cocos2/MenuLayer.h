@@ -11,7 +11,7 @@
 @protocol MenuLayerDelegate;
 @interface MenuLayer : CCLayer {
     CCMenu *_menu;
-    CCMenuItem *_clickToStartMenuItem;
+    CCMenuItemLabel *_clickToStartMenuItem;
     CCSprite *_logo;
     id<MenuLayerDelegate> _delegate;
 }

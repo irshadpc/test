@@ -17,9 +17,9 @@ static const float IMPULSE = 330.0f;
 {
     if(self =  [super initWithGameLayer:aLayer]){
         pos_x = viewSize.width / 2;
-        pos_y = viewSize.height / 2;
+        pos_y = 3*viewSize.height / 5;
         vel_x = 0;
-        vel_y = 0;
+        vel_y = pos_y;
         acc_x = 0;
         acc_y = GRAVITY;
         _status = STANDING;
@@ -64,7 +64,7 @@ static const float IMPULSE = 330.0f;
                     _angle += (vel_y * delta);
                 }
             }
-            sprite.rotation = -_angle/3;
+            sprite.rotation = -_angle/2;
             break;
         case SLIDING:
             _sinceTouch = 0.0f;

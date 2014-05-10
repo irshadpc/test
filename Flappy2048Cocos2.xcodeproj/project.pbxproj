@@ -174,6 +174,7 @@
 		F7202706191CCBC3008A1EFB /* GameObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F7202705191CCBC3008A1EFB /* GameObject.m */; };
 		F7202709191CD8B8008A1EFB /* BackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F7202708191CD8B8008A1EFB /* BackgroundLayer.m */; };
 		F7A1AE1A191CE95A0039439A /* ColumnLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A1AE19191CE95A0039439A /* ColumnLayer.m */; };
+		F7A1AE1E191DD5400039439A /* NSMutableArray+Shuffling.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A1AE1D191DD5400039439A /* NSMutableArray+Shuffling.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -499,6 +500,8 @@
 		F7202708191CD8B8008A1EFB /* BackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundLayer.m; sourceTree = "<group>"; };
 		F7A1AE18191CE95A0039439A /* ColumnLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColumnLayer.h; sourceTree = "<group>"; };
 		F7A1AE19191CE95A0039439A /* ColumnLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColumnLayer.m; sourceTree = "<group>"; };
+		F7A1AE1C191DD5400039439A /* NSMutableArray+Shuffling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Shuffling.h"; sourceTree = "<group>"; };
+		F7A1AE1D191DD5400039439A /* NSMutableArray+Shuffling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Shuffling.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -957,6 +960,7 @@
 		F72026B8191C9060008A1EFB /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F7A1AE1B191DD5270039439A /* Util */,
 				F7202700191CC60D008A1EFB /* Layer */,
 				F72026F7191CAEAF008A1EFB /* GameLogic */,
 				F72026F0191C9306008A1EFB /* Object */,
@@ -1033,6 +1037,15 @@
 				F7A1AE19191CE95A0039439A /* ColumnLayer.m */,
 			);
 			name = Layer;
+			sourceTree = "<group>";
+		};
+		F7A1AE1B191DD5270039439A /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				F7A1AE1C191DD5400039439A /* NSMutableArray+Shuffling.h */,
+				F7A1AE1D191DD5400039439A /* NSMutableArray+Shuffling.m */,
+			);
+			name = Util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1140,6 +1153,7 @@
 				F7202597191C900B008A1EFB /* CCLayer.m in Sources */,
 				F72025F9191C900B008A1EFB /* CCTileMapAtlas.m in Sources */,
 				F72025FC191C900B008A1EFB /* CCTMXLayer.m in Sources */,
+				F7A1AE1E191DD5400039439A /* NSMutableArray+Shuffling.m in Sources */,
 				F7202694191C900C008A1EFB /* mat4.c in Sources */,
 				F7202570191C900A008A1EFB /* ccDeprecated.m in Sources */,
 				F720262B191C900B008A1EFB /* CCDirectorMac.m in Sources */,

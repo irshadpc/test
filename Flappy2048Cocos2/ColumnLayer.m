@@ -8,6 +8,7 @@
 
 #import "ColumnLayer.h"
 #import "MainScene.h"
+#import "NSMutableArray+Shuffling.h"
 
 @implementation ColumnLayer
 @synthesize _value, _delegate = delegate, _columIndex;
@@ -73,7 +74,7 @@
         pos_x = _parentLayer.position.x + _parentLayer.contentSize.width + self.contentSize.width/2;
     }
     if([self checkParentFlappyImpact]){
-        DLog(@"Impact");
+
     }
     [self setPosition:ccp(pos_x, pos_y)];
 }
@@ -89,6 +90,23 @@
 
 -(void)mul4{
     _value = _value *2*2;
+}
+
+-(void)setArrayValue:(NSArray *)values{
+    if(!_valueArray)
+    {
+        _valueArray = [[NSMutableArray alloc] initWithArray:values];
+    }else{
+        [_valueArray removeAllObjects];
+        [_valueArray addObjectsFromArray:values];
+    }
+    [_valueArray shuffle];
+    
+    int count = [_squareArray count];
+    for (int i=0; i<count; i++) {
+        Square *s = [_squareArray objectAtIndex:i];
+        [s setNumber:(long)[_valueArray objectAtIndex:i]];
+    }
 }
 @end
 

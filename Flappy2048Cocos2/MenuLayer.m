@@ -16,12 +16,24 @@
 -(id)init{
     if(self = [super init]){
         _logo = [CCSprite spriteWithSpriteFrameName:@"logo"];
-        _logo.position = ccp(self.contentSize.width/2, self.contentSize.height/2 + 50);
+        _logo.position = ccp(self.contentSize.width/2, self.contentSize.height/2 + 100);
+        _logo.scale = 0.9;
         [self addChild:_logo];
         
-        _clickToStartMenuItem = [[CCMenuItem alloc] initWithTarget:self selector:@selector(didTouchStart:)];
+        CCLabelTTF *_lb = [CCLabelTTF labelWithString:@"Click to start" fontName:@"Helvetica" fontSize:40 dimensions:CGSizeMake(viewSize.width, 50) hAlignment:kCCTextAlignmentCenter lineBreakMode:kCCLineBreakModeWordWrap];
+        _lb.color = ccc3(0, 0, 0);
+        _clickToStartMenuItem = [CCMenuItemLabel itemWithLabel:_lb target:self selector:@selector(didTouchStart:)];
         _menu = [CCMenu menuWithItems:_clickToStartMenuItem, nil];
+        _menu.position = ccp(self.contentSize.width/2, self.contentSize.height/2 - 10);
+        [_menu alignItemsVertically];
         [self addChild:_menu];
+        
+        CGPoint oldPoint = _menu.position;
+        id moveUp  =[CCMoveTo actionWithDuration:0.5 position:ccp(oldPoint.x, oldPoint.y + 20)];
+        id moveDown  =[CCMoveTo actionWithDuration:0.5 position:ccp(oldPoint.x, oldPoint.y - 20)];
+        id sequen = [CCSequence actions:moveUp, moveDown, nil];
+        [_menu runAction:[CCRepeatForever actionWithAction:sequen]];
+        
     }
     return self;
 }
@@ -32,6 +44,7 @@
     {
         if([_delegate respondsToSelector:@selector( gameMenuDidTouchStart)]){
             [_delegate performSelector:@selector(gameMenuDidTouchStart) withObject:nil];
+            DLog(@"Click start !");
         }
     }
     DLog(@"CLick start");

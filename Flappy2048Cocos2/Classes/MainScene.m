@@ -21,7 +21,7 @@ typedef enum {
     GAME_OVER,
 }GameState;
 
-@interface MainScene()<ColumnLayerDelegate>
+@interface MainScene()<ColumnLayerDelegate, MenuLayerDelegate>
 
 @end
 
@@ -67,6 +67,7 @@ typedef enum {
         _backgroundLayer = [[[BackgroundLayer alloc] initWithParentLayer:self] autorelease];
         _backgroundLayer.anchorPoint = ccp(0, 0);
         [self addChild:_backgroundLayer];
+
         [self initFlappi];
         [self initCol];
         // start schedule update
@@ -81,22 +82,29 @@ typedef enum {
 {
 }
 
--(void)initData{
+//==========================================================================================//
+// INIT
+//==========================================================================================//
+-(void)initData
+{
     DLog(@"Init New game");
     _gameState = GAME_PAUSE;
     [self initGameMenuLayer];
 }
 
--(void)initGameMenuLayer{
-    _starMenuLayer = [[[MenuLayer alloc] init] autorelease];
-    _starMenuLayer.anchorPoint = ccp(0, 0);
+-(void)initGameMenuLayer
+{
+    _starMenuLayer = [[MenuLayer alloc] init];
+    _starMenuLayer.anchorPoint = ccp(0.5, 0);
     _starMenuLayer.contentSize = CGSizeMake(viewSize.width, viewSize.height);
+    _starMenuLayer._delegate = self;
+    [self addChild:_starMenuLayer];
 }
 
 -(void)initFlappi{
     _sprites = [[NSMutableArray alloc] init];
     _flap = [[Flappie alloc] initWithGameLayer:self];
-    [_flap updatePosition:ccp(self.contentSize.width/4, self.contentSize.height/2)];
+    [_flap updatePosition:ccp(self.contentSize.width/4, 3*self.contentSize.height/5)];
     // add to screen
     [_flap putOn];
     // add to array to handler in game logic
@@ -108,36 +116,33 @@ typedef enum {
     _distance2Col = viewSize.width - 50;
     _col = [[ColumnLayer alloc] initBlocksWitnValue:0 parentLayer:self];
     _col._columIndex = 0;
-    
     _colBuffer = [[ColumnLayer alloc] initBlocksWitnValue:1 parentLayer:self];
     _colBuffer._columIndex = 1;
-    
-    [_col set_delegate:self];
-    [_colBuffer set_delegate:self];
-    
     _col.anchorPoint = ccp(0.5, 0);
     _colBuffer.anchorPoint = ccp(0.5, 0);
-    
+    [_col set_delegate:self];
+    [_colBuffer set_delegate:self];
     CCSprite* groundTemp = [CCSprite spriteWithFile:@"ground.png"];
     Square* sqtemp = [[Square alloc] initWithGameLayer:self];
-    
-    [_col updatePosition:ccp(viewSize.width - [sqtemp width]*2, groundTemp.contentSize.height)];
+    [_col updatePosition:ccp(viewSize.width + [sqtemp width]*2, groundTemp.contentSize.height)];
     [self addChild:_col z:1];
-    [_col activate];
-    
     [_colBuffer updatePosition:ccp(_col.position.x + _col.contentSize.width /2 + _distance2Col, groundTemp.contentSize.height)];
     [self addChild:_colBuffer z:1];
-    [_colBuffer activate];
-    
     [_sprites addObject:_col];
     [_sprites addObject:_colBuffer];
+}
+
+#pragma mark MenuDelegate
+-(void)gameMenuDidTouchStart{
     
     [_flap setFlappieStatus:FLAPPYNG];
+    [_starMenuLayer removeFromParentAndCleanup:YES];
     
+    [_col activate];
+    [_colBuffer activate];
 }
 
 #pragma mark ColumnDelgate
-
 -(void)columnDidOutOffScreen:(int)index{
     if(index==0){ // main index
         [_col moveToStatOfParent];
