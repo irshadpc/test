@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		F70909681920D9AD000D9312 /* GameOverLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F70909671920D9AD000D9312 /* GameOverLayer.m */; };
+		F709096B1920E538000D9312 /* UIColor+RTTFromHex.m in Sources */ = {isa = PBXBuildFile; fileRef = F709096A1920E538000D9312 /* UIColor+RTTFromHex.m */; };
+		F709096E1920E5BA000D9312 /* UIColor+Cocos.m in Sources */ = {isa = PBXBuildFile; fileRef = F709096D1920E5BA000D9312 /* UIColor+Cocos.m */; };
 		F7202506191C900A008A1EFB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7202505191C900A008A1EFB /* QuartzCore.framework */; };
 		F7202508191C900A008A1EFB /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7202507191C900A008A1EFB /* OpenGLES.framework */; };
 		F720250A191C900A008A1EFB /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7202509191C900A008A1EFB /* OpenAL.framework */; };
@@ -181,6 +183,10 @@
 /* Begin PBXFileReference section */
 		F70909661920D9AD000D9312 /* GameOverLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverLayer.h; sourceTree = "<group>"; };
 		F70909671920D9AD000D9312 /* GameOverLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOverLayer.m; sourceTree = "<group>"; };
+		F70909691920E538000D9312 /* UIColor+RTTFromHex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+RTTFromHex.h"; sourceTree = "<group>"; };
+		F709096A1920E538000D9312 /* UIColor+RTTFromHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+RTTFromHex.m"; sourceTree = "<group>"; };
+		F709096C1920E5BA000D9312 /* UIColor+Cocos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Cocos.h"; sourceTree = "<group>"; };
+		F709096D1920E5BA000D9312 /* UIColor+Cocos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Cocos.m"; sourceTree = "<group>"; };
 		F7202502191C900A008A1EFB /* Flappy2048Cocos2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flappy2048Cocos2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7202505191C900A008A1EFB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F7202507191C900A008A1EFB /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -1049,6 +1055,10 @@
 			children = (
 				F7A1AE1C191DD5400039439A /* NSMutableArray+Shuffling.h */,
 				F7A1AE1D191DD5400039439A /* NSMutableArray+Shuffling.m */,
+				F70909691920E538000D9312 /* UIColor+RTTFromHex.h */,
+				F709096A1920E538000D9312 /* UIColor+RTTFromHex.m */,
+				F709096C1920E5BA000D9312 /* UIColor+Cocos.h */,
+				F709096D1920E5BA000D9312 /* UIColor+Cocos.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -1268,10 +1278,12 @@
 				F72026A4191C900C008A1EFB /* vec4.c in Sources */,
 				F7202566191C900A008A1EFB /* CCCamera.m in Sources */,
 				F7202560191C900A008A1EFB /* CCAnimationCache.m in Sources */,
+				F709096E1920E5BA000D9312 /* UIColor+Cocos.m in Sources */,
 				F7A1AE1A191CE95A0039439A /* ColumnLayer.m in Sources */,
 				F7202582191C900B008A1EFB /* CCGLProgram.m in Sources */,
 				F7202672191C900C008A1EFB /* SimpleAudioEngine.m in Sources */,
 				F7202624191C900B008A1EFB /* CCTouchDispatcher.m in Sources */,
+				F709096B1920E538000D9312 /* UIColor+RTTFromHex.m in Sources */,
 				F72025A7191C900B008A1EFB /* CCNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

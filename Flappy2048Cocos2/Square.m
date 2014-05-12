@@ -8,7 +8,11 @@
 
 #import "Square.h"
 #import "Game.h"
+#import "UIColor+RTTFromHex.h"
+#import "UIColor+Cocos.h"
 
+static NSDictionary* bgColorDic;
+static NSDictionary* fgColorDic;
 @implementation Square
 {
     CCSprite *_frame;
@@ -29,6 +33,35 @@
         [sprite addChild:_content];
         [sprite addChild:_frame];
         sprite.contentSize = _frame.contentSize;
+        bgColorDic = @{
+                       @1 : @0xeee4da,
+                       @2 : @0xeee4da,
+                       @4 : @0xede0c8,
+                       @8 : @0xf2b179,
+                       @16 : @0xf59563,
+                       @32 : @0xf67c5f,
+                       @64 : @0xf65e3b,
+                       @128 : @0xedcf72,
+                       @256 : @0xedcc61,
+                       @512 : @0xedc850,
+                       @1024 : @0xedc53f,
+                       @2048 : @0xedc22e
+                       };
+        
+        fgColorDic = @{
+                       @1 : @0x776e65,
+                       @2 : @0x776e65,
+                       @4 : @0x776e65,
+                       @8 : @0xf9f6f2,
+                       @16 : @0xf9f6f2,
+                       @32 : @0xf9f6f2,
+                       @64 : @0xf9f6f2,
+                       @128 : @0xf9f6f2,
+                       @256 : @0xf9f6f2,
+                       @512 : @0xf9f6f2,
+                       @1024 : @0xf9f6f2,
+                       @2048 : @0xf9f6f2
+                       };
     }
     return self;
 }
@@ -53,9 +86,14 @@
     _valueLabel.fontSize = fontsize;
     [_valueLabel setString:[NSString stringWithFormat:@"%ld", _valueNumber]];
     
-    UIColor* c = [game getColorFor:_valueNumber ];
-    ccColor3B shirtColor = {arc4random() % 255,arc4random() % 255,arc4random() % 255};
-    [_content setColor:shirtColor];
+    if([bgColorDic objectForKey:@(number)])
+    {
+        NSUInteger objColor = [[bgColorDic objectForKey:@(number)] unsignedIntegerValue];
+        UIColor* c = [UIColor fromHex:objColor];
+        [_content setColor:[c c3b]];
+    }else{
+        DLog(@"This color does not exist in background color maps %ld", number);
+    }
 }
 
 - (int) calculateFontSizeForString:(NSString*)string fontName:(NSString*)usedFontName

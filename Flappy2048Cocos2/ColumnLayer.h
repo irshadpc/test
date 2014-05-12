@@ -13,8 +13,6 @@
 
 @protocol ColumnLayerDelegate;
 @interface ColumnLayer : CCLayer {
-    NSMutableArray *_squareArray;
-    NSMutableArray *_valueArray;
     long _value;
     CCLayer *_parentLayer;
     float pos_x;
@@ -33,14 +31,13 @@
 @property (assign, nonatomic) long _value;
 @property (assign, nonatomic) int _columIndex;
 @property (assign, nonatomic) id<ColumnLayerDelegate> delegate;
-@property (strong, nonatomic) Square *_targetBLock;
+@property (strong, nonatomic) Square *_targetBlock;
 @property (assign, nonatomic) float y_pos;
 -(id)initBlocksWitnValue:(NSInteger)value parentLayer:(CCLayer*)aLayer;
 -(void)activate;
 -(void)deActivate;
 -(void)updatePosition:(CGPoint)pos;
 -(void)layerDidTouched:(UITouch*)touch;
--(void)setArrayValue:(NSArray*)values;
 @end
 
 @protocol ColumnLayerDelegate<NSObject>

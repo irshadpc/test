@@ -11,8 +11,12 @@
 #import "NSMutableArray+Shuffling.h"
 
 @implementation ColumnLayer
+{
+    NSMutableArray *valuesArray;
+    NSMutableArray *squareArray;
+}
 
-@synthesize _value, _columIndex, delegate, _targetBLock, y_pos;
+@synthesize _value, _columIndex, delegate, _targetBlock, y_pos;
 
 -(id)init
 {
@@ -28,8 +32,9 @@
 -(id)initBlocksWitnValue:(NSInteger)value parentLayer:(CCLayer*)aLayer
 {
     if(self = [super init]){
+        valuesArray = [[NSMutableArray alloc] init];
+        squareArray = [[NSMutableArray alloc] init];
         _value = value; // 1,2 4 8 16 ....
-        _squareArray = [[NSMutableArray  alloc] init];
         _parentLayer = aLayer;
         _targetBlock = [[Square alloc] initWithGameLayer:self];
         [_targetBlock setNumber:value];
@@ -47,7 +52,8 @@
 -(void)loadColumn:(float)blockSize
 {
     int count = self.contentSize.height / blockSize;
-    _indexOfTarget =  1 + arc4random()%(count-1);
+    _indexOfTarget =  1 + arc4random()%(count-3);
+    
     float y = 0;
     for (int i=0; i< count; i++)
     {
@@ -58,6 +64,8 @@
             [_targetBlock updatePosition:ccp(0, y)];
             y_pos = y;
             [_targetBlock putOn];
+            [squareArray addObject:_targetBlock];
+            [valuesArray addObject:@(_value)];
         }
         else
         {
@@ -68,8 +76,18 @@
             long randomValue = pow(2, randomPow);
             [sq setNumber:randomValue];
             [sq putOn];
+            [squareArray addObject:sq];
+            [valuesArray addObject:@(randomValue)];
         }
+    }
+    DLog(@"Square Array: %@", squareArray);
+    DLog(@"Value Array: %@", valuesArray);
+}
 
+-(void)updateAllSquaresWithUpperValue
+{
+    for (Square *sq in squareArray) {
+        [sq setNumber:sq._valueNumber*4];
     }
 }
 
@@ -92,34 +110,18 @@
 
 -(void)update:(ccTime)delta{
     if(!activated) return;
-
     // update pos_x, pos_y
     pos_x -= 2;
     if(pos_x < -(viewSize.width - 50))
     {
+        // reset value with the higher pow 2*2
         pos_x = _parentLayer.position.x + _parentLayer.contentSize.width + self.contentSize.width/2;
+        [self updateAllSquaresWithUpperValue];
     }
     // update position
     [self setPosition:ccp(pos_x, pos_y)];
 }
 
-
--(void)setArrayValue:(NSArray *)values{
-    if(!_valueArray)
-    {
-        _valueArray = [[NSMutableArray alloc] initWithArray:values];
-    }else{
-        [_valueArray removeAllObjects];
-        [_valueArray addObjectsFromArray:values];
-    }
-    [_valueArray shuffle];
-    
-    int count = [_squareArray count];
-    for (int i=0; i<count; i++) {
-        Square *s = [_squareArray objectAtIndex:i];
-        [s setNumber:(long)[_valueArray objectAtIndex:i]];
-    }
-}
 
 @end
 
