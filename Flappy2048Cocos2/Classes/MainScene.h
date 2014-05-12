@@ -13,4 +13,5 @@
 +(CCScene*)scene;
 -(void)initData;
 -(CGPoint)distanceXYWithFlappi:(CGPoint)pos;
+-(CGPoint)posFlappi;
 @end

@@ -12,7 +12,29 @@
 
 static Game *instance = nil;
 @implementation Game
-@synthesize currentValue, currentScore, highestScore, valueColorMapsDictionary;
+@synthesize currentValue, currentScore, highestScore, valueColorMapsDictionary, colorMap, gameState;
+
+-(id)init
+{
+    if(self = [super init]){
+        colorMap = @{
+                     @"0": @"eae8e4",
+                     @"1": @"eae8e4",
+                     @"2": @"eae8e4",
+                     @"4": @"ede0ca",
+                     @"8": @"edddba",
+                     @"16": @"eddaab",
+                     @"32": @"edd79b",
+                     @"64": @"edd48b",
+                     @"128": @"edd17c",
+                     @"256": @"edce6c",
+                     @"512": @"edcb5c",
+                     @"1024": @"edc84d",
+                     @"2048": @"edc53d",
+                     };
+    }
+    return self;
+}
 
 +(Game*)sharedInstance{
     @synchronized(self){
@@ -63,5 +85,17 @@ static Game *instance = nil;
 {
     
     CCLOG(@"Did receive game return foreground");
+}
+-(UIColor*)getColorFor:(long)number{
+    UIColor *color = [self colorFromHexString:[colorMap objectForKey:[NSString stringWithFormat:@"%ld", number]]];
+    return  color;
+}
+
+-(UIColor *)colorFromHexString:(NSString *)hexString {
+    unsigned rgbValue = 0;
+    NSScanner *scanner = [NSScanner scannerWithString:hexString];
+    [scanner setScanLocation:1]; // bypass '#' character
+    [scanner scanHexInt:&rgbValue];
+    return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
 }
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F70909681920D9AD000D9312 /* GameOverLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F70909671920D9AD000D9312 /* GameOverLayer.m */; };
 		F7202506191C900A008A1EFB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7202505191C900A008A1EFB /* QuartzCore.framework */; };
 		F7202508191C900A008A1EFB /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7202507191C900A008A1EFB /* OpenGLES.framework */; };
 		F720250A191C900A008A1EFB /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7202509191C900A008A1EFB /* OpenAL.framework */; };
@@ -178,6 +179,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F70909661920D9AD000D9312 /* GameOverLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverLayer.h; sourceTree = "<group>"; };
+		F70909671920D9AD000D9312 /* GameOverLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOverLayer.m; sourceTree = "<group>"; };
 		F7202502191C900A008A1EFB /* Flappy2048Cocos2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flappy2048Cocos2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7202505191C900A008A1EFB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F7202507191C900A008A1EFB /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -1035,6 +1038,8 @@
 				F7202708191CD8B8008A1EFB /* BackgroundLayer.m */,
 				F7A1AE18191CE95A0039439A /* ColumnLayer.h */,
 				F7A1AE19191CE95A0039439A /* ColumnLayer.m */,
+				F70909661920D9AD000D9312 /* GameOverLayer.h */,
+				F70909671920D9AD000D9312 /* GameOverLayer.m */,
 			);
 			name = Layer;
 			sourceTree = "<group>";
@@ -1249,6 +1254,7 @@
 				F72025DE191C900B008A1EFB /* ccShaders.m in Sources */,
 				F7202634191C900B008A1EFB /* CCWindow.m in Sources */,
 				F7202612191C900B008A1EFB /* cocos2d.m in Sources */,
+				F70909681920D9AD000D9312 /* GameOverLayer.m in Sources */,
 				F72025BF191C900B008A1EFB /* CCProgressTimer.m in Sources */,
 				F7202594191C900B008A1EFB /* CCLabelTTF.m in Sources */,
 				F7202641191C900C008A1EFB /* CCFileUtils.m in Sources */,

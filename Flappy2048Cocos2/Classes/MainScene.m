@@ -13,51 +13,43 @@
 #import "MenuLayer.h"
 #import "BackgroundLayer.h"
 #import "ColumnLayer.h"
+#import "GameOverLayer.h"
 
-typedef enum {
-    GAME_BEGIN,
-    GAME_PAUSE,
-    GAME_RUNNING,
-    GAME_OVER,
-}GameState;
-
-@interface MainScene()<ColumnLayerDelegate, MenuLayerDelegate>
+@interface MainScene()<ColumnLayerDelegate, MenuLayerDelegate, GameOverMenuDelegate>
 
 @end
 
 @implementation MainScene{
-
+    //------------------------------
     MenuLayer *_starMenuLayer;
     BackgroundLayer *_backgroundLayer;
-    CCLayer *_gameOverLayer;
+    GameOverLayer *_gameOverLayer;
     CCLayer *_mainLayer;
-    
+    //------------------------------
     NSMutableArray *_sprites;
     NSMutableArray *_allSquare;
-    
+    //------------------------------
     Flappie *_flap;
-    
-    //word gravity
-    
-    //Resrouce bacthnode
-    CCSpriteBatchNode *_batchNode;
-    GameState _gameState;
-    
     ColumnLayer *_col;
     ColumnLayer *_colBuffer;
-    
     float _distance2Col;
-    
+    //------------------------------
+    //Resrouce bacthnode
+    CCSpriteBatchNode *_batchNode;
+    //------------------------------
+    float _impacted;
 }
 
-+(CCScene*)scene{
++(CCScene*)scene
+{
     CCScene *scene = [CCScene node];
     MainScene *mainScene = [MainScene node];
-    [mainScene initData];
     [scene addChild:mainScene];
     return scene;
 }
--(id)init{
+
+-(id)init
+{
     if(self = [super init])
     {
         _batchNode = [CCSpriteBatchNode batchNodeWithFile:@"flappy2048.pvr"];
@@ -67,13 +59,14 @@ typedef enum {
         _backgroundLayer = [[[BackgroundLayer alloc] initWithParentLayer:self] autorelease];
         _backgroundLayer.anchorPoint = ccp(0, 0);
         [self addChild:_backgroundLayer];
-
+        [self initData];
         [self initFlappi];
         [self initCol];
-        // start schedule update
-        [self scheduleUpdate];
-        //
+        
         [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(didImpactGround:) name:@"nt_impact_ground" object:nil];
+        [game setGameState:GAME_BEGIN];
+        [self scheduleUpdate];
+        _impacted = NO;
     }
     return self;
 }
@@ -87,9 +80,10 @@ typedef enum {
 //==========================================================================================//
 -(void)initData
 {
-    DLog(@"Init New game");
-    _gameState = GAME_PAUSE;
+    [game setGameState:GAME_BEGIN];
     [self initGameMenuLayer];
+    [self initGameOverMenuLayer];
+    [self addChild:_starMenuLayer];
 }
 
 -(void)initGameMenuLayer
@@ -98,7 +92,14 @@ typedef enum {
     _starMenuLayer.anchorPoint = ccp(0.5, 0);
     _starMenuLayer.contentSize = CGSizeMake(viewSize.width, viewSize.height);
     _starMenuLayer._delegate = self;
-    [self addChild:_starMenuLayer];
+}
+
+-(void)initGameOverMenuLayer
+{
+    _gameOverLayer = [[GameOverLayer alloc] init];
+    _gameOverLayer.anchorPoint = ccp(0.5, 0);
+    _gameOverLayer.contentSize = CGSizeMake(viewSize.width, viewSize.height);
+    _gameOverLayer.delegate = self;
 }
 
 -(void)initFlappi{
@@ -114,51 +115,88 @@ typedef enum {
 -(void)initCol
 {
     _distance2Col = viewSize.width - 50;
-    _col = [[ColumnLayer alloc] initBlocksWitnValue:0 parentLayer:self];
+    _col = [[ColumnLayer alloc] initBlocksWitnValue:1 parentLayer:self];
     _col._columIndex = 0;
-    _colBuffer = [[ColumnLayer alloc] initBlocksWitnValue:1 parentLayer:self];
+    _colBuffer = [[ColumnLayer alloc] initBlocksWitnValue:2 parentLayer:self];
     _colBuffer._columIndex = 1;
     _col.anchorPoint = ccp(0.5, 0);
     _colBuffer.anchorPoint = ccp(0.5, 0);
-    [_col set_delegate:self];
-    [_colBuffer set_delegate:self];
+    [_col setDelegate:self];
+    [_colBuffer setDelegate:self];
+    
     CCSprite* groundTemp = [CCSprite spriteWithFile:@"ground.png"];
     Square* sqtemp = [[Square alloc] initWithGameLayer:self];
     [_col updatePosition:ccp(viewSize.width + [sqtemp width]*2, groundTemp.contentSize.height)];
-    [self addChild:_col z:1];
     [_colBuffer updatePosition:ccp(_col.position.x + _col.contentSize.width /2 + _distance2Col, groundTemp.contentSize.height)];
+    
+    [self addChild:_col z:1];
     [self addChild:_colBuffer z:1];
     [_sprites addObject:_col];
     [_sprites addObject:_colBuffer];
 }
 
-#pragma mark MenuDelegate
--(void)gameMenuDidTouchStart{
-    
+
+#pragma mark ColumnDelegate
+
+-(void)columnDidImpactFlappie:(NSNumber*)y_pos
+{
+    DLog(@"");
+//    [_flap updatePosition:ccp(_flap.pos_x, [y_pos floatValue])];
+    [_flap setFlappieStatus:SLIDING];
+    // do action scale to flappie
+    id zoomIn = [CCScaleTo actionWithDuration:0.2 scale:1.5];
+    id zoomOut =[CCScaleTo actionWithDuration:0.2 scale:1.0];
+    id acitonSequene = [CCSequence actionOne:zoomIn two:zoomOut];
+    [_flap.sprite runAction:[CCRepeat actionWithAction:acitonSequene times:1]];
+}
+
+-(void)impactWithPos:(CGPoint)pos
+{
+    DLog(@"impact");
+    [_flap updatePosition:pos];
+    [_flap setFlappieStatus:SLIDING];
+    id zoomIn = [CCScaleTo actionWithDuration:0.2 scale:1.5];
+    id zoomOut =[CCScaleTo actionWithDuration:0.2 scale:1.0];
+    id acitonSequene = [CCSequence actionOne:zoomIn two:zoomOut];
+    _flap.sprite.rotation = 0;
+    [_flap.sprite stopAllActions];
+    [_flap.sprite runAction:[CCRepeat actionWithAction:acitonSequene times:1]];
+}
+
+-(void)columnFlappieDidOut
+{
     [_flap setFlappieStatus:FLAPPYNG];
+}
+
+-(void)impactDone
+{
+    [_flap setFlappieStatus:FLAPPYNG];
+}
+
+#pragma mark MenuDelegate
+-(void)gameMenuDidTouchStart
+{
+    [game setGameState:GAME_RUNNING];
     [_starMenuLayer removeFromParentAndCleanup:YES];
-    
+    [_flap setFlappieStatus:FLAPPYNG];
     [_col activate];
     [_colBuffer activate];
 }
 
-#pragma mark ColumnDelgate
--(void)columnDidOutOffScreen:(int)index{
-    if(index==0){ // main index
-        [_col moveToStatOfParent];
-        [_col mul4];
-    }
-    else if(index==1){ // buffer
-        [_colBuffer moveToStatOfParent];
-        [_colBuffer mul4];
-    }
+-(void)gameOverDidTouchPlayAgain
+{
+    [_gameOverLayer removeAllChildrenWithCleanup:YES];
+    DLog(@"Play again");
 }
 
+-(void)gameOverDidTouchShareFacebook
+{
+    DLog(@"Share facebook");
+}
 #pragma mark Game Timer Update
 -(void)update:(ccTime)delta
 {
-    // donothing yet
-//    float deltaY =
+    
     if([_sprites count] >0)
     {
         [_sprites enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -166,10 +204,70 @@ typedef enum {
             [o update:delta];
         }];
     }
+    if([game gameState] != GAME_OVER){
+        [self checkImpact];
+    }
+}
+
+-(void)checkImpact{
+    CGPoint pos;
+    CGPoint flapPos;
+    float disX;
+    float disY;
+    pos = ccp(_col.position.x, _col.y_pos + _col.position.y);
+    flapPos = [self posFlappi];
+    disX = flapPos.x + _flap.sprite.contentSize.width/2 - pos.x;
+    disY = flapPos.y - _flap.sprite.contentSize.height - pos.y;
+    if(abs(disX)<_flap.sprite.contentSize.width  && abs(disY)<_flap.sprite.contentSize.width && !_impacted)
+    {
+        _impacted = YES;
+        [self impactWithPos:ccp(_flap.pos_x, _col.y_pos + _col.position.y + _flap.sprite.contentSize.height)];
+        return;
+    }
+    else if(disX > _flap.sprite.contentSize.width && _impacted)
+    {
+        _impacted = NO;
+        [self impactDone];
+        return;
+    }
+    if(abs(disX)<_flap.sprite.contentSize.width && !_impacted){
+        [self overTheGame];
+    }
+    
+    pos = ccp(_colBuffer.position.x, _colBuffer.y_pos + _colBuffer.position.y);
+    disX = flapPos.x + _flap.sprite.contentSize.width/2 - pos.x;
+    disY = flapPos.y - _flap.sprite.contentSize.height - pos.y;
+    if(abs(disX)<_flap.sprite.contentSize.width  && abs(disY)<_flap.sprite.contentSize.width && !_impacted)
+    {
+        _impacted = YES;
+        [self impactWithPos:ccp(_flap.pos_x, _colBuffer.y_pos + _colBuffer.position.y + _flap.sprite.contentSize.height)];
+        return;
+    }
+    else if(disX > _flap.sprite.contentSize.width && _impacted)
+    {
+        _impacted = NO;
+        [self impactDone];
+        return;
+    }
+    if(abs(disX)<_flap.sprite.contentSize.width && !_impacted){
+        [self overTheGame];
+    }
+}
+
+-(void)overTheGame
+{
+    [game setGameState:GAME_OVER];
+    [_col deActivate];
+    [_colBuffer deActivate];
+    [_flap setFlappieStatus:DIE];
+    if(![self getChildByTag:99]){
+        [self addChild:_gameOverLayer z:10 tag:99];
+    }else{
+        DLog(@"");
+    }
 }
 
 #pragma mark touch handler
-#pragma mark - Touch handler
 -(BOOL)ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
     if([_sprites count] >0)
@@ -184,7 +282,6 @@ typedef enum {
 // convenience methods which take a UITouch instead of CGPoint
 
 #ifdef __CC_PLATFORM_IOS
-
 /*----------------------------------------------------------------------------
  Method:      <#method name#>   <#description#>
  -----------------------------------------------------------------------------*/
@@ -206,7 +303,10 @@ typedef enum {
 }
 
 -(CGPoint)distanceXYWithFlappi:(CGPoint)pos{
-    return ccp(abs(pos.x - _flap.pos_x), abs(pos.y - _flap.pos_y));
+    return ccp(pos.x - _flap.pos_x, pos.y - _flap.pos_y);
+}
+-(CGPoint)posFlappi{
+    return _flap.sprite.position;
 }
 #endif // __CC_PLATFORM_IOS
 @end

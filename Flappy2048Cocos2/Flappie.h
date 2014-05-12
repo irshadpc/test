@@ -39,8 +39,12 @@ typedef enum {
     float layerWidth;
     float layerHeight;
     float minimunY;
-    
+    BOOL _affectByGravity;
+    BOOL _affectByTouch;
+    float _preVel_y;
+    BOOL _isSliding;
     FlappieStatus _status;
+    FlappieStatus _prevStatus;
 }
 @property (assign, nonatomic) float _x;
 @property (assign, nonatomic) float _y;

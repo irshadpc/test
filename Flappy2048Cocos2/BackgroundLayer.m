@@ -7,7 +7,7 @@
 //
 
 #import "BackgroundLayer.h"
-
+#import "Game.h"
 
 @implementation BackgroundLayer
 
@@ -41,14 +41,18 @@
 }
 
 -(void)update:(ccTime)delta{
-    [_groundLine setPosition:ccp(_groundLine.position.x - 2, _groundLine.position.y)];
-    if(_groundLine.position.x < - _groundLine.contentSize.width/2){
-        _groundLine.position = ccp(_groundLineBuffer.position.x + _groundLineBuffer.contentSize.width/2 + _groundLine.contentSize.width/2,_groundLine.position.y);
-    }
-    
-    [_groundLineBuffer setPosition:ccp(_groundLineBuffer.position.x - 2, _groundLineBuffer.position.y)];
-    if(_groundLineBuffer.position.x < - _groundLineBuffer.contentSize.width/2){
-        _groundLineBuffer.position = ccp(_groundLine.position.x + _groundLine.contentSize.width/2 + _groundLineBuffer.contentSize.width/2,_groundLineBuffer.position.y);
+    if(game.gameState != GAME_OVER)
+    {
+        [_groundLine setPosition:ccp(_groundLine.position.x - 2, _groundLine.position.y)];
+        if(_groundLine.position.x < - _groundLine.contentSize.width/2){
+            _groundLine.position = ccp(_groundLineBuffer.position.x + _groundLineBuffer.contentSize.width/2 + _groundLine.contentSize.width/2,_groundLine.position.y);
+        }
+        
+        [_groundLineBuffer setPosition:ccp(_groundLineBuffer.position.x - 2, _groundLineBuffer.position.y)];
+        if(_groundLineBuffer.position.x < - _groundLineBuffer.contentSize.width/2){
+            _groundLineBuffer.position = ccp(_groundLine.position.x + _groundLine.contentSize.width/2 + _groundLineBuffer.contentSize.width/2,_groundLineBuffer.position.y);
+        }
+    }else{
     }
 }
 

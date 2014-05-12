@@ -7,7 +7,7 @@
 //
 
 #import "Flappie.h"
-static const float GRAVITY = -1180.0f;
+static const float GRAVITY = -1080.0f;
 static const float IMPULSE = 330.0f;
 @implementation Flappie
 
@@ -23,12 +23,16 @@ static const float IMPULSE = 330.0f;
         acc_x = 0;
         acc_y = GRAVITY;
         _status = STANDING;
+        _prevStatus = STANDING;
         _sinceTouch = 0.0f;
         [self loadSprite];
         layerHeight = viewSize.height;
         layerWidth = viewSize.width;
         CCSprite* groundTemp = [CCSprite spriteWithFile:@"ground.png"];
         minimunY = groundTemp.contentSize.height;
+        _affectByGravity = NO;
+        _affectByTouch = YES;
+        _isSliding = NO;
     }
     return self;
 }
@@ -39,39 +43,61 @@ static const float IMPULSE = 330.0f;
         case STANDING:
             break;
         case FLAPPYNG:
-            pos_x = ((int)pos_x + (int)layerWidth) % (int)layerWidth;
-            vel_y += acc_y * delta;
-            pos_y += vel_y * delta;
-            pos_x += vel_x * delta;
-            if(pos_y-60 <= minimunY){
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"nt_impact_ground" object:nil];
-                vel_y = IMPULSE + fabsf(vel_x);
-            }else{
-                
-            }
-            
-            [sprite setPosition:ccp(pos_x, pos_y)];
-            if(vel_y >0){
-                if(_angle+(vel_y * delta)< 60)
-                {
-                    _angle += (vel_y * delta);
-                }
-            }
-            if(vel_y <0)
+            if(_affectByGravity)
             {
-                if(_angle+(vel_y * delta)>- 120)
-                {
-                    _angle += (vel_y * delta);
+                pos_x = ((int)pos_x + (int)layerWidth) % (int)layerWidth;
+                vel_y += acc_y * delta;
+                pos_y += vel_y * delta;
+                pos_x += vel_x * delta;
+                if(pos_y-60 <= minimunY){
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"nt_impact_ground" object:nil];
+                    vel_y = IMPULSE + fabsf(vel_x);
                 }
+                
+                [sprite setPosition:ccp(pos_x, pos_y)];
+                if(vel_y >0){
+                    if(_angle+(vel_y * delta)< 60)
+                    {
+                        _angle += (vel_y * delta)*1.5 ;
+                    }
+                }
+                if(vel_y <0)
+                {
+                    if(_angle+(vel_y * delta)>- 120)
+                    {
+                        _angle += (vel_y * delta);
+                    }
+                }
+                [sprite setRotation:-_angle/2 ];
             }
-            sprite.rotation = -_angle/2;
             break;
         case SLIDING:
-            _sinceTouch = 0.0f;
-            vel_y = 0;
-            [sprite setRotation:0];
+            if(!_isSliding){
+                _status = _prevStatus;
+                _affectByGravity = YES;
+                _affectByTouch = YES;
+                vel_y = _preVel_y;
+                _preVel_y = 0;
+            }else{
+                _sinceTouch = 0.0f;
+                vel_y = 0;
+                [sprite setRotation:0];
+            }
+           
             break;
         case DIE:
+            if(_affectByGravity)
+            {
+                pos_x = ((int)pos_x + (int)layerWidth) % (int)layerWidth;
+                vel_y += acc_y * delta;
+                pos_y += vel_y * delta;
+                if(pos_y<minimunY+sprite.contentSize.height){
+                    pos_y = minimunY+sprite.contentSize.height;
+                }
+                pos_x += vel_x * delta;
+                [sprite setPosition:ccp(pos_x, pos_y)];
+                [sprite setRotation:0 ];
+            }
             break;
     }
     
@@ -79,9 +105,14 @@ static const float IMPULSE = 330.0f;
 
 -(void)layerDidTouched:(UITouch *)aTouch
 {
-    vel_y = IMPULSE;
-    if(_sinceTouch == 0)
-        _sinceTouch = 1.0f;
+    if(_affectByTouch)
+    {
+        vel_y = IMPULSE;
+        if(_sinceTouch == 0)
+            _sinceTouch = 1.0f;
+    }else{
+        
+    }
 }
 
 #pragma mark public methods
@@ -136,16 +167,52 @@ static const float IMPULSE = 330.0f;
 {
     _actionFlapUp = [CCRotateTo actionWithDuration:.2f angle:-15.0f];
     _actionFlapDown = [CCRotateTo actionWithDuration:.2f angle:30.0f];
-    _actionScaleUp =  [CCEaseInOut actionWithAction:[CCScaleTo actionWithDuration:1 scaleX:1.0 scaleY:1.0] rate:2.0];
-    _actionScaleDown = [CCEaseInOut actionWithAction:[CCScaleTo actionWithDuration:0.5 scaleX:0.8 scaleY:0.8] rate:2.0];
-    _actionSquenceScale = [CCSequence actions:_actionScaleUp, _actionScaleDown, nil];
+   
+    _actionScaleUp =  [CCScaleTo actionWithDuration:0.3 scale:2.0];
+    _actionScaleDown = [CCScaleTo actionWithDuration:0.3 scale:1.0];
+    _actionSquenceScale = [CCSequence actionOne:_actionScaleUp two:_actionScaleDown];
     
     [_wingFrame runAction:[CCRepeatForever actionWithAction:[CCSequence actionOne:_actionFlapUp two:_actionFlapDown]]];
     [_wingContent runAction:[CCRepeatForever actionWithAction:[CCSequence actionOne:[_actionFlapUp copy] two:[_actionFlapDown copy]]]];
 }
 
--(void)setFlappieStatus:(FlappieStatus)status{
+-(void)setFlappieStatus:(FlappieStatus)status
+{
+    if(status == _status) return;
+    _prevStatus = _status;
     _status = status;
+    switch (_status)
+    {
+        case FLAPPYNG:
+            _isSliding = NO;
+            _affectByGravity = YES;
+            _affectByTouch = YES;
+            _prevStatus = FLAPPYNG;
+            DLog(@"Set Flappie FLAPPING");
+            break;
+        case STANDING:
+            _isSliding = NO;
+            _affectByTouch = NO;
+            _affectByGravity = NO;
+            _prevStatus = STANDING;
+            DLog(@"Set Flappie STANDING");
+            break;
+        case SLIDING:
+            _affectByTouch = NO;
+            _affectByGravity = NO;
+            _preVel_y = vel_y;
+            _isSliding = YES;
+            DLog(@"Set Flappie SLIDING");
+            break;
+        case DIE:
+            vel_y = 0;
+            _isSliding = NO;
+            _prevStatus = DIE;
+            _affectByGravity = YES;
+            _affectByTouch = NO;
+            DLog(@"Set Flappie DIE");
+            break;
+    }
 }
 
 @end
