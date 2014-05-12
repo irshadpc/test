@@ -42,7 +42,7 @@
 
     [self addChild:_menu];
     
-    CGPoint oldPoint = _shareFbLabel.position;
+    CGPoint oldPoint = _playAgainLabel.position;
     id moveUp  =[CCMoveTo actionWithDuration:0.35 position:ccp(oldPoint.x, oldPoint.y + 10)];
     id moveDown  =[CCMoveTo actionWithDuration:0.35 position:ccp(oldPoint.x, oldPoint.y - 10)];
     id sequen = [CCSequence actions:moveUp, moveDown, nil];

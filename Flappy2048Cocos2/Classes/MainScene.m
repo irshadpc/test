@@ -37,7 +37,8 @@
     //Resrouce bacthnode
     CCSpriteBatchNode *_batchNode;
     //------------------------------
-    float _impacted;
+    BOOL _impacted;
+    BOOL _checkCol;
 }
 
 +(CCScene*)scene
@@ -67,6 +68,7 @@
         [game setGameState:GAME_BEGIN];
         [self scheduleUpdate];
         _impacted = NO;
+        _checkCol = YES;
     }
     return self;
 }
@@ -83,7 +85,7 @@
     [game setGameState:GAME_BEGIN];
     [self initGameMenuLayer];
     [self initGameOverMenuLayer];
-    [self addChild:_starMenuLayer];
+    [self addChild:_starMenuLayer z:10];
 }
 
 -(void)initGameMenuLayer
@@ -138,18 +140,6 @@
 
 #pragma mark ColumnDelegate
 
--(void)columnDidImpactFlappie:(NSNumber*)y_pos
-{
-    DLog(@"");
-//    [_flap updatePosition:ccp(_flap.pos_x, [y_pos floatValue])];
-    [_flap setFlappieStatus:SLIDING];
-    // do action scale to flappie
-    id zoomIn = [CCScaleTo actionWithDuration:0.2 scale:1.5];
-    id zoomOut =[CCScaleTo actionWithDuration:0.2 scale:1.0];
-    id acitonSequene = [CCSequence actionOne:zoomIn two:zoomOut];
-    [_flap.sprite runAction:[CCRepeat actionWithAction:acitonSequene times:1]];
-}
-
 -(void)impactWithPos:(CGPoint)pos
 {
     DLog(@"impact");
@@ -170,6 +160,9 @@
 
 -(void)impactDone
 {
+    DLog(@"impact done");
+    _impacted = NO;
+    _checkCol = !_checkCol;
     [_flap setFlappieStatus:FLAPPYNG];
 }
 
@@ -214,44 +207,55 @@
     CGPoint flapPos;
     float disX;
     float disY;
-    pos = ccp(_col.position.x, _col.y_pos + _col.position.y);
-    flapPos = [self posFlappi];
-    disX = flapPos.x + _flap.sprite.contentSize.width/2 - pos.x;
-    disY = flapPos.y - _flap.sprite.contentSize.height - pos.y;
-    if(abs(disX)<_flap.sprite.contentSize.width  && abs(disY)<_flap.sprite.contentSize.width && !_impacted)
-    {
-        _impacted = YES;
-        [self impactWithPos:ccp(_flap.pos_x, _col.y_pos + _col.position.y + _flap.sprite.contentSize.height)];
-        return;
+    
+    if(_checkCol){
+        pos = ccp(_col.position.x, _col.y_pos + _col.position.y);
+        flapPos = ccp(_flap.pos_x, _flap.pos_y);
+        disX = flapPos.x + _flap.sprite.contentSize.width/2 - pos.x;
+        disY = flapPos.y - _flap.sprite.contentSize.height - pos.y;
+        if(abs(disX)<_flap.sprite.contentSize.width  && abs(disY)<_flap.sprite.contentSize.width && _impacted == NO)
+        {
+            _impacted = YES;
+            [self impactWithPos:ccp(_flap.pos_x, _col.y_pos + _col.position.y + _flap.sprite.contentSize.height)];
+            return;
+        }
+        else if(_impacted==YES && disX > _flap.sprite.contentSize.width)
+        {
+            _impacted = NO;
+            [self impactDone];
+            [_flap updateNumber:_col._value];
+            return;
+        }
+        if(abs(disX)<_flap.sprite.contentSize.width && _impacted==NO){
+            [self overTheGame];
+            return;
+        }
+        
     }
-    else if(disX > _flap.sprite.contentSize.width && _impacted)
-    {
-        _impacted = NO;
-        [self impactDone];
-        return;
-    }
-    if(abs(disX)<_flap.sprite.contentSize.width && !_impacted){
-        [self overTheGame];
+    else{
+        flapPos = ccp(_flap.pos_x, _flap.pos_y);
+        pos = ccp(_colBuffer.position.x, _colBuffer.y_pos + _colBuffer.position.y);
+        disX = flapPos.x + _flap.sprite.contentSize.width/2 - pos.x;
+        disY = flapPos.y - _flap.sprite.contentSize.height - pos.y;
+        if(abs(disX)<_flap.sprite.contentSize.width  && abs(disY)<_flap.sprite.contentSize.width && _impacted==NO)
+        {
+            _impacted = YES;
+            [self impactWithPos:ccp(_flap.pos_x, _colBuffer.y_pos + _colBuffer.position.y + _flap.sprite.contentSize.height)];
+            return;
+        }
+        else if(disX > _flap.sprite.contentSize.width && _impacted==YES)
+        {
+            _impacted = NO;
+            [self impactDone];
+            [_flap updateNumber:_colBuffer._value];
+            return;
+        }
+        if(abs(disX)<_flap.sprite.contentSize.width && _impacted==NO){
+            [self overTheGame];
+            return;
+        }
     }
     
-    pos = ccp(_colBuffer.position.x, _colBuffer.y_pos + _colBuffer.position.y);
-    disX = flapPos.x + _flap.sprite.contentSize.width/2 - pos.x;
-    disY = flapPos.y - _flap.sprite.contentSize.height - pos.y;
-    if(abs(disX)<_flap.sprite.contentSize.width  && abs(disY)<_flap.sprite.contentSize.width && !_impacted)
-    {
-        _impacted = YES;
-        [self impactWithPos:ccp(_flap.pos_x, _colBuffer.y_pos + _colBuffer.position.y + _flap.sprite.contentSize.height)];
-        return;
-    }
-    else if(disX > _flap.sprite.contentSize.width && _impacted)
-    {
-        _impacted = NO;
-        [self impactDone];
-        return;
-    }
-    if(abs(disX)<_flap.sprite.contentSize.width && !_impacted){
-        [self overTheGame];
-    }
 }
 
 -(void)overTheGame

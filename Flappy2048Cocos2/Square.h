@@ -20,6 +20,7 @@
 -(void)updatePosition:(CGPoint)newPoint;
 -(void)moveLeft:(float)deltaX;
 -(void)setNumber:(long)number;
+-(void)setNumberWithOldColor:(long)number;
 -(float)width;
 -(float)height;
 @end

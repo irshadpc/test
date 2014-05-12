@@ -33,10 +33,28 @@ static const float IMPULSE = 330.0f;
         _affectByGravity = NO;
         _affectByTouch = YES;
         _isSliding = NO;
+        _valueNumber = 1;
     }
     return self;
 }
 
+-(void)updateNumber:(long)number
+{
+    _valueNumber*=2;
+    [_valueLabel setFontSize:[self calculateFontSizeForString:[NSString stringWithFormat:@"%ld", _valueNumber] fontName:@"Helvetica"]];
+    _valueLabel.string = [NSString stringWithFormat:@"%ld", _valueNumber];
+}
+- (int) calculateFontSizeForString:(NSString*)string fontName:(NSString*)usedFontName
+{
+    int fontSize = 40; // it seems to be the biggest font we can use
+    while (--fontSize > 0) {
+        CGSize size = [string sizeWithFont:[UIFont fontWithName:usedFontName size:fontSize]];
+        if (size.width <= sprite.contentSize.width-10 && size.height <= sprite.contentSize.height -10)
+            break;
+    }
+    
+    return fontSize;
+}
 #pragma mark
 -(void)update:(ccTime)delta{
     switch (_status) {

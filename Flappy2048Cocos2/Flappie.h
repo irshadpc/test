@@ -43,6 +43,7 @@ typedef enum {
     BOOL _affectByTouch;
     float _preVel_y;
     BOOL _isSliding;
+    long _valueNumber;
     FlappieStatus _status;
     FlappieStatus _prevStatus;
 }
@@ -58,4 +59,5 @@ typedef enum {
 -(void)updateFlappi;
 -(void)flap:(float)height;
 -(void)setFlappieStatus:(FlappieStatus)status;
+-(void)updateNumber:(long)number;
 @end

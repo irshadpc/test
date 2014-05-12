@@ -87,7 +87,7 @@
 -(void)updateAllSquaresWithUpperValue
 {
     for (Square *sq in squareArray) {
-        [sq setNumber:sq._valueNumber*4];
+        [sq setNumberWithOldColor:sq._valueNumber*4];
     }
 }
 

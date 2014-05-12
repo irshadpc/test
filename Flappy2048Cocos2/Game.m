@@ -18,19 +18,19 @@ static Game *instance = nil;
 {
     if(self = [super init]){
         colorMap = @{
-                     @"0": @"eae8e4",
-                     @"1": @"eae8e4",
-                     @"2": @"eae8e4",
-                     @"4": @"ede0ca",
-                     @"8": @"edddba",
-                     @"16": @"eddaab",
-                     @"32": @"edd79b",
-                     @"64": @"edd48b",
-                     @"128": @"edd17c",
-                     @"256": @"edce6c",
-                     @"512": @"edcb5c",
-                     @"1024": @"edc84d",
-                     @"2048": @"edc53d",
+                     @0: @0xeae8e4,
+                     @1: @0xeae8e4,
+                     @2: @0xeae8e4,
+                     @4: @0xede0ca,
+                     @8: @0xedddba,
+                     @16: @0xeddaab,
+                     @32: @0xedd79b,
+                     @64: @0xedd48b,
+                     @128: @0xedd17c,
+                     @256: @0xedce6c,
+                     @512: @0xedcb5c,
+                     @1024: @0xedc84d,
+                     @2048: @0xedc53d,
                      };
     }
     return self;
