@@ -222,6 +222,15 @@
 		F769DF2D1921F18E00C52815 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F769DF2C1921F18E00C52815 /* MessageUI.framework */; };
 		F769DF2F1921F19D00C52815 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F769DF2E1921F19D00C52815 /* CFNetwork.framework */; };
 		F769DF321921F3AA00C52815 /* HUDLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F769DF311921F3AA00C52815 /* HUDLayer.m */; };
+		F769DF36192219D500C52815 /* sfx_flap.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F769DF33192219D500C52815 /* sfx_flap.mp3 */; };
+		F769DF37192219D500C52815 /* sfx_hit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F769DF34192219D500C52815 /* sfx_hit.mp3 */; };
+		F769DF38192219D500C52815 /* sfx_pass.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F769DF35192219D500C52815 /* sfx_pass.mp3 */; };
+		F769DF3E19221B6800C52815 /* sfx_die.caf in Resources */ = {isa = PBXBuildFile; fileRef = F769DF3919221B6700C52815 /* sfx_die.caf */; };
+		F769DF3F19221B6800C52815 /* sfx_hit.caf in Resources */ = {isa = PBXBuildFile; fileRef = F769DF3A19221B6700C52815 /* sfx_hit.caf */; };
+		F769DF4019221B6800C52815 /* sfx_point.aif in Resources */ = {isa = PBXBuildFile; fileRef = F769DF3B19221B6700C52815 /* sfx_point.aif */; };
+		F769DF4119221B6800C52815 /* sfx_swooshing.caf in Resources */ = {isa = PBXBuildFile; fileRef = F769DF3C19221B6700C52815 /* sfx_swooshing.caf */; };
+		F769DF4219221B6800C52815 /* sfx_wing.caf in Resources */ = {isa = PBXBuildFile; fileRef = F769DF3D19221B6700C52815 /* sfx_wing.caf */; };
+		F769DF441922231D00C52815 /* share.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F769DF431922231D00C52815 /* share.jpg */; };
 		F7A1AE1A191CE95A0039439A /* ColumnLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A1AE19191CE95A0039439A /* ColumnLayer.m */; };
 		F7A1AE1E191DD5400039439A /* NSMutableArray+Shuffling.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A1AE1D191DD5400039439A /* NSMutableArray+Shuffling.m */; };
 /* End PBXBuildFile section */
@@ -675,6 +684,15 @@
 		F769DF2E1921F19D00C52815 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		F769DF301921F3AA00C52815 /* HUDLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUDLayer.h; sourceTree = "<group>"; };
 		F769DF311921F3AA00C52815 /* HUDLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUDLayer.m; sourceTree = "<group>"; };
+		F769DF33192219D500C52815 /* sfx_flap.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = sfx_flap.mp3; path = Resources/sfx_flap.mp3; sourceTree = "<group>"; };
+		F769DF34192219D500C52815 /* sfx_hit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = sfx_hit.mp3; path = Resources/sfx_hit.mp3; sourceTree = "<group>"; };
+		F769DF35192219D500C52815 /* sfx_pass.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = sfx_pass.mp3; path = Resources/sfx_pass.mp3; sourceTree = "<group>"; };
+		F769DF3919221B6700C52815 /* sfx_die.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfx_die.caf; sourceTree = "<group>"; };
+		F769DF3A19221B6700C52815 /* sfx_hit.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfx_hit.caf; sourceTree = "<group>"; };
+		F769DF3B19221B6700C52815 /* sfx_point.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfx_point.aif; sourceTree = "<group>"; };
+		F769DF3C19221B6700C52815 /* sfx_swooshing.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfx_swooshing.caf; sourceTree = "<group>"; };
+		F769DF3D19221B6700C52815 /* sfx_wing.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfx_wing.caf; sourceTree = "<group>"; };
+		F769DF431922231D00C52815 /* share.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = share.jpg; sourceTree = "<group>"; };
 		F7A1AE18191CE95A0039439A /* ColumnLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColumnLayer.h; sourceTree = "<group>"; };
 		F7A1AE19191CE95A0039439A /* ColumnLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColumnLayer.m; sourceTree = "<group>"; };
 		F7A1AE1C191DD5400039439A /* NSMutableArray+Shuffling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Shuffling.h"; sourceTree = "<group>"; };
@@ -772,6 +790,14 @@
 		F720251A191C900A008A1EFB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F769DF33192219D500C52815 /* sfx_flap.mp3 */,
+				F769DF3919221B6700C52815 /* sfx_die.caf */,
+				F769DF3A19221B6700C52815 /* sfx_hit.caf */,
+				F769DF3B19221B6700C52815 /* sfx_point.aif */,
+				F769DF3C19221B6700C52815 /* sfx_swooshing.caf */,
+				F769DF3D19221B6700C52815 /* sfx_wing.caf */,
+				F769DF34192219D500C52815 /* sfx_hit.mp3 */,
+				F769DF35192219D500C52815 /* sfx_pass.mp3 */,
 				F72026FC191CBA07008A1EFB /* flappy2048.plist */,
 				F72026FD191CBA07008A1EFB /* flappy2048.pvr */,
 				F72026BD191C92D4008A1EFB /* Images */,
@@ -1170,6 +1196,7 @@
 		F72026BD191C92D4008A1EFB /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				F769DF431922231D00C52815 /* share.jpg */,
 				F72026BE191C92D4008A1EFB /* bg-hd.png */,
 				F72026BF191C92D4008A1EFB /* bg-ipad.png */,
 				F72026C0191C92D4008A1EFB /* block-content-hd.png */,
@@ -1542,6 +1569,7 @@
 				F720251E191C900A008A1EFB /* Default@2x.png in Resources */,
 				F72026EB191C92D4008A1EFB /* tap-right-ipad.png in Resources */,
 				F72026E9191C92D4008A1EFB /* tap-left-ipad.png in Resources */,
+				F769DF4019221B6800C52815 /* sfx_point.aif in Resources */,
 				F72026D7191C92D4008A1EFB /* bg-hd.png in Resources */,
 				F72026ED191C92D4008A1EFB /* wing-content-ipad.png in Resources */,
 				F72026FE191CBA07008A1EFB /* flappy2048.plist in Resources */,
@@ -1549,20 +1577,27 @@
 				F7202528191C900A008A1EFB /* Icon-Small.png in Resources */,
 				F7202524191C900A008A1EFB /* Icon-72.png in Resources */,
 				F72026EA191C92D4008A1EFB /* tap-right-hd.png in Resources */,
+				F769DF4119221B6800C52815 /* sfx_swooshing.caf in Resources */,
 				F72026E5191C92D4008A1EFB /* sound-off-ipad.png in Resources */,
 				F72026FF191CBA07008A1EFB /* flappy2048.pvr in Resources */,
 				F720251C191C900A008A1EFB /* Default.png in Resources */,
 				F72026EE191C92D4008A1EFB /* wing-frame-hd.png in Resources */,
+				F769DF441922231D00C52815 /* share.jpg in Resources */,
 				F72026DA191C92D4008A1EFB /* block-content-ipad.png in Resources */,
 				F72026E8191C92D4008A1EFB /* tap-left-hd.png in Resources */,
+				F769DF3E19221B6800C52815 /* sfx_die.caf in Resources */,
 				F72026D9191C92D4008A1EFB /* block-content-hd.png in Resources */,
 				F7202526191C900A008A1EFB /* Icon-Small-50.png in Resources */,
 				F7202531191C900A008A1EFB /* iTunesArtwork in Resources */,
+				F769DF4219221B6800C52815 /* sfx_wing.caf in Resources */,
 				F72026DE191C92D4008A1EFB /* ground-ipad.png in Resources */,
 				F720252A191C900A008A1EFB /* Icon-Small@2x.png in Resources */,
 				F72026E6191C92D4008A1EFB /* sound-on-hd.png in Resources */,
+				F769DF36192219D500C52815 /* sfx_flap.mp3 in Resources */,
 				F7202522191C900A008A1EFB /* Default-Landscape~ipad.png in Resources */,
+				F769DF3F19221B6800C52815 /* sfx_hit.caf in Resources */,
 				F72026EF191C92D4008A1EFB /* wing-frame-ipad.png in Resources */,
+				F769DF37192219D500C52815 /* sfx_hit.mp3 in Resources */,
 				F72026DD191C92D4008A1EFB /* ground-hd.png in Resources */,
 				F72026DF191C92D4008A1EFB /* ground-line-hd.png in Resources */,
 				F7202520191C900A008A1EFB /* Default-568h@2x.png in Resources */,
@@ -1571,6 +1606,7 @@
 				F72026E3191C92D4008A1EFB /* sound-icon-png.png in Resources */,
 				F72026D8191C92D4008A1EFB /* bg-ipad.png in Resources */,
 				F720252E191C900A008A1EFB /* Icon@2x.png in Resources */,
+				F769DF38192219D500C52815 /* sfx_pass.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,6 +16,7 @@
     CCSprite *_frame;
     CCSprite *_content;
     CCLabelTTF *_valueLabel;
+    UIColor* c;
 }
 @synthesize _x, _y, _valueNumber;
 
@@ -67,7 +68,6 @@
 #pragma mark public methods
 -(void)setNumber:(long)number
 {
-    
     _valueNumber = number;
     if(!_valueLabel)
     {
@@ -83,18 +83,19 @@
     int fontsize = [self calculateFontSizeForString:[NSString stringWithFormat:@"%ld", _valueNumber] fontName:@"Helvetica"];
     _valueLabel.fontSize = fontsize;
     [_valueLabel setString:[NSString stringWithFormat:@"%ld", _valueNumber]];
-    
-    NSUInteger objColor;
-    if(number > 1024)
-    {
-        objColor = [[game colorMap][@(1024)] unsignedIntegerValue];
+    if(!c){
+        NSUInteger objColor;
+        if(number > 1024)
+        {
+            objColor = [[game colorMap][@(1024)] unsignedIntegerValue];
 
-    }else{
-        DLog(@"This color does not exist in background color maps %ld", number);
-        objColor = [[game colorMap][@(number)] unsignedIntegerValue];
+        }else{
+            objColor = [[game colorMap][@(number)] unsignedIntegerValue];
+        }
+        c = [UIColor fromHex:objColor];
+        [_content setColor:[c c3b]];
     }
-    UIColor* c = [UIColor fromHex:objColor];
-    [_content setColor:[c c3b]];
+    
 }
 
 -(void)setNumberWithOldColor:(long)number

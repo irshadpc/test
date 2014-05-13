@@ -52,7 +52,7 @@ typedef enum {
 -(void)openFbSession:(void(^)(bool))callback;
 -(void)login:(void(^)(bool))callback;
 -(void)fetchUserDetail:(void(^)(bool))callback;
-
+-(void)shareFb;
 #pragma mark tracker
 -(void)trackNewGame;
 -(void)trackPlayAgain;

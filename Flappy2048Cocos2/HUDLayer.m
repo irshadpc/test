@@ -32,6 +32,9 @@
     [super setContentSize:contentSize];
     
 }
+-(void)increseScore{
+    [self setScore:_score+1];
+}
 -(void)setScore:(int)score{
     _score = score;
     id zoomIn = [CCScaleTo actionWithDuration:0.2 scale:1.5];

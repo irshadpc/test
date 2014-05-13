@@ -6,7 +6,7 @@
 //  Created by namnh9 on 5/9/14.
 //  Copyright (c) 2014 catcher. All rights reserved.
 //
-
+#import <AudioToolbox/AudioServices.h>
 #import "MainScene.h"
 #import "Flappie.h"
 #import "Square.h"
@@ -17,7 +17,8 @@
 #import "HUDLayer.h"
 #import "Game.h"
 #import "GAI.h"
-#import <AudioToolbox/AudioServices.h>
+#import "SimpleAudioEngine.h"
+
 
 @interface MainScene()<ColumnLayerDelegate, MenuLayerDelegate, GameOverMenuDelegate>
 
@@ -93,6 +94,13 @@
     [self initGameMenuLayer];
     [self initGameOverMenuLayer];
     [self addChild:_starMenuLayer z:10];
+    
+    [[SimpleAudioEngine sharedEngine] preloadEffect:@"sfx_wing.caf"];
+    [[SimpleAudioEngine sharedEngine] preloadEffect:@"sfx_hit.caf"];
+    [[SimpleAudioEngine sharedEngine] preloadEffect:@"sfx_die.caf"];
+    [[SimpleAudioEngine sharedEngine] preloadEffect:@"sfx_swooshing.caf"];
+    [[SimpleAudioEngine sharedEngine] preloadEffect:@"sfx_pass.mp3"];
+
 }
 
 -(void)initHudLayer{
@@ -154,6 +162,7 @@
 -(void)impactWithPos:(CGPoint)pos
 {
     DLog(@"impact");
+    [_hudLayer increseScore];
     [_flap updatePosition:pos];
     [_flap setFlappieStatus:SLIDING];
     id zoomIn = [CCScaleTo actionWithDuration:0.2 scale:1.5];
@@ -162,6 +171,7 @@
     _flap.sprite.rotation = 0;
     [_flap.sprite stopAllActions];
     [_flap.sprite runAction:[CCRepeat actionWithAction:acitonSequene times:1]];
+    [[SimpleAudioEngine sharedEngine] playEffect:@"sfx_pass.mp3"];
 }
 
 -(void)columnFlappieDidOut
@@ -174,6 +184,7 @@
     _impacted = NO;
     _checkCol = !_checkCol;
     [_flap setFlappieStatus:FLAPPYNG];
+    
 }
 
 #pragma mark MenuDelegate
@@ -190,18 +201,39 @@
 
 -(void)gameOverDidTouchPlayAgain
 {
-    [_gameOverLayer removeAllChildrenWithCleanup:YES];
+    [game setGameState:GAME_RUNNING];
     [game trackPlayAgain];
+    [_gameOverLayer removeFromParent];
+
+    [_flap updatePosition:ccp(self.contentSize.width/4, 3*self.contentSize.height/5)];
+    [_flap setFlappieStatus:FLAPPYNG];
+    [_flap updateNumber:1];
+    _flap.vel_y = 400;
+    
+    CCSprite* groundTemp = [CCSprite spriteWithFile:@"ground.png"];
+    Square* sqtemp = [[Square alloc] initWithGameLayer:self];
+    [_col updatePosition:ccp(viewSize.width + [sqtemp width]*2, groundTemp.contentSize.height)];
+    [_colBuffer updatePosition:ccp(_col.position.x + _col.contentSize.width /2 + _distance2Col, groundTemp.contentSize.height)];
+    [_col resetWithValue:1];
+    [_colBuffer resetWithValue:2];
+    
+    _impacted = NO;
+    _checkCol = YES;
+    
+    [_col activate];
+    [_colBuffer activate];
 }
 
 
 -(void)gameOverDidTouchShareFacebook
 {
-    [_gameOverLayer removeAllChildrenWithCleanup:YES];
-    [game login:^(bool successful) {
+//    [_gameOverLayer removeFromParent];
+//    [game shareFb];
+    [game trackShareFacebook];
+    [game login:^(bool success) {
         
     }];
-    [game trackShareFacebook];
+    
 }
 #pragma mark Game Timer Update
 -(void)update:(ccTime)delta
@@ -245,6 +277,9 @@
         }else if(disX==0 && _impacted){
             [_col removeTargetBlock];
         }
+        if (_impacted && _col._scrollable){
+            [_flap updatePosition:ccp(_flap.pos_x, _col.y_pos + _col.position.y + _flap.sprite.contentSize.height)];
+        }
         if(abs(disX)<_flap.sprite.contentSize.width && _impacted==NO){
             [self overTheGame];
             return;
@@ -272,6 +307,9 @@
         }else if(disX==0 && _impacted){
             [_colBuffer removeTargetBlock];
         }
+        if (_impacted && _colBuffer._scrollable){
+            [_flap updatePosition:ccp(_flap.pos_x, _colBuffer.y_pos + _colBuffer.position.y + _flap.sprite.contentSize.height)];
+        }
         if(abs(disX)<_flap.sprite.contentSize.width && _impacted==NO){
             [self overTheGame];
             return;
@@ -283,13 +321,11 @@
 -(void)overTheGame
 {
     [game setGameState:GAME_OVER];
+    [[SimpleAudioEngine sharedEngine] playEffect:@"sfx_hit.caf"];
+    [[SimpleAudioEngine sharedEngine] playEffect:@"sfx_die.caf"];
     [_col deActivate];
     [_colBuffer deActivate];
     [_flap setFlappieStatus:DIE];
-    
-//    [self addChild:colorLayer z:20];
-//    [self performSelector:@selector(removeRedLayer) withObject:nil afterDelay:0.07];
-  
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     id rotateLeft = [CCRotateTo actionWithDuration:0.01 angle:5];
     id rotateBackLeft = [CCRotateTo actionWithDuration:0.01 angle:-5];

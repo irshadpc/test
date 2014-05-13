@@ -112,69 +112,93 @@ static Game *instance = nil;
 }
 
 -(void)openFbSession:(void(^)(bool))callback{
-    NSArray *permissions = [[NSArray alloc] initWithObjects: @"email", @"public_profile", @"user_friends",nil];
+    NSArray *permissions = [[NSArray alloc] initWithObjects:@"publish_actions",nil];
     // Attempt to open the session. If the session is not open, show the user the Facebook login UX
     [FBSession openActiveSessionWithReadPermissions:permissions
-                                       allowLoginUI:false
+                                       allowLoginUI:true
                                   completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
-        // Did something go wrong during login? I.e. did the user cancel?
-        if (status == FBSessionStateClosedLoginFailed || status == FBSessionStateClosed || status == FBSessionStateCreatedOpening) {
-            isFbLoggedIn = false;
-            callback(false);
-        }
-        else {
-            isFbLoggedIn = true;
-            callback(true);
-        }
-    }];
+                  if(!error){
+                      // Did something go wrong during login? I.e. did the user cancel?
+                      if (status == FBSessionStateClosedLoginFailed || status == FBSessionStateClosed || status == FBSessionStateCreatedOpening) {
+                          isFbLoggedIn = false;
+                          callback(false);
+                      }
+                      else {
+                          isFbLoggedIn = true;
+                          callback(true);
+                      }
+
+                  }else{
+                      DLog(@"Error: %@",[FBErrorUtility userMessageForError:error]);
+                  }
+            }];
 }
 
 
 -(void)login:(void (^)(bool))callback{
-    NSArray *permissions = [[NSArray alloc] initWithObjects:
-                            @"email", @"public_profile", @"user_friends",
-                            nil];
-    // Attempt to open the session. If the session is not open, show the user the Facebook login UX
-    [FBSession openActiveSessionWithReadPermissions:nil
-                                       allowLoginUI:true
-                                  completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
-          if(!error){
-              switch (status) {
-                  case FBSessionStateClosed:
-                      DLog(@"FBSessionStateClosed ");
-                  case FBSessionStateClosedLoginFailed:
-                      DLog(@"FBSessionStateClosedLoginFailed ");
-                  case FBSessionStateCreatedOpening:
-                      DLog(@"FBSessionStateCreatedOpening ");
-                      // If so, just send them round the loop again
-                      [[FBSession activeSession] closeAndClearTokenInformation];
-                      [FBSession setActiveSession:nil];
-                      [self createFbSession];
-                      isFbLoggedIn = false;
-                      callback(false);
-                      break;
-                  case FBSessionStateCreatedTokenLoaded:
-                      DLog(@"FBSessionStateCreatedTokenLoaded ");
-                  case FBSessionStateOpen:
-                      DLog(@"FBSessionStateOpen Done");
-                  case FBSessionStateOpenTokenExtended:
-                      DLog(@"FBSessionStateOpenTokenExtended ");
-                  case FBSessionStateCreated:
-                      DLog(@"FBSessionStateCreated ");
-                      [self fetchUserDetail:^(bool done){
-                          DLog(@"FetchUserDetail ");
-                      }];
-                      isFbLoggedIn = true;
-                      callback(true);
-                      break;
-                  default:
-                      break;
-              }
-          }
-         else{
-             DLog(@"Error: %@",[FBErrorUtility userMessageForError:error]);
-         }
-    }];
+    // Check if the Facebook app is installed and we can present the share dialog
+    FBLinkShareParams *params = [[FBLinkShareParams alloc] init];
+    params.link = [NSURL URLWithString:@"https://itunes.apple.com/au/app/impossible-flappy-flappys/id845040429?mt=8"];
+    params.picture = [NSURL URLWithString:@"https://fbcdn-photos-f-a.akamaihd.net/hphotos-ak-prn2/t39.2081-0/10333116_886921368000612_183850266_n.jpg"];
+    params.caption =@"Build great social apps and get more installs.";
+    params.linkDescription =@"Allow your users to share stories on Facebook from your app using the iOS SDK.";
+    params.name =@"Flappy 2048";
+    // If the Facebook app is installed and we can present the share dialog
+    if ([FBDialogs canPresentShareDialogWithParams:params]) {
+        // Present share dialog
+        [FBDialogs presentShareDialogWithParams:params clientState:nil
+                                        handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
+            if(error) {
+                // An error occurred, we need to handle the error
+                // See: https://developers.facebook.com/docs/ios/errors
+                DLog(@"Error publishing story: %@", error.description);
+            } else {
+                // Success
+                DLog(@"result %@", results);
+            }
+         }];
+        
+        // If the Facebook app is NOT installed and we can't present the share dialog
+    } else {
+        // FALLBACK: publish just a link using the Feed dialog
+        // Put together the dialog parameters
+        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       @"Flappy 2048", @"name",
+                                       @"Build great social apps and get more installs.", @"caption",
+                                       @"Allow your users to share stories on Facebook from your app using the iOS SDK.", @"description",
+//                                       @"https://itunes.apple.com/au/app/impossible-flappy-flappys/id845040429?mt=8", @"link",
+                                       @"https://fbcdn-photos-f-a.akamaihd.net/hphotos-ak-prn2/t39.2081-0/10333116_886921368000612_183850266_n.jpg", @"picture",
+                                       nil];
+        
+        // Show the feed dialog
+        [FBWebDialogs presentFeedDialogModallyWithSession:nil
+                                               parameters:params
+                                                  handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+                                                      if (error) {
+                                                          // An error occurred, we need to handle the error
+                                                          // See: https://developers.facebook.com/docs/ios/errors
+                                                          DLog(@"Error publishing story: %@", error.description);
+                                                      } else {
+                                                          if (result == FBWebDialogResultDialogNotCompleted) {
+                                                              // User canceled.
+                                                              DLog(@"User cancelled.");
+                                                          } else {
+                                                              // Handle the publish feed callback
+                                                              NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
+                                                              
+                                                              if (![urlParams valueForKey:@"post_id"]) {
+                                                                  // User canceled.
+                                                                  DLog(@"User cancelled.");
+                                                                  
+                                                              } else {
+                                                                  // User clicked the Share button
+                                                                  NSString *result = [NSString stringWithFormat: @"Posted story, id: %@", [urlParams valueForKey:@"post_id"]];
+                                                                  DLog(@"result %@", result);
+                                                              }
+                                                          }
+                                                      }
+                                                  }];
+    }
 }
 
 -(void)fetchUserDetail:(void (^)(bool))callback
@@ -204,6 +228,41 @@ static Game *instance = nil;
      }];
 }
 
+-(void)shareFb{
+    NSArray* images = @[
+                        @{@"url": [UIImage imageNamed:@"share.jpg"], @"user_generated" : @"true" }
+                        ];
+    id<FBGraphObject> mealObject =
+    [FBGraphObject openGraphObjectForPostWithType:@"cooking-app:meal"
+                                            title:@"Lamb Vindaloo"
+                                            image:images
+                                              url:@"https://example.com/cooking-app/meal/Lamb-Vindaloo.html"
+                                      description:@"Spicy curry of lamb and potatoes"];
+    
+    id<FBOpenGraphAction> cookAction = (id<FBOpenGraphAction>)[FBGraphObject graphObject];
+    [cookAction setObject:mealObject forKey:@"meal"];
+    [FBDialogs presentShareDialogWithOpenGraphAction:cookAction
+                                          actionType:@"cooking-app:cook"
+                                 previewPropertyName:@"meal"
+                                             handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
+                                                 if(error) {
+                                                     NSLog(@"Error: %@", error.description);
+                                                 } else {
+                                                     NSLog(@"Success!");
+                                                 }
+                                             }];
+}
+- (NSDictionary*)parseURLParams:(NSString *)query {
+    NSArray *pairs = [query componentsSeparatedByString:@"&"];
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    for (NSString *pair in pairs) {
+        NSArray *kv = [pair componentsSeparatedByString:@"="];
+        NSString *val =
+        [kv[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        params[kv[0]] = val;
+    }
+    return params;
+}
 -(void)trackNewGame{
     // Set screen name on the tracker to be sent with all hits.
     [tracker set:kGAIScreenName value:@"GameScene"];

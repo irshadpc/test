@@ -7,6 +7,8 @@
 //
 
 #import "Flappie.h"
+#import "SimpleAudioEngine.h"
+
 static const float GRAVITY = -1080.0f;
 static const float IMPULSE = 330.0f;
 @implementation Flappie
@@ -125,6 +127,7 @@ static const float IMPULSE = 330.0f;
 {
     if(_affectByTouch)
     {
+        [[SimpleAudioEngine sharedEngine] playEffect:@"sfx_wing.caf"];
         vel_y = IMPULSE;
         if(_sinceTouch == 0)
             _sinceTouch = 1.0f;

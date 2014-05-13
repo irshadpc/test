@@ -24,7 +24,7 @@
         _lb.color = ccc3(0, 0, 0);
         _clickToStartMenuItem = [CCMenuItemLabel itemWithLabel:_lb target:self selector:@selector(didTouchStart:)];
         _menu = [CCMenu menuWithItems:_clickToStartMenuItem, nil];
-        _menu.position = ccp(self.contentSize.width/2, self.contentSize.height/2 - 40);
+        _menu.position = ccp(self.contentSize.width/2, self.contentSize.height/2 - 60);
         [_menu alignItemsVertically];
         [self addChild:_menu];
         

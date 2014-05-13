@@ -21,4 +21,5 @@
 -(void)setContentSize:(CGSize)contentSize;
 -(void)setScore:(int)score;
 -(void)setHightScore:(int)score;
+-(void)increseScore;
 @end

@@ -23,10 +23,9 @@
     BOOL _impacted;
     id<ColumnLayerDelegate> delegate;
     Square *_targetBlock;
-    float x_pos;
     float y_pos;
-    
     BOOL _scrollable;
+    float highest_y;
 }
 
 
@@ -35,12 +34,14 @@
 @property (assign, nonatomic) id<ColumnLayerDelegate> delegate;
 @property (strong, nonatomic) Square *_targetBlock;
 @property (assign, nonatomic) float y_pos;
+@property (assign, nonatomic)BOOL _scrollable;
 -(id)initBlocksWitnValue:(NSInteger)value parentLayer:(CCLayer*)aLayer;
 -(void)activate;
 -(void)deActivate;
 -(void)updatePosition:(CGPoint)pos;
 -(void)layerDidTouched:(UITouch*)touch;
 -(void)removeTargetBlock;
+-(void)resetWithValue:(long)number;
 @end
 
 @protocol ColumnLayerDelegate<NSObject>

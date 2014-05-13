@@ -10,7 +10,7 @@
 #import "MainScene.h"
 #import "NSMutableArray+Shuffling.h"
 
-#define NUM_START_SCROLL 128
+#define NUM_START_SCROLL 32
 
 @implementation ColumnLayer
 {
@@ -18,14 +18,13 @@
     NSMutableArray *squareArray;
 }
 
-@synthesize _value, _columIndex, delegate, _targetBlock, y_pos;
+@synthesize _value, _columIndex, delegate, _targetBlock, y_pos, _scrollable;
 
 -(id)init
 {
     if(self = [super init]){
         _indexOfTarget = -1;
         _impacted = NO;
-        x_pos = 0;
         y_pos = 0;
         _scrollable = NO;
     }
@@ -54,8 +53,8 @@
 
 -(void)loadColumn:(float)blockSize
 {
-    int count = self.contentSize.height / blockSize +3;
-    _indexOfTarget =  1 + arc4random()%(count-6);
+    int count = self.contentSize.height / blockSize +1;
+    _indexOfTarget =  1 + arc4random()%(count-4);
     
     float y = 0;
     for (int i=0; i< count; i++)
@@ -83,8 +82,7 @@
             [valuesArray addObject:@(randomValue)];
         }
     }
-    DLog(@"Square Array: %@", squareArray);
-    DLog(@"Value Array: %@", valuesArray);
+    highest_y = ((Square*)[squareArray lastObject])._y;
 }
 
 -(void)updateAllSquaresWithUpperValue
@@ -93,9 +91,11 @@
     if(_value >= NUM_START_SCROLL){
         _scrollable = YES;
     }
+    
     for (Square *sq in squareArray) {
         [sq setNumberWithOldColor:sq._valueNumber*4];
     }
+    
 }
 
 -(void)activate{
@@ -130,11 +130,18 @@
     [self setPosition:ccp(pos_x, pos_y)];
     if(_scrollable){
         for (Square* sq in squareArray) {
-            [sq updatePosition:ccp(sq._x, sq._y-0.2)];
-            if (sq._y < -[sq height]) {
-                x_pos = sq.pos_x;
-                y_pos = ((Square*)[squareArray lastObject])._y + [sq height];
-                [sq updatePosition:ccp(x_pos, y_pos)];
+            if(sq != _targetBlock){
+                float y = sq._y-0.4;
+                if (y < -[sq height]) {
+                    y = highest_y ;
+                }
+                [sq updatePosition:ccp(sq._x, y)];
+            }else{
+                y_pos = sq._y-0.4;
+                if (y_pos < -[sq height]) {
+                    y_pos = highest_y;
+                }
+                [sq updatePosition:ccp(sq._x, y_pos)];
             }
         }
     }
@@ -144,6 +151,21 @@
 {
     [_targetBlock.sprite setVisible:NO];
 }
-
+-(void)resetWithValue:(long)number{
+    [_targetBlock.sprite setVisible:YES];
+    _value = number;
+    int count = self.contentSize.height / _targetBlock.sprite.contentSize.height +1;
+    for (int i=0; i< count; i++){
+        if(i == _indexOfTarget){
+            [_targetBlock setNumber:_value];
+        }else{
+            Square * sq   = [squareArray objectAtIndex:i];
+            int randomPow = 2 + arc4random() % count;
+            long randomValue = pow(2, randomPow);
+            [sq setNumber:randomValue];
+        }
+    }
+    _scrollable = NO;
+}
 @end
 
