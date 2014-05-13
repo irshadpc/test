@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
+
 @protocol MenuLayerDelegate;
 @interface MenuLayer : CCLayer {
     CCMenu *_menu;

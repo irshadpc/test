@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 #import "CocosDenshion.h"
+#import "GAI.h"
+#import <FacebookSDK/FacebookSDK.h>
+
 typedef enum {
     GAME_BEGIN,
     GAME_PAUSE,
@@ -20,6 +23,8 @@ typedef enum {
 #define FL_GAME_STATE_UPDATE @"fl_gamestate_update"
 #define NT_GAME_GOTO_BACKGROUND @"fl_game_goto_background"
 #define NT_GAME_RETURN_FOREGROUND @"fl_game_return_foreground"
+
+
 @interface Game : NSObject
 
 @property(assign, nonatomic) long currentValue;
@@ -29,6 +34,10 @@ typedef enum {
 @property(strong, nonatomic) NSMutableDictionary *valueColorMapsDictionary;
 @property (assign, nonatomic) GameState gameState;
 
+@property(assign, nonatomic) bool isFbLoggedIn;
+@property(strong, nonatomic) NSMutableDictionary *facebookUserDetail;
+@property(strong, nonatomic) id<GAITracker> tracker;
+
 +(Game*)sharedInstance;
 
 -(void)loadCurrentUserInfo;
@@ -37,4 +46,15 @@ typedef enum {
 -(void)unregisterGameNotification;
 -(UIColor*)getColorFor:(long)number;
 -(CCSprite*)loadSpriteFile:(NSString*)imageName;
+
+#pragma mark Facebook Implement;
+-(void)createFbSession;
+-(void)openFbSession:(void(^)(bool))callback;
+-(void)login:(void(^)(bool))callback;
+-(void)fetchUserDetail:(void(^)(bool))callback;
+
+#pragma mark tracker
+-(void)trackNewGame;
+-(void)trackPlayAgain;
+-(void)trackShareFacebook;
 @end

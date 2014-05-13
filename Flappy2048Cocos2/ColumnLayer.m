@@ -10,6 +10,8 @@
 #import "MainScene.h"
 #import "NSMutableArray+Shuffling.h"
 
+#define NUM_START_SCROLL 128
+
 @implementation ColumnLayer
 {
     NSMutableArray *valuesArray;
@@ -25,6 +27,7 @@
         _impacted = NO;
         x_pos = 0;
         y_pos = 0;
+        _scrollable = NO;
     }
     return self;
 }
@@ -51,8 +54,8 @@
 
 -(void)loadColumn:(float)blockSize
 {
-    int count = self.contentSize.height / blockSize;
-    _indexOfTarget =  1 + arc4random()%(count-3);
+    int count = self.contentSize.height / blockSize +3;
+    _indexOfTarget =  1 + arc4random()%(count-6);
     
     float y = 0;
     for (int i=0; i< count; i++)
@@ -86,6 +89,10 @@
 
 -(void)updateAllSquaresWithUpperValue
 {
+    _value*=4;
+    if(_value >= NUM_START_SCROLL){
+        _scrollable = YES;
+    }
     for (Square *sq in squareArray) {
         [sq setNumberWithOldColor:sq._valueNumber*4];
     }
@@ -117,11 +124,26 @@
         // reset value with the higher pow 2*2
         pos_x = _parentLayer.position.x + _parentLayer.contentSize.width + self.contentSize.width/2;
         [self updateAllSquaresWithUpperValue];
+        [_targetBlock.sprite setVisible:YES];
     }
     // update position
     [self setPosition:ccp(pos_x, pos_y)];
+    if(_scrollable){
+        for (Square* sq in squareArray) {
+            [sq updatePosition:ccp(sq._x, sq._y-0.2)];
+            if (sq._y < -[sq height]) {
+                x_pos = sq.pos_x;
+                y_pos = ((Square*)[squareArray lastObject])._y + [sq height];
+                [sq updatePosition:ccp(x_pos, y_pos)];
+            }
+        }
+    }
 }
 
+-(void)removeTargetBlock
+{
+    [_targetBlock.sprite setVisible:NO];
+}
 
 @end
 

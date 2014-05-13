@@ -40,7 +40,7 @@ static const float IMPULSE = 330.0f;
 
 -(void)updateNumber:(long)number
 {
-    _valueNumber*=2;
+    _valueNumber=number;
     [_valueLabel setFontSize:[self calculateFontSizeForString:[NSString stringWithFormat:@"%ld", _valueNumber] fontName:@"Helvetica"]];
     _valueLabel.string = [NSString stringWithFormat:@"%ld", _valueNumber];
 }
@@ -135,8 +135,8 @@ static const float IMPULSE = 330.0f;
 
 #pragma mark public methods
 -(void)putOn{
-    pos_x = viewSize.width/4;
-    pos_y = 2/3*viewSize.height;
+    pos_x = [CCDirector sharedDirector].winSize.width/4;
+    pos_y = (float)2.0/3*[CCDirector sharedDirector].winSize.height;
     [parentLayer addChild:sprite z:2];
 }
 -(void)updateFlappi
@@ -206,21 +206,18 @@ static const float IMPULSE = 330.0f;
             _affectByGravity = YES;
             _affectByTouch = YES;
             _prevStatus = FLAPPYNG;
-            DLog(@"Set Flappie FLAPPING");
             break;
         case STANDING:
             _isSliding = NO;
             _affectByTouch = NO;
             _affectByGravity = NO;
             _prevStatus = STANDING;
-            DLog(@"Set Flappie STANDING");
             break;
         case SLIDING:
             _affectByTouch = NO;
             _affectByGravity = NO;
             _preVel_y = vel_y;
             _isSliding = YES;
-            DLog(@"Set Flappie SLIDING");
             break;
         case DIE:
             vel_y = 0;
@@ -228,9 +225,12 @@ static const float IMPULSE = 330.0f;
             _prevStatus = DIE;
             _affectByGravity = YES;
             _affectByTouch = NO;
-            DLog(@"Set Flappie DIE");
             break;
     }
 }
-
+-(void)updatePosition:(CGPoint)pos{
+    pos_x = pos.x;
+    pos_y = pos.y;
+    [sprite setPosition:pos];
+}
 @end

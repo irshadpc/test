@@ -27,16 +27,16 @@
     self.anchorPoint = ccp(0.5, 0);
     _bg.anchorPoint = ccp(0.5, 0);
     _bg.position  = ccp(viewSize.width/2, 0);
-    [self addChild:_bg];
+    [self addChild:_bg z:0];
     _ground.anchorPoint = ccp(0.5, 0);
     _ground.position  = ccp(viewSize.width/2, 0);
-    [self addChild:_ground];
+    [_parentLayer addChild:_ground z:4];
     _groundLine.anchorPoint = ccp(0.5, 1.0);
     _groundLine.position  = ccp(viewSize.width/2, _ground.contentSize.height);
-    [self addChild:_groundLine];
+    [_parentLayer addChild:_groundLine z:4];
     _groundLineBuffer.anchorPoint = ccp(0.5, 1.0);
     _groundLineBuffer.position  = ccp(_groundLine.position.x + _groundLine.contentSize.width/2 + _groundLineBuffer.contentSize.width/2, _ground.contentSize.height);
-    [self addChild:_groundLineBuffer];
+    [_parentLayer addChild:_groundLineBuffer z:4];
     [self scheduleUpdate];
 }
 

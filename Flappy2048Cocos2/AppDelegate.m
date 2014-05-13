@@ -11,9 +11,35 @@
 #import "AppDelegate.h"
 #import "IntroLayer.h"
 #import "MainScene.h"
+#import <FacebookSDK/FacebookSDK.h>
+#import "GAI.h"
+#import "PlayHavenSDK.h"
+
+
+#define APP_HANDLED_URL @"www.facebook.com"
+#define PLAYHEAVEN_APPID @"25f7a087c6a74a6f8b7f5146b932fd3c"
+#define PLAYHEAVEN_APPSECRET @"00f30a49b7b54fd1ade53fb2e7b5b092"
+
+/** Google Analytics configuration constants **/
+static NSString *const kGaPropertyId = @"UA-50923349-1"; // Placeholder property ID.
+static NSString *const kTrackingPreferenceKey = @"allowTracking";
+
 
 @implementation MyNavigationController
-
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    // attempt to extract a token from the url
+    return [FBAppCall handleOpenURL:url
+                  sourceApplication:sourceApplication
+                    fallbackHandler:^(FBAppCall *call) {
+                        NSLog(@"In fallback handler");
+                        if (call.appLinkData && call.appLinkData.targetURL) {
+                            [[NSNotificationCenter defaultCenter] postNotificationName:APP_HANDLED_URL object:call.appLinkData.targetURL];
+                        }
+                    }];
+}
 // The available orientations should be defined in the Info.plist file.
 // And in iOS 6+ only, you can override it in the Root View controller in the "supportedInterfaceOrientations" method.
 // Only valid for iOS 6+. NOT VALID for iOS 4 / 5.
@@ -136,13 +162,32 @@
 	
 	// make main window visible
 	[window_ makeKeyAndVisible];
+    
+    [self setupGoogleAnalytics];
+    [[PHPublisherOpenRequest requestForApp:PLAYHEAVEN_APPID secret:PLAYHEAVEN_APPSECRET ] send];
 	
 	return YES;
+}
+
+-(void)setupGoogleAnalytics{
+    // Optional: automatically send uncaught exceptions to Google Analytics.
+    [GAI sharedInstance].trackUncaughtExceptions = YES;
+    
+    // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
+    [GAI sharedInstance].dispatchInterval = 20;
+    
+    // Optional: set Logger to VERBOSE for debug information.
+    [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelVerbose];
+
+    // Initialize tracker. Replace with your tracking ID.
+    [[GAI sharedInstance] trackerWithTrackingId:kGaPropertyId];
 }
 
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
+    [GAI sharedInstance].optOut =
+    ![[NSUserDefaults standardUserDefaults] boolForKey:kTrackingPreferenceKey];
 	if( [navController_ visibleViewController] == director_ )
 		[director_ pause];
 }
@@ -150,6 +195,13 @@
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
+    PHPublisherContentRequest *request = [PHPublisherContentRequest
+                                          requestForApp:PLAYHEAVEN_APPID
+                                          secret:PLAYHEAVEN_APPSECRET
+                                          placement:@"app_launch" delegate:nil];
+    [request send];
+    [FBAppEvents activateApp];
+    [FBAppCall handleDidBecomeActive];
 	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];	
 	if( [navController_ visibleViewController] == director_ )
 		[director_ resume];
@@ -163,6 +215,7 @@
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
 {
+    [[PHPublisherOpenRequest requestForApp:PLAYHEAVEN_APPID secret:PLAYHEAVEN_APPSECRET ] send];
 	if( [navController_ visibleViewController] == director_ )
 		[director_ startAnimation];
 }
@@ -170,6 +223,7 @@
 // application will be killed
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+    [FBSession.activeSession close];
 	CC_DIRECTOR_END();
 }
 

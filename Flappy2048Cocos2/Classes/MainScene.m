@@ -14,6 +14,10 @@
 #import "BackgroundLayer.h"
 #import "ColumnLayer.h"
 #import "GameOverLayer.h"
+#import "HUDLayer.h"
+#import "Game.h"
+#import "GAI.h"
+#import <AudioToolbox/AudioServices.h>
 
 @interface MainScene()<ColumnLayerDelegate, MenuLayerDelegate, GameOverMenuDelegate>
 
@@ -24,7 +28,7 @@
     MenuLayer *_starMenuLayer;
     BackgroundLayer *_backgroundLayer;
     GameOverLayer *_gameOverLayer;
-    CCLayer *_mainLayer;
+    HUDLayer *_hudLayer;
     //------------------------------
     NSMutableArray *_sprites;
     NSMutableArray *_allSquare;
@@ -39,6 +43,8 @@
     //------------------------------
     BOOL _impacted;
     BOOL _checkCol;
+    
+    CCLayerColor *colorLayer;
 }
 
 +(CCScene*)scene
@@ -59,7 +65,7 @@
         [[[CCDirector sharedDirector] touchDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
         _backgroundLayer = [[[BackgroundLayer alloc] initWithParentLayer:self] autorelease];
         _backgroundLayer.anchorPoint = ccp(0, 0);
-        [self addChild:_backgroundLayer];
+        [self addChild:_backgroundLayer z:0];
         [self initData];
         [self initFlappi];
         [self initCol];
@@ -83,11 +89,17 @@
 -(void)initData
 {
     [game setGameState:GAME_BEGIN];
+    [self initHudLayer];
     [self initGameMenuLayer];
     [self initGameOverMenuLayer];
     [self addChild:_starMenuLayer z:10];
 }
 
+-(void)initHudLayer{
+    _hudLayer = [[HUDLayer alloc] init];
+    _hudLayer.anchorPoint = ccp(0.5, 0.5);
+    _hudLayer.contentSize = viewSize;
+}
 -(void)initGameMenuLayer
 {
     _starMenuLayer = [[MenuLayer alloc] init];
@@ -102,15 +114,14 @@
     _gameOverLayer.anchorPoint = ccp(0.5, 0);
     _gameOverLayer.contentSize = CGSizeMake(viewSize.width, viewSize.height);
     _gameOverLayer.delegate = self;
+    colorLayer = [CCLayerColor layerWithColor:ccc4(255, 0, 0, 10) width:viewSize.width height:viewSize.height];
 }
 
 -(void)initFlappi{
     _sprites = [[NSMutableArray alloc] init];
     _flap = [[Flappie alloc] initWithGameLayer:self];
     [_flap updatePosition:ccp(self.contentSize.width/4, 3*self.contentSize.height/5)];
-    // add to screen
     [_flap putOn];
-    // add to array to handler in game logic
     [_sprites addObject:_flap];
 }
 
@@ -160,7 +171,6 @@
 
 -(void)impactDone
 {
-    DLog(@"impact done");
     _impacted = NO;
     _checkCol = !_checkCol;
     [_flap setFlappieStatus:FLAPPYNG];
@@ -174,17 +184,24 @@
     [_flap setFlappieStatus:FLAPPYNG];
     [_col activate];
     [_colBuffer activate];
+    [self addChild:_hudLayer z:10];
+    [game trackNewGame];
 }
 
 -(void)gameOverDidTouchPlayAgain
 {
     [_gameOverLayer removeAllChildrenWithCleanup:YES];
-    DLog(@"Play again");
+    [game trackPlayAgain];
 }
+
 
 -(void)gameOverDidTouchShareFacebook
 {
-    DLog(@"Share facebook");
+    [_gameOverLayer removeAllChildrenWithCleanup:YES];
+    [game login:^(bool successful) {
+        
+    }];
+    [game trackShareFacebook];
 }
 #pragma mark Game Timer Update
 -(void)update:(ccTime)delta
@@ -216,6 +233,7 @@
         if(abs(disX)<_flap.sprite.contentSize.width  && abs(disY)<_flap.sprite.contentSize.width && _impacted == NO)
         {
             _impacted = YES;
+            [_flap updateNumber:_col._value*2];
             [self impactWithPos:ccp(_flap.pos_x, _col.y_pos + _col.position.y + _flap.sprite.contentSize.height)];
             return;
         }
@@ -223,8 +241,9 @@
         {
             _impacted = NO;
             [self impactDone];
-            [_flap updateNumber:_col._value];
             return;
+        }else if(disX==0 && _impacted){
+            [_col removeTargetBlock];
         }
         if(abs(disX)<_flap.sprite.contentSize.width && _impacted==NO){
             [self overTheGame];
@@ -240,6 +259,7 @@
         if(abs(disX)<_flap.sprite.contentSize.width  && abs(disY)<_flap.sprite.contentSize.width && _impacted==NO)
         {
             _impacted = YES;
+            [_flap updateNumber:_colBuffer._value*2];
             [self impactWithPos:ccp(_flap.pos_x, _colBuffer.y_pos + _colBuffer.position.y + _flap.sprite.contentSize.height)];
             return;
         }
@@ -247,8 +267,10 @@
         {
             _impacted = NO;
             [self impactDone];
-            [_flap updateNumber:_colBuffer._value];
+            
             return;
+        }else if(disX==0 && _impacted){
+            [_colBuffer removeTargetBlock];
         }
         if(abs(disX)<_flap.sprite.contentSize.width && _impacted==NO){
             [self overTheGame];
@@ -264,11 +286,27 @@
     [_col deActivate];
     [_colBuffer deActivate];
     [_flap setFlappieStatus:DIE];
+    
+//    [self addChild:colorLayer z:20];
+//    [self performSelector:@selector(removeRedLayer) withObject:nil afterDelay:0.07];
+  
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    id rotateLeft = [CCRotateTo actionWithDuration:0.01 angle:5];
+    id rotateBackLeft = [CCRotateTo actionWithDuration:0.01 angle:-5];
+    id rotateRight = [CCRotateTo actionWithDuration:0.01 angle:-5];
+    id rotateBackRight = [CCRotateTo actionWithDuration:0.01 angle:5];
+    id rotaterollback = [CCRotateTo actionWithDuration:0.01 angle:0];
+    id se = [CCSequence actions:rotateLeft, rotateBackLeft, rotateRight, rotateBackRight,rotaterollback, nil];
+    [self runAction:[CCRepeat actionWithAction:se times:3]];
+    
     if(![self getChildByTag:99]){
         [self addChild:_gameOverLayer z:10 tag:99];
     }else{
-        DLog(@"");
     }
+}
+
+-(void)removeRedLayer{
+    [colorLayer removeFromParent];
 }
 
 #pragma mark touch handler

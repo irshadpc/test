@@ -14,4 +14,5 @@
 -(void)initData;
 -(CGPoint)distanceXYWithFlappi:(CGPoint)pos;
 -(CGPoint)posFlappi;
+-(void)removeRedLayer;
 @end

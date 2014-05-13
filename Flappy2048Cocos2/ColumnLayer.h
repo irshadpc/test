@@ -25,6 +25,8 @@
     Square *_targetBlock;
     float x_pos;
     float y_pos;
+    
+    BOOL _scrollable;
 }
 
 
@@ -38,6 +40,7 @@
 -(void)deActivate;
 -(void)updatePosition:(CGPoint)pos;
 -(void)layerDidTouched:(UITouch*)touch;
+-(void)removeTargetBlock;
 @end
 
 @protocol ColumnLayerDelegate<NSObject>

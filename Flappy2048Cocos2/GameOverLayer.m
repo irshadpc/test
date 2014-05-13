@@ -51,7 +51,11 @@
 }
 
 -(void)didTouchShareFacebook:(id)sender{
-    
+    if(delegate){
+        if([delegate respondsToSelector:@selector(gameOverDidTouchShareFacebook)]){
+            [delegate performSelector:@selector(gameOverDidTouchShareFacebook) withObject:nil];
+        }
+    }
 }
 -(void)didTouchPlayAgain:(id)sender
 {
