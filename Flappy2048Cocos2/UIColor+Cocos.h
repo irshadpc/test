@@ -16,4 +16,5 @@
 @property (readonly) ccColor4F c4f;
 
 -(void)setCCDrawColor;
++ (UIColor *) colorWithHexString: (NSString *) hexString;
 @end

@@ -27,6 +27,7 @@
         _impacted = NO;
         y_pos = 0;
         _scrollable = NO;
+        level = 0;
     }
     return self;
 }
@@ -55,7 +56,6 @@
 {
     int count = self.contentSize.height / blockSize +1;
     _indexOfTarget =  1 + arc4random()%(count-4);
-    
     float y = 0;
     for (int i=0; i< count; i++)
     {
@@ -83,19 +83,30 @@
         }
     }
     highest_y = ((Square*)[squareArray lastObject])._y;
+    lowest_y = ((Square*)[squareArray objectAtIndex:0])._y;
 }
 
 -(void)updateAllSquaresWithUpperValue
 {
-    _value*=4;
+    level ++;
+    _value *= 4;
     if(_value >= NUM_START_SCROLL){
         _scrollable = YES;
     }
-    
     for (Square *sq in squareArray) {
-        [sq setNumberWithOldColor:sq._valueNumber*4];
+        if(sq != _targetBlock)
+        {
+            [sq setNumberWithOldColor:sq._valueNumber*2];
+        }else
+        {
+            [_targetBlock setNumberWithOldColor:_targetBlock._valueNumber*4];
+        }
     }
     
+}
+
+-(UIColor*)getTargetBlockColor{
+    return [_targetBlock color];
 }
 
 -(void)activate{
@@ -115,35 +126,72 @@
     [self setPosition:ccp(pos_x, pos_y)];
 }
 
--(void)update:(ccTime)delta{
+-(void)update:(ccTime)delta
+{
     if(!activated) return;
-    // update pos_x, pos_y
     pos_x -= 2;
     if(pos_x < -(viewSize.width - 50))
     {
-        // reset value with the higher pow 2*2
         pos_x = _parentLayer.position.x + _parentLayer.contentSize.width + self.contentSize.width/2;
         [self updateAllSquaresWithUpperValue];
         [_targetBlock.sprite setVisible:YES];
     }
     // update position
     [self setPosition:ccp(pos_x, pos_y)];
-    if(_scrollable){
-        for (Square* sq in squareArray) {
-            if(sq != _targetBlock){
-                float y = sq._y-0.4;
-                if (y < -[sq height]) {
-                    y = highest_y ;
+    
+    if(_scrollable)
+    {
+        BOOL scrollUp = NO;
+        if(_targetBlock.pos_y < 3.0/4*viewSize.height){
+            scrollUp = YES;
+        }
+        if(scrollUp){
+            for (Square* sq in squareArray)
+            {
+                if(sq != _targetBlock){
+                    float y = sq._y-0.4;
+                    
+                    if (y < -[sq height])
+                    {
+                        y = highest_y ;
+                    }
+                    [sq updatePosition:ccp(sq._x, y)];
                 }
-                [sq updatePosition:ccp(sq._x, y)];
-            }else{
-                y_pos = sq._y-0.4;
-                if (y_pos < -[sq height]) {
-                    y_pos = highest_y;
+                else
+                {
+                    y_pos = sq._y-0.4;
+                    
+                    if (y_pos < -[sq height]) {
+                        y_pos = highest_y;
+                    }
+                    [sq updatePosition:ccp(sq._x, y_pos)];
                 }
-                [sq updatePosition:ccp(sq._x, y_pos)];
+            }
+        }else
+        {
+            for (Square* sq in squareArray)
+            {
+                if(sq != _targetBlock){
+                    float y = sq._y+0.4;
+                    
+                    if (y > highest_y + [sq height])
+                    {
+                        y = lowest_y ;
+                    }
+                    [sq updatePosition:ccp(sq._x, y)];
+                }
+                else
+                {
+                    y_pos = sq._y+0.4;
+                    
+                    if (y_pos > highest_y+[sq height]) {
+                        y_pos = lowest_y;
+                    }
+                    [sq updatePosition:ccp(sq._x, y_pos)];
+                }
             }
         }
+        
     }
 }
 
@@ -162,7 +210,7 @@
             Square * sq   = [squareArray objectAtIndex:i];
             int randomPow = 2 + arc4random() % count;
             long randomValue = pow(2, randomPow);
-            [sq setNumber:randomValue];
+            [sq setNumber:sq._valueNumber*4];
         }
     }
     _scrollable = NO;

@@ -26,25 +26,7 @@ static NSString *const kTrackingPreferenceKey = @"allowTracking";
 
 
 @implementation MyNavigationController
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation {
-    // attempt to extract a token from the url
-    return [FBAppCall handleOpenURL:url
-                  sourceApplication:sourceApplication
-                    fallbackHandler:^(FBAppCall *call) {
-                        if (call.appLinkData && call.appLinkData.targetURL) {
-                            // Invoke pending callback.
-                            DLog(@"%@",call);
-                        }
-                    }];
-}
 
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
-{
-    return [FBSession.activeSession handleOpenURL:url];
-}
 // The available orientations should be defined in the Info.plist file.
 // And in iOS 6+ only, you can override it in the Root View controller in the "supportedInterfaceOrientations" method.
 // Only valid for iOS 6+. NOT VALID for iOS 4 / 5.
@@ -88,7 +70,49 @@ static NSString *const kTrackingPreferenceKey = @"allowTracking";
 @implementation AppController
 
 @synthesize window=window_, navController=navController_, director=director_;
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    
+    BOOL urlWasHandled =
+    [FBAppCall handleOpenURL:url
+           sourceApplication:sourceApplication
+             fallbackHandler:
+     ^(FBAppCall *call) {
+         // Parse the incoming URL to look for a target_url parameter
+         NSString *query = [url query];
+         NSDictionary *params = [self parseURLParams:query];
+         // Check if target URL exists
+         NSString *appLinkDataString = [params valueForKey:@"al_applink_data"];
+         if (appLinkDataString) {
+             NSError *error = nil;
+             NSDictionary *applinkData =
+             [NSJSONSerialization JSONObjectWithData:[appLinkDataString dataUsingEncoding:NSUTF8StringEncoding]
+                                             options:0
+                                               error:&error];
+             if (!error &&
+                 [applinkData isKindOfClass:[NSDictionary class]] &&
+                 applinkData[@"target_url"]) {
+                 NSString *targetURLString = applinkData[@"target_url"];
+                 // Show the incoming link in an alert
+                 // Your code to direct the user to the
+                 // appropriate flow within your app goes here
+                 [[[UIAlertView alloc] initWithTitle:@"Received link:"
+                                             message:targetURLString
+                                            delegate:nil
+                                   cancelButtonTitle:@"OK"
+                                   otherButtonTitles:nil] show];
+             }
+         }
+     }];
+    return urlWasHandled;
+}
 
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    return [FBSession.activeSession handleOpenURL:url];
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Create the main window
@@ -169,8 +193,10 @@ static NSString *const kTrackingPreferenceKey = @"allowTracking";
 	[window_ makeKeyAndVisible];
     
     [self setupGoogleAnalytics];
+#ifndef DEBUG
     [[PHPublisherOpenRequest requestForApp:PLAYHEAVEN_APPID secret:PLAYHEAVEN_APPSECRET ] send];
-	
+#endif
+    
 	return YES;
 }
 
@@ -200,11 +226,13 @@ static NSString *const kTrackingPreferenceKey = @"allowTracking";
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
+#ifndef DEBUG
     PHPublisherContentRequest *request = [PHPublisherContentRequest
                                           requestForApp:PLAYHEAVEN_APPID
                                           secret:PLAYHEAVEN_APPSECRET
-                                          placement:@"app_launch" delegate:nil];
+                         placement:@"app_launch" delegate:nil];
     [request send];
+#endif
     [FBAppEvents activateApp];
     [FBAppCall handleDidBecomeActive];
 	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];	
@@ -220,7 +248,9 @@ static NSString *const kTrackingPreferenceKey = @"allowTracking";
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
 {
+#ifndef DEBUG
     [[PHPublisherOpenRequest requestForApp:PLAYHEAVEN_APPID secret:PLAYHEAVEN_APPSECRET ] send];
+#endif
 	if( [navController_ visibleViewController] == director_ )
 		[director_ startAnimation];
 }

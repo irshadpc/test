@@ -11,14 +11,17 @@
 #import "UIColor+RTTFromHex.h"
 #import "UIColor+Cocos.h"
 
+//var text_colors = ['606060', '606060', '606060', 'ffffff'];
+//var tile_colors = ['eeeeee', 'eae8e4', 'ede0c8', 'f2b179', 'f59563', 'f67c5f', 'f65e3b', 'edcf72', 'edcc61', 'edc850', 'edc53f', 'edc53f', '3c3a32'];
+//var tile_colors_2 = ['4c4c4c', '5c5c5c', '4c5c6c', '4c4c7c', '3c3c6c', '2c2c5c', '2c3c4c', '2c4c3c', '2c5c2c', '3c3a32'];// 'c050c0', '9050ff', '5090ff', '60b060', '40b0b0', 'b0b040', '3c3a32'];
+
 @implementation Square
 {
     CCSprite *_frame;
     CCSprite *_content;
     CCLabelTTF *_valueLabel;
-    UIColor* c;
 }
-@synthesize _x, _y, _valueNumber;
+@synthesize _x, _y, _valueNumber, _tileColor, _tileColor2, _textColor, c;
 
 -(id)initWithGameLayer:(CCLayer *)aLayer
 {
@@ -32,35 +35,12 @@
         [sprite addChild:_content];
         [sprite addChild:_frame];
         sprite.contentSize = _frame.contentSize;
-//        bgColorDic = @{
-//                       @1 : @0xeee4da,
-//                       @2 : @0xeee4da,
-//                       @4 : @0xede0c8,
-//                       @8 : @0xf2b179,
-//                       @16 : @0xf59563,
-//                       @32 : @0xf67c5f,
-//                       @64 : @0xf65e3b,
-//                       @128 : @0xedcf72,
-//                       @256 : @0xedcc61,
-//                       @512 : @0xedc850,
-//                       @1024 : @0xedc53f,
-//                       @2048 : @0xedc22e
-//                       };
-//        
-//        fgColorDic = @{
-//                       @1 : @0x776e65,
-//                       @2 : @0x776e65,
-//                       @4 : @0x776e65,
-//                       @8 : @0xf9f6f2,
-//                       @16 : @0xf9f6f2,
-//                       @32 : @0xf9f6f2,
-//                       @64 : @0xf9f6f2,
-//                       @128 : @0xf9f6f2,
-//                       @256 : @0xf9f6f2,
-//                       @512 : @0xf9f6f2,
-//                       @1024 : @0xf9f6f2,
-//                       @2048 : @0xf9f6f2
-//                       };
+        _tileColor = [CCArray new];
+        [_tileColor addObjectsFromNSArray:@[@"eeeeee",@"eae8e4",@"ede0c8",@"f2b179",@"f59563",@"f67c5f",@"f65e3b",@"edcf72",@"edcc61",@"edc850",@"edc53f",@"edc53f",@"3c3a32"]];
+        _tileColor2 = [CCArray new];
+        [_tileColor2 addObjectsFromNSArray:@[@"4c4c4c",@"5c5c5c",@"4c5c6c",@"4c4c7c",@"3c3c6c",@"2c2c5c",@"2c3c4c",@"2c4c3c",@"2c5c2c",@"3c3a32",@"c050c0",@"9050ff",@"5090ff",@"60b060",@"40b0b0",@"b0b040",@"3c3a32"]];
+        _textColor = [CCArray new];
+        [_textColor addObjectsFromNSArray:@[@"606060",@"606060",@"606060",@"ffffff"]];
     }
     return self;
 }
@@ -75,7 +55,7 @@
                                        dimensions:sprite.contentSize
                                        hAlignment:kCCTextAlignmentCenter lineBreakMode:kCCLineBreakModeClip];
         _valueLabel.verticalAlignment = kCCVerticalTextAlignmentCenter;
-        _valueLabel.color = ccc3(0, 0, 0);
+        _valueLabel.color = ccc3(255, 255, 255);
         _valueLabel.anchorPoint = ccp(0.5, 0);
         [_valueLabel setContentSize:sprite.contentSize];
         [sprite addChild:_valueLabel];
@@ -83,19 +63,33 @@
     int fontsize = [self calculateFontSizeForString:[NSString stringWithFormat:@"%ld", _valueNumber] fontName:@"Helvetica"];
     _valueLabel.fontSize = fontsize;
     [_valueLabel setString:[NSString stringWithFormat:@"%ld", _valueNumber]];
-    if(!c){
-        NSUInteger objColor;
-        if(number > 1024)
-        {
-            objColor = [[game colorMap][@(1024)] unsignedIntegerValue];
 
-        }else{
-            objColor = [[game colorMap][@(number)] unsignedIntegerValue];
-        }
-        c = [UIColor fromHex:objColor];
-        [_content setColor:[c c3b]];
+    [self setColor];
+}
+
+-(void)setColor
+{
+    int log = log2(_valueNumber);
+    int tci = log ;
+    NSString *colorString;
+    if(tci < 0) tci = 0;
+    if(tci > _tileColor.count)
+    {
+        tci -= _tileColor.count;
+        tci %= _tileColor2.count;
+        colorString = [_tileColor2 objectAtIndex:tci];
+    }
+    else
+    {
+        colorString = [_tileColor objectAtIndex:tci];
     }
     
+    c = [[UIColor colorWithHexString:[NSString stringWithFormat:@"#%@",colorString]] copy];
+    _content.color = [c c3b];
+}
+
+-(UIColor*)color{
+    return c;
 }
 
 -(void)setNumberWithOldColor:(long)number
@@ -115,6 +109,8 @@
     int fontsize = [self calculateFontSizeForString:[NSString stringWithFormat:@"%ld", _valueNumber] fontName:@"Helvetica"];
     _valueLabel.fontSize = fontsize;
     [_valueLabel setString:[NSString stringWithFormat:@"%ld", _valueNumber]];
+    
+    [self setColor];
     
 }
 

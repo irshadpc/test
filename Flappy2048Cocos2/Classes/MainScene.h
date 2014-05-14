@@ -15,4 +15,5 @@
 -(CGPoint)distanceXYWithFlappi:(CGPoint)pos;
 -(CGPoint)posFlappi;
 -(void)removeRedLayer;
+-(void)overTheGame;
 @end

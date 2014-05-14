@@ -176,8 +176,6 @@
 		F7202703191CC62B008A1EFB /* MenuLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F7202702191CC62B008A1EFB /* MenuLayer.m */; };
 		F7202706191CCBC3008A1EFB /* GameObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F7202705191CCBC3008A1EFB /* GameObject.m */; };
 		F7202709191CD8B8008A1EFB /* BackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F7202708191CD8B8008A1EFB /* BackgroundLayer.m */; };
-		F769DDC11921C36C00C52815 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F769DDC01921C36C00C52815 /* FacebookSDK.framework */; };
-		F769DE5C1921EC6B00C52815 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F769DDC31921EC6A00C52815 /* FacebookSDK.framework */; };
 		F769DEA91921EC6B00C52815 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F769DE451921EC6A00C52815 /* libGoogleAnalyticsServices.a */; };
 		F769DEAB1921EC6B00C52815 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F769DE5A1921EC6B00C52815 /* libGoogleAdMobAds.a */; };
 		F769DEB41921ECA200C52815 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F769DEB31921ECA200C52815 /* AdSupport.framework */; };
@@ -231,6 +229,9 @@
 		F769DF4119221B6800C52815 /* sfx_swooshing.caf in Resources */ = {isa = PBXBuildFile; fileRef = F769DF3C19221B6700C52815 /* sfx_swooshing.caf */; };
 		F769DF4219221B6800C52815 /* sfx_wing.caf in Resources */ = {isa = PBXBuildFile; fileRef = F769DF3D19221B6700C52815 /* sfx_wing.caf */; };
 		F769DF441922231D00C52815 /* share.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F769DF431922231D00C52815 /* share.jpg */; };
+		F769DF4D192308DC00C52815 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F769DF4C192308DC00C52815 /* FacebookSDK.framework */; };
+		F769DF4F1923091400C52815 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F769DF4E1923091400C52815 /* libsqlite3.dylib */; };
+		F769DF511923091900C52815 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F769DF501923091900C52815 /* Social.framework */; };
 		F7A1AE1A191CE95A0039439A /* ColumnLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A1AE19191CE95A0039439A /* ColumnLayer.m */; };
 		F7A1AE1E191DD5400039439A /* NSMutableArray+Shuffling.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A1AE1D191DD5400039439A /* NSMutableArray+Shuffling.m */; };
 /* End PBXBuildFile section */
@@ -563,7 +564,6 @@
 		F7202707191CD8B8008A1EFB /* BackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundLayer.h; sourceTree = "<group>"; };
 		F7202708191CD8B8008A1EFB /* BackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundLayer.m; sourceTree = "<group>"; };
 		F769DDC01921C36C00C52815 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = Flappy2048Cocos2/FacebookSDK.framework; sourceTree = "<group>"; };
-		F769DDC31921EC6A00C52815 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		F769DDC71921EC6A00C52815 /* DFPBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPBannerView.h; sourceTree = "<group>"; };
 		F769DDC81921EC6A00C52815 /* DFPExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPExtras.h; sourceTree = "<group>"; };
 		F769DDC91921EC6A00C52815 /* DFPInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPInterstitial.h; sourceTree = "<group>"; };
@@ -693,6 +693,9 @@
 		F769DF3C19221B6700C52815 /* sfx_swooshing.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfx_swooshing.caf; sourceTree = "<group>"; };
 		F769DF3D19221B6700C52815 /* sfx_wing.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfx_wing.caf; sourceTree = "<group>"; };
 		F769DF431922231D00C52815 /* share.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = share.jpg; sourceTree = "<group>"; };
+		F769DF4C192308DC00C52815 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		F769DF4E1923091400C52815 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		F769DF501923091900C52815 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		F7A1AE18191CE95A0039439A /* ColumnLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColumnLayer.h; sourceTree = "<group>"; };
 		F7A1AE19191CE95A0039439A /* ColumnLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColumnLayer.m; sourceTree = "<group>"; };
 		F7A1AE1C191DD5400039439A /* NSMutableArray+Shuffling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Shuffling.h"; sourceTree = "<group>"; };
@@ -704,20 +707,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F769DF511923091900C52815 /* Social.framework in Frameworks */,
+				F769DF4F1923091400C52815 /* libsqlite3.dylib in Frameworks */,
 				F769DF2F1921F19D00C52815 /* CFNetwork.framework in Frameworks */,
+				F769DF4D192308DC00C52815 /* FacebookSDK.framework in Frameworks */,
 				F769DF2D1921F18E00C52815 /* MessageUI.framework in Frameworks */,
 				F769DEBC1921F04E00C52815 /* StoreKit.framework in Frameworks */,
 				F769DEBA1921ECBC00C52815 /* libz.1.1.3.dylib in Frameworks */,
 				F769DEB81921ECB000C52815 /* CoreData.framework in Frameworks */,
 				F769DEB61921ECA900C52815 /* SystemConfiguration.framework in Frameworks */,
 				F769DEB41921ECA200C52815 /* AdSupport.framework in Frameworks */,
-				F769DDC11921C36C00C52815 /* FacebookSDK.framework in Frameworks */,
 				F720250A191C900A008A1EFB /* OpenAL.framework in Frameworks */,
 				F7202510191C900A008A1EFB /* UIKit.framework in Frameworks */,
 				F769DEA91921EC6B00C52815 /* libGoogleAnalyticsServices.a in Frameworks */,
 				F7202506191C900A008A1EFB /* QuartzCore.framework in Frameworks */,
 				F720250E191C900A008A1EFB /* AVFoundation.framework in Frameworks */,
-				F769DE5C1921EC6B00C52815 /* FacebookSDK.framework in Frameworks */,
 				F7202514191C900A008A1EFB /* CoreGraphics.framework in Frameworks */,
 				F7202516191C900A008A1EFB /* CoreText.framework in Frameworks */,
 				F7202508191C900A008A1EFB /* OpenGLES.framework in Frameworks */,
@@ -751,6 +755,8 @@
 		F7202504191C900A008A1EFB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F769DF501923091900C52815 /* Social.framework */,
+				F769DF4E1923091400C52815 /* libsqlite3.dylib */,
 				F769DF2E1921F19D00C52815 /* CFNetwork.framework */,
 				F769DF2C1921F18E00C52815 /* MessageUI.framework */,
 				F769DEBB1921F04E00C52815 /* StoreKit.framework */,
@@ -1270,8 +1276,8 @@
 		F769DDC21921C64400C52815 /* 3rd */ = {
 			isa = PBXGroup;
 			children = (
+				F769DF4C192308DC00C52815 /* FacebookSDK.framework */,
 				F769DEBE1921F0DF00C52815 /* PlayHeavenSDK */,
-				F769DDC31921EC6A00C52815 /* FacebookSDK.framework */,
 				F769DDC41921EC6A00C52815 /* GoogleAdMobAdsSdkiOS-6.5.1 */,
 			);
 			name = 3rd;
@@ -1824,8 +1830,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nguyen Nam (6VL4QAWH9K)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nguyen Nam (6VL4QAWH9K)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1858,8 +1864,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nguyen Nam (6VL4QAWH9K)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nguyen Nam (6VL4QAWH9K)";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

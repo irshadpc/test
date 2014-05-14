@@ -34,6 +34,9 @@
 }
 -(void)increseScore{
     [self setScore:_score+1];
+    if(game.highestScore < _score){
+        [game updateHightScore:_score];
+    }
 }
 -(void)setScore:(int)score{
     _score = score;

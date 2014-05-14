@@ -82,6 +82,7 @@
 
 -(void)didImpactGround:(NSNotification*)noti
 {
+    [self overTheGame];
 }
 
 //==========================================================================================//
@@ -171,6 +172,7 @@
     _flap.sprite.rotation = 0;
     [_flap.sprite stopAllActions];
     [_flap.sprite runAction:[CCRepeat actionWithAction:acitonSequene times:1]];
+    
     [[SimpleAudioEngine sharedEngine] playEffect:@"sfx_pass.mp3"];
 }
 
@@ -184,9 +186,34 @@
     _impacted = NO;
     _checkCol = !_checkCol;
     [_flap setFlappieStatus:FLAPPYNG];
-    
 }
 
+-(void)overTheGame
+{
+    [game setGameState:GAME_OVER];
+    [[SimpleAudioEngine sharedEngine] playEffect:@"sfx_hit.caf"];
+    [[SimpleAudioEngine sharedEngine] playEffect:@"sfx_die.caf"];
+    [_col deActivate];
+    [_colBuffer deActivate];
+    [_flap setFlappieStatus:DIE];
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    id rotateLeft = [CCRotateTo actionWithDuration:0.01 angle:5];
+    id rotateBackLeft = [CCRotateTo actionWithDuration:0.01 angle:-5];
+    id rotateRight = [CCRotateTo actionWithDuration:0.01 angle:-5];
+    id rotateBackRight = [CCRotateTo actionWithDuration:0.01 angle:5];
+    id rotaterollback = [CCRotateTo actionWithDuration:0.01 angle:0];
+    id se = [CCSequence actions:rotateLeft, rotateBackLeft, rotateRight, rotateBackRight,rotaterollback, nil];
+    [self runAction:[CCRepeat actionWithAction:se times:3]];
+    
+    if(![self getChildByTag:99]){
+        [self addChild:_gameOverLayer z:10 tag:99];
+    }else{
+    }
+}
+
+-(void)removeRedLayer{
+    [colorLayer removeFromParent];
+}
 #pragma mark MenuDelegate
 -(void)gameMenuDidTouchStart
 {
@@ -203,7 +230,7 @@
 {
     [game setGameState:GAME_RUNNING];
     [game trackPlayAgain];
-    [_gameOverLayer removeFromParent];
+    [_gameOverLayer removeFromParentAndCleanup:NO];
 
     [_flap updatePosition:ccp(self.contentSize.width/4, 3*self.contentSize.height/5)];
     [_flap setFlappieStatus:FLAPPYNG];
@@ -228,11 +255,8 @@
 -(void)gameOverDidTouchShareFacebook
 {
 //    [_gameOverLayer removeFromParent];
-//    [game shareFb];
     [game trackShareFacebook];
-    [game login:^(bool success) {
-        
-    }];
+    [game shareFb];
     
 }
 #pragma mark Game Timer Update
@@ -265,6 +289,7 @@
         if(abs(disX)<_flap.sprite.contentSize.width  && abs(disY)<_flap.sprite.contentSize.width && _impacted == NO)
         {
             _impacted = YES;
+            [_flap setColor:[_col getTargetBlockColor]];
             [_flap updateNumber:_col._value*2];
             [self impactWithPos:ccp(_flap.pos_x, _col.y_pos + _col.position.y + _flap.sprite.contentSize.height)];
             return;
@@ -294,6 +319,7 @@
         if(abs(disX)<_flap.sprite.contentSize.width  && abs(disY)<_flap.sprite.contentSize.width && _impacted==NO)
         {
             _impacted = YES;
+            [_flap setColor:[_colBuffer getTargetBlockColor]];
             [_flap updateNumber:_colBuffer._value*2];
             [self impactWithPos:ccp(_flap.pos_x, _colBuffer.y_pos + _colBuffer.position.y + _flap.sprite.contentSize.height)];
             return;
@@ -318,32 +344,6 @@
     
 }
 
--(void)overTheGame
-{
-    [game setGameState:GAME_OVER];
-    [[SimpleAudioEngine sharedEngine] playEffect:@"sfx_hit.caf"];
-    [[SimpleAudioEngine sharedEngine] playEffect:@"sfx_die.caf"];
-    [_col deActivate];
-    [_colBuffer deActivate];
-    [_flap setFlappieStatus:DIE];
-    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-    id rotateLeft = [CCRotateTo actionWithDuration:0.01 angle:5];
-    id rotateBackLeft = [CCRotateTo actionWithDuration:0.01 angle:-5];
-    id rotateRight = [CCRotateTo actionWithDuration:0.01 angle:-5];
-    id rotateBackRight = [CCRotateTo actionWithDuration:0.01 angle:5];
-    id rotaterollback = [CCRotateTo actionWithDuration:0.01 angle:0];
-    id se = [CCSequence actions:rotateLeft, rotateBackLeft, rotateRight, rotateBackRight,rotaterollback, nil];
-    [self runAction:[CCRepeat actionWithAction:se times:3]];
-    
-    if(![self getChildByTag:99]){
-        [self addChild:_gameOverLayer z:10 tag:99];
-    }else{
-    }
-}
-
--(void)removeRedLayer{
-    [colorLayer removeFromParent];
-}
 
 #pragma mark touch handler
 -(BOOL)ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event

@@ -10,7 +10,6 @@
 #import "cocos2d.h"
 #import "CocosDenshion.h"
 #import "GAI.h"
-#import <FacebookSDK/FacebookSDK.h>
 
 typedef enum {
     GAME_BEGIN,
@@ -40,6 +39,7 @@ typedef enum {
 
 +(Game*)sharedInstance;
 
+-(void)updateHightScore:(long)newHigheScore;
 -(void)loadCurrentUserInfo;
 -(void)updateNewUserInfo;
 -(void)registeGameNotification;

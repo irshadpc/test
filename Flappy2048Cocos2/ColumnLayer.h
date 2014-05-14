@@ -26,6 +26,8 @@
     float y_pos;
     BOOL _scrollable;
     float highest_y;
+    float lowest_y;
+    int level;
 }
 
 
@@ -42,6 +44,7 @@
 -(void)layerDidTouched:(UITouch*)touch;
 -(void)removeTargetBlock;
 -(void)resetWithValue:(long)number;
+-(UIColor*)getTargetBlockColor;
 @end
 
 @protocol ColumnLayerDelegate<NSObject>

@@ -8,6 +8,7 @@
 
 #import "Game.h"
 #import "GAIDictionaryBuilder.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 #define KEY_HIGHT_SCORE @"fl_hight_score"
 #define kGAIScreenName @"Scene Name"
@@ -50,6 +51,12 @@ static Game *instance = nil;
         
         return instance;
     }
+}
+
+-(void)updateHightScore:(long)newHigheScore;
+{
+    highestScore = newHigheScore;
+    [[NSUserDefaults standardUserDefaults] setInteger:highestScore forKey:KEY_HIGHT_SCORE];
 }
 -(void)loadCurrentUserInfo
 {
@@ -134,39 +141,141 @@ static Game *instance = nil;
             }];
 }
 
+#define  APP_LINK @"https://developers.facebook.com/docs/ios/share/"
+//
+//-(void)login:(void (^)(bool))callback
+//{
+//    DLog(@"Start");
+//    // Whenever a person opens the app, check for a cached session
+//    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
+//        // If there's one, just open the session silently, without showing the user the login UI
+//        [FBSession openActiveSessionWithReadPermissions:@[@"public_profile"]
+//                                           allowLoginUI:NO
+//                                      completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
+//                                          // Handler for session state changes
+//                                          // This method will be called EACH time the session state changes,
+//                                          // also for intermediate states and NOT just when the session open
+//                                          [self sessionStateChanged:session state:state error:error];
+//                                      }];
+//    }
+//    else if (FBSession.activeSession.state != FBSessionStateOpen){
+//        [FBSession openActiveSessionWithReadPermissions:@[@"public_profile", @"email"]
+//                                           allowLoginUI:YES
+//                                      completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
+//                                          // Handler for session state changes
+//                                          // This method will be called EACH time the session state changes,
+//                                          // also for intermediate states and NOT just when the session open
+//                                          [self sessionStateChanged:session state:state error:error];
+//                                      }];
+//    }
+//    else{
+//        DLog(@"%@", FBSession.activeSession);
+//        [self shareFb:^(bool successful) {
+//            
+//        }];
+//    }
+//}
+//
+//// This method will handle ALL the session state changes in the app
+//- (void)sessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error
+//{
+//    DLog(@"Start");
+//    // If the session was opened successfully
+//    if (!error && state == FBSessionStateOpen){
+//        NSLog(@"Session opened");
+//        // Show the user the logged-in UI
+//        //[self userLoggedIn];
+//        [self shareFb:^(bool successful) {
+//            
+//        }];
+//        return;
+//    }
+//    if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed){
+//        // If the session is closed
+//        NSLog(@"Session closed");
+//        [FBSession.activeSession closeAndClearTokenInformation];
+//
+//    }
+//    
+//    // Handle errors
+//    if (error){
+//        NSLog(@"Error");
+//        NSString *alertText;
+//        NSString *alertTitle;
+//        // If the error requires people using an app to make an action outside of the app in order to recover
+//        if ([FBErrorUtility shouldNotifyUserForError:error] == YES){
+//            alertTitle = @"Something went wrong";
+//            alertText = [FBErrorUtility userMessageForError:error];
+//            //            [self showMessage:alertText withTitle:alertTitle];
+//        } else {
+//            
+//            // If the user cancelled login, do nothing
+//            if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled) {
+//                NSLog(@"User cancelled login");
+//                
+//                // Handle session closures that happen outside of the app
+//            } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryAuthenticationReopenSession){
+//                alertTitle = @"Session Error";
+//                alertText = @"Your current session is no longer valid. Please log in again.";
+//                //                [self showMessage:alertText withTitle:alertTitle];
+//                
+//                // Here we will handle all other errors with a generic error message.
+//                // We recommend you check our Handling Errors guide for more information
+//                // https://developers.facebook.com/docs/ios/errors/
+//            } else {
+//                //Get more error information from the error
+//                NSDictionary *errorInformation = [[[error.userInfo objectForKey:@"com.facebook.sdk:ParsedJSONResponseKey"] objectForKey:@"body"] objectForKey:@"error"];
+//                
+//                // Show the user an error message
+//                alertTitle = @"Something went wrong";
+//                alertText = [NSString stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@", [errorInformation objectForKey:@"message"]];
+//                //                [self showMessage:alertText withTitle:alertTitle];
+//            }
+//        }
+//        // Clear this token
+//        [FBSession.activeSession closeAndClearTokenInformation];
+//        // Show the user the logged-out UI
+//        //        [self userLoggedOut];
+//    }
+//}
 
--(void)login:(void (^)(bool))callback{
-    // Check if the Facebook app is installed and we can present the share dialog
-    FBLinkShareParams *params = [[FBLinkShareParams alloc] init];
-    params.link = [NSURL URLWithString:@"https://itunes.apple.com/au/app/impossible-flappy-flappys/id845040429?mt=8"];
-    params.picture = [NSURL URLWithString:@"https://fbcdn-photos-f-a.akamaihd.net/hphotos-ak-prn2/t39.2081-0/10333116_886921368000612_183850266_n.jpg"];
-    params.caption =@"Build great social apps and get more installs.";
-    params.linkDescription =@"Allow your users to share stories on Facebook from your app using the iOS SDK.";
-    params.name =@"Flappy 2048";
-    // If the Facebook app is installed and we can present the share dialog
-    if ([FBDialogs canPresentShareDialogWithParams:params]) {
-        // Present share dialog
-        [FBDialogs presentShareDialogWithParams:params clientState:nil
-                                        handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
-            if(error) {
-                // An error occurred, we need to handle the error
-                // See: https://developers.facebook.com/docs/ios/errors
-                DLog(@"Error publishing story: %@", error.description);
-            } else {
-                // Success
-                DLog(@"result %@", results);
-            }
-         }];
+-(void)shareFb:(void (^)(bool))callback{
+    FBShareDialogParams *params = [[FBShareDialogParams alloc] init];
+    params.link = [NSURL URLWithString:APP_LINK];
+    BOOL canShare = [FBDialogs canPresentShareDialogWithParams:params];
+    if (canShare) {
+        NSArray* images = @[
+                            @{@"url": [UIImage imageNamed:@"share.jpg"], @"user_generated" : @"true" }
+                            ];
+        id<FBGraphObject> mealObject =
+        [FBGraphObject openGraphObjectForPostWithType:@"cooking-app:meal"
+                                                title:@"Lamb Vindaloo"
+                                                image:images
+                                                  url:@"https://example.com/cooking-app/meal/Lamb-Vindaloo.html"
+                                          description:@"Spicy curry of lamb and potatoes"];
         
-        // If the Facebook app is NOT installed and we can't present the share dialog
-    } else {
+        id<FBOpenGraphAction> cookAction = (id<FBOpenGraphAction>)[FBGraphObject graphObject];
+        [cookAction setObject:mealObject forKey:@"meal"];
+        [FBDialogs presentShareDialogWithOpenGraphAction:cookAction
+                                              actionType:@"cooking-app:cook"
+                                     previewPropertyName:@"meal"
+                                                 handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
+                                                     if(error) {
+                                                         DLog(@"Error: %@", error.description);
+                                                     } else {
+                                                         DLog(@"Success!");
+                                                     }
+                                                 }];
+    }
+    else{
         // FALLBACK: publish just a link using the Feed dialog
+        // Show the feed dialog
         // Put together the dialog parameters
         NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                       @"Flappy 2048", @"name",
+                                       @"Sharing Tutorial", @"name",
                                        @"Build great social apps and get more installs.", @"caption",
                                        @"Allow your users to share stories on Facebook from your app using the iOS SDK.", @"description",
-//                                       @"https://itunes.apple.com/au/app/impossible-flappy-flappys/id845040429?mt=8", @"link",
+                                       APP_LINK, @"link",
                                        @"https://fbcdn-photos-f-a.akamaihd.net/hphotos-ak-prn2/t39.2081-0/10333116_886921368000612_183850266_n.jpg", @"picture",
                                        nil];
         
@@ -180,14 +289,14 @@ static Game *instance = nil;
                                                           DLog(@"Error publishing story: %@", error.description);
                                                       } else {
                                                           if (result == FBWebDialogResultDialogNotCompleted) {
-                                                              // User canceled.
+                                                              // User cancelled.
                                                               DLog(@"User cancelled.");
                                                           } else {
                                                               // Handle the publish feed callback
                                                               NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
                                                               
                                                               if (![urlParams valueForKey:@"post_id"]) {
-                                                                  // User canceled.
+                                                                  // User cancelled.
                                                                   DLog(@"User cancelled.");
                                                                   
                                                               } else {
@@ -201,56 +310,82 @@ static Game *instance = nil;
     }
 }
 
--(void)fetchUserDetail:(void (^)(bool))callback
-{
-    // Start the facebook request
-    [[FBRequest requestForMe] startWithCompletionHandler:
-     ^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *result, NSError *error)
-     {
-         // Did everything come back okay with no errors?
-         if (!error && result) {
-             DLog(@"%@",result);
-             // If so we can extract out the player's Facebook ID and first name
-             NSString* firsName     = [[NSString alloc] initWithString:result.first_name];
-             NSString* lastName     = [[NSString alloc] initWithString:result.last_name];
-             NSString* middleName   = [[NSString alloc] initWithString:result.middle_name];
-             long userFbId          =  [result.objectID longLongValue];
-             [self.facebookUserDetail setObject:firsName forKey:@"firstname"];
-             [self.facebookUserDetail setObject:lastName forKey:@"lastname"];
-             [self.facebookUserDetail setObject:middleName forKey:@"middlename"];
-             [self.facebookUserDetail setObject:result.objectID forKey:@"fbId"];
-             callback(true);
-         }
-         else {
-             DLog(@"Error: %@",[FBErrorUtility userMessageForError:error]);
-             callback(false);
-         }
-     }];
-}
+//-(void)fetchUserDetail:(void (^)(bool))callback
+//{
+//    // Start the facebook request
+//    [[FBRequest requestForMe] startWithCompletionHandler:
+//     ^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *result, NSError *error)
+//     {
+//         // Did everything come back okay with no errors?
+//         if (!error && result) {
+//             DLog(@"%@",result);
+//             // If so we can extract out the player's Facebook ID and first name
+//             NSString* firsName     = [[NSString alloc] initWithString:result.first_name];
+//             NSString* lastName     = [[NSString alloc] initWithString:result.last_name];
+//             NSString* middleName   = [[NSString alloc] initWithString:result.middle_name];
+//             long userFbId          =  [result.objectID longLongValue];
+//             [self.facebookUserDetail setObject:firsName forKey:@"firstname"];
+//             [self.facebookUserDetail setObject:lastName forKey:@"lastname"];
+//             [self.facebookUserDetail setObject:middleName forKey:@"middlename"];
+//             [self.facebookUserDetail setObject:result.objectID forKey:@"fbId"];
+//             callback(true);
+//         }
+//         else {
+//             DLog(@"Error: %@",[FBErrorUtility userMessageForError:error]);
+//             callback(false);
+//         }
+//     }];
+//}
 
 -(void)shareFb{
-    NSArray* images = @[
-                        @{@"url": [UIImage imageNamed:@"share.jpg"], @"user_generated" : @"true" }
-                        ];
-    id<FBGraphObject> mealObject =
-    [FBGraphObject openGraphObjectForPostWithType:@"cooking-app:meal"
-                                            title:@"Lamb Vindaloo"
-                                            image:images
-                                              url:@"https://example.com/cooking-app/meal/Lamb-Vindaloo.html"
-                                      description:@"Spicy curry of lamb and potatoes"];
-    
-    id<FBOpenGraphAction> cookAction = (id<FBOpenGraphAction>)[FBGraphObject graphObject];
-    [cookAction setObject:mealObject forKey:@"meal"];
-    [FBDialogs presentShareDialogWithOpenGraphAction:cookAction
-                                          actionType:@"cooking-app:cook"
-                                 previewPropertyName:@"meal"
-                                             handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
-                                                 if(error) {
-                                                     NSLog(@"Error: %@", error.description);
-                                                 } else {
-                                                     NSLog(@"Success!");
-                                                 }
-                                             }];
+    NSURL *url = [NSURL URLWithString:@"https://itunes.apple.com/au/app/impossible-flappy-flappys/id845040429?mt=8"];
+    NSURL *picUrl = [NSURL URLWithString:@"https://fbcdn-photos-d-a.akamaihd.net/hphotos-ak-prn2/t39.2081-0/p128x128/10333115_886778698014879_689012476_n.png"];
+//    [FBDialogs presentShareDialogWithLink:url
+//                                  handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
+//                                      if(error) {
+//                                          NSLog(@"Error: %@", error.description);
+//                                      } else {
+//                                          NSLog(@"Success!");
+//                                      }
+//                                  }];
+//    [FBDialogs presentShareDialogWithLink:nil name:@"Flappy 2048" caption:@"Flappy 2048 Caption" description:@"Flappy 2048 Description" picture:picUrl clientState:nil handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
+//        if(error) {
+//            DLog(@"Error: %@", error.description);
+//        } else {
+//            DLog(@"Success!");
+//        }
+//
+//    }];
+    FBShareDialogParams *params = [[FBShareDialogParams alloc] init];
+    params.link = url;
+    params.picture = picUrl;
+    params.name = [NSString  stringWithFormat:@"I scored %ld in Flappy 2048! Can you beat that?",highestScore];
+
+    [FBDialogs presentShareDialogWithParams:params clientState:nil handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
+        
+    }];
+//    NSArray* images = @[
+//                        @{@"url": [UIImage imageNamed:@"share.jpg"], @"user_generated" : @"true" }
+//                        ];
+//    id<FBGraphObject> mealObject =
+//    [FBGraphObject openGraphObjectForPostWithType:@"cooking-app:meal"
+//                                            title:@"Lamb Vindaloo"
+//                                            image:images
+//                                              url:@"https://example.com/cooking-app/meal/Lamb-Vindaloo.html"
+//                                      description:@"Spicy curry of lamb and potatoes"];
+//    
+//    id<FBOpenGraphAction> cookAction = (id<FBOpenGraphAction>)[FBGraphObject graphObject];
+//    [cookAction setObject:mealObject forKey:@"meal"];
+//    [FBDialogs presentShareDialogWithOpenGraphAction:cookAction
+//                                          actionType:@"cooking-app:cook"
+//                                 previewPropertyName:@"meal"
+//                                             handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
+//                                                 if(error) {
+//                                                     NSLog(@"Error: %@", error.description);
+//                                                 } else {
+//                                                     NSLog(@"Success!");
+//                                                 }
+//                                             }];
 }
 - (NSDictionary*)parseURLParams:(NSString *)query {
     NSArray *pairs = [query componentsSeparatedByString:@"&"];

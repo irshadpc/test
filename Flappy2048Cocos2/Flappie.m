@@ -8,6 +8,7 @@
 
 #import "Flappie.h"
 #import "SimpleAudioEngine.h"
+#import "UIColor+Cocos.h"
 
 static const float GRAVITY = -1080.0f;
 static const float IMPULSE = 330.0f;
@@ -168,7 +169,7 @@ static const float IMPULSE = 330.0f;
                                    hAlignment:kCCTextAlignmentCenter
                                    vAlignment:kCCTextAlignmentCenter
                                 lineBreakMode:kCCLabelAutomaticWidth];
-    _valueLabel.color = ccc3(0, 0, 0);
+    _valueLabel.color = ccc3(255, 255, 255);
     sprite = [CCSprite node];
     [sprite addChild:_blockContent];
     [sprite addChild:_valueLabel];
@@ -182,6 +183,11 @@ static const float IMPULSE = 330.0f;
     sprite.anchorPoint = ccp(0, 0.5);
     sprite.contentSize = _blockContent.contentSize;
     [self initAction];
+}
+
+-(void)setColor:(UIColor*)color{
+    _blockContent.color = [color c3b];
+    _wingContent.color = [color c3b];
 }
 
 -(void)initAction

@@ -60,4 +60,5 @@ typedef enum {
 -(void)flap:(float)height;
 -(void)setFlappieStatus:(FlappieStatus)status;
 -(void)updateNumber:(long)number;
+-(void)setColor:(UIColor*)color;
 @end
