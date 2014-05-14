@@ -141,11 +141,7 @@
     
     if(_scrollable)
     {
-        BOOL scrollUp = NO;
-        if(_targetBlock.pos_y < 3.0/4*viewSize.height){
-            scrollUp = YES;
-        }
-        if(scrollUp){
+
             for (Square* sq in squareArray)
             {
                 if(sq != _targetBlock){
@@ -167,31 +163,6 @@
                     [sq updatePosition:ccp(sq._x, y_pos)];
                 }
             }
-        }else
-        {
-            for (Square* sq in squareArray)
-            {
-                if(sq != _targetBlock){
-                    float y = sq._y+0.4;
-                    
-                    if (y > highest_y + [sq height])
-                    {
-                        y = lowest_y ;
-                    }
-                    [sq updatePosition:ccp(sq._x, y)];
-                }
-                else
-                {
-                    y_pos = sq._y+0.4;
-                    
-                    if (y_pos > highest_y+[sq height]) {
-                        y_pos = lowest_y;
-                    }
-                    [sq updatePosition:ccp(sq._x, y_pos)];
-                }
-            }
-        }
-        
     }
 }
 

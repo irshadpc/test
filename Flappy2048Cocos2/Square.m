@@ -73,14 +73,16 @@
     int tci = log ;
     NSString *colorString;
     if(tci < 0) tci = 0;
-    if(tci > _tileColor.count)
+    if(tci >= _tileColor.count)
     {
         tci -= _tileColor.count;
         tci %= _tileColor2.count;
+        DLog(@"Color2 index : %d", tci);
         colorString = [_tileColor2 objectAtIndex:tci];
     }
     else
     {
+        DLog(@"Color index : %d", tci);
         colorString = [_tileColor objectAtIndex:tci];
     }
     
@@ -90,17 +92,19 @@
 
 -(UIColor*)color{
     int log = log2(_valueNumber);
-    int tci = log + 1 ;
+    int tci = log + 1;
     NSString *colorString;
     if(tci < 0) tci = 0;
-    if(tci > _tileColor.count)
+    if(tci >= _tileColor.count)
     {
         tci -= _tileColor.count;
         tci %= _tileColor2.count;
+        DLog(@"Color2 index : %d", tci);
         colorString = [_tileColor2 objectAtIndex:tci];
     }
     else
     {
+        DLog(@"Color index : %d", tci);
         colorString = [_tileColor objectAtIndex:tci];
     }
     
