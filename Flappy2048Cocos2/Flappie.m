@@ -169,7 +169,7 @@ static const float IMPULSE = 330.0f;
                                    hAlignment:kCCTextAlignmentCenter
                                    vAlignment:kCCTextAlignmentCenter
                                 lineBreakMode:kCCLabelAutomaticWidth];
-    _valueLabel.color = ccc3(255, 255, 255);
+    _valueLabel.color = [[UIColor colorWithHexString:@"#606060"] c3b];
     sprite = [CCSprite node];
     [sprite addChild:_blockContent];
     [sprite addChild:_valueLabel];

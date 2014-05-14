@@ -55,7 +55,7 @@
                                        dimensions:sprite.contentSize
                                        hAlignment:kCCTextAlignmentCenter lineBreakMode:kCCLineBreakModeClip];
         _valueLabel.verticalAlignment = kCCVerticalTextAlignmentCenter;
-        _valueLabel.color = ccc3(255, 255, 255);
+        _valueLabel.color = [[UIColor colorWithHexString:@"#606060"] c3b];
         _valueLabel.anchorPoint = ccp(0.5, 0);
         [_valueLabel setContentSize:sprite.contentSize];
         [sprite addChild:_valueLabel];
@@ -89,7 +89,22 @@
 }
 
 -(UIColor*)color{
-    return c;
+    int log = log2(_valueNumber);
+    int tci = log + 1 ;
+    NSString *colorString;
+    if(tci < 0) tci = 0;
+    if(tci > _tileColor.count)
+    {
+        tci -= _tileColor.count;
+        tci %= _tileColor2.count;
+        colorString = [_tileColor2 objectAtIndex:tci];
+    }
+    else
+    {
+        colorString = [_tileColor objectAtIndex:tci];
+    }
+    
+    return [[UIColor colorWithHexString:[NSString stringWithFormat:@"#%@",colorString]] copy];
 }
 
 -(void)setNumberWithOldColor:(long)number
