@@ -232,6 +232,11 @@
 		F769DF4D192308DC00C52815 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F769DF4C192308DC00C52815 /* FacebookSDK.framework */; };
 		F769DF4F1923091400C52815 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F769DF4E1923091400C52815 /* libsqlite3.dylib */; };
 		F769DF511923091900C52815 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F769DF501923091900C52815 /* Social.framework */; };
+		F780908C192466DE004E9878 /* BrookeS8.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F7809087192466DE004E9878 /* BrookeS8.ttf */; };
+		F780908D192466DE004E9878 /* KBbubblegum.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F7809088192466DE004E9878 /* KBbubblegum.ttf */; };
+		F780908E192466DE004E9878 /* KBREINDEERGAMES.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F7809089192466DE004E9878 /* KBREINDEERGAMES.ttf */; };
+		F780908F192466DE004E9878 /* KGNexttoMeSketched.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F780908A192466DE004E9878 /* KGNexttoMeSketched.ttf */; };
+		F7809090192466DE004E9878 /* KGNexttoMeSolid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F780908B192466DE004E9878 /* KGNexttoMeSolid.ttf */; };
 		F7A1AE1A191CE95A0039439A /* ColumnLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A1AE19191CE95A0039439A /* ColumnLayer.m */; };
 		F7A1AE1E191DD5400039439A /* NSMutableArray+Shuffling.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A1AE1D191DD5400039439A /* NSMutableArray+Shuffling.m */; };
 /* End PBXBuildFile section */
@@ -696,6 +701,11 @@
 		F769DF4C192308DC00C52815 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		F769DF4E1923091400C52815 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		F769DF501923091900C52815 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		F7809087192466DE004E9878 /* BrookeS8.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BrookeS8.ttf; sourceTree = "<group>"; };
+		F7809088192466DE004E9878 /* KBbubblegum.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = KBbubblegum.ttf; sourceTree = "<group>"; };
+		F7809089192466DE004E9878 /* KBREINDEERGAMES.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = KBREINDEERGAMES.ttf; sourceTree = "<group>"; };
+		F780908A192466DE004E9878 /* KGNexttoMeSketched.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = KGNexttoMeSketched.ttf; sourceTree = "<group>"; };
+		F780908B192466DE004E9878 /* KGNexttoMeSolid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = KGNexttoMeSolid.ttf; sourceTree = "<group>"; };
 		F7A1AE18191CE95A0039439A /* ColumnLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColumnLayer.h; sourceTree = "<group>"; };
 		F7A1AE19191CE95A0039439A /* ColumnLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColumnLayer.m; sourceTree = "<group>"; };
 		F7A1AE1C191DD5400039439A /* NSMutableArray+Shuffling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Shuffling.h"; sourceTree = "<group>"; };
@@ -796,6 +806,7 @@
 		F720251A191C900A008A1EFB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F7809086192466DE004E9878 /* font */,
 				F769DF33192219D500C52815 /* sfx_flap.mp3 */,
 				F769DF3919221B6700C52815 /* sfx_die.caf */,
 				F769DF3A19221B6700C52815 /* sfx_hit.caf */,
@@ -1496,6 +1507,19 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		F7809086192466DE004E9878 /* font */ = {
+			isa = PBXGroup;
+			children = (
+				F7809087192466DE004E9878 /* BrookeS8.ttf */,
+				F7809088192466DE004E9878 /* KBbubblegum.ttf */,
+				F7809089192466DE004E9878 /* KBREINDEERGAMES.ttf */,
+				F780908A192466DE004E9878 /* KGNexttoMeSketched.ttf */,
+				F780908B192466DE004E9878 /* KGNexttoMeSolid.ttf */,
+			);
+			name = font;
+			path = Resources/font;
+			sourceTree = "<group>";
+		};
 		F7A1AE1B191DD5270039439A /* Util */ = {
 			isa = PBXGroup;
 			children = (
@@ -1581,6 +1605,7 @@
 				F72026FE191CBA07008A1EFB /* flappy2048.plist in Resources */,
 				F72026E4191C92D4008A1EFB /* sound-off-hd.png in Resources */,
 				F7202528191C900A008A1EFB /* Icon-Small.png in Resources */,
+				F7809090192466DE004E9878 /* KGNexttoMeSolid.ttf in Resources */,
 				F7202524191C900A008A1EFB /* Icon-72.png in Resources */,
 				F72026EA191C92D4008A1EFB /* tap-right-hd.png in Resources */,
 				F769DF4119221B6800C52815 /* sfx_swooshing.caf in Resources */,
@@ -1608,11 +1633,15 @@
 				F72026DF191C92D4008A1EFB /* ground-line-hd.png in Resources */,
 				F7202520191C900A008A1EFB /* Default-568h@2x.png in Resources */,
 				F72026E0191C92D4008A1EFB /* ground-line-ipad.png in Resources */,
+				F780908F192466DE004E9878 /* KGNexttoMeSketched.ttf in Resources */,
 				F72026DC191C92D4008A1EFB /* block-frame-ipad.png in Resources */,
 				F72026E3191C92D4008A1EFB /* sound-icon-png.png in Resources */,
 				F72026D8191C92D4008A1EFB /* bg-ipad.png in Resources */,
+				F780908E192466DE004E9878 /* KBREINDEERGAMES.ttf in Resources */,
 				F720252E191C900A008A1EFB /* Icon@2x.png in Resources */,
+				F780908C192466DE004E9878 /* BrookeS8.ttf in Resources */,
 				F769DF38192219D500C52815 /* sfx_pass.mp3 in Resources */,
+				F780908D192466DE004E9878 /* KBbubblegum.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

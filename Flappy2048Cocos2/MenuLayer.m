@@ -20,7 +20,7 @@
         _logo.scale = 0.9;
         [self addChild:_logo];
         
-        CCLabelTTF *_lb = [CCLabelTTF labelWithString:@"Click to start" fontName:@"Helvetica" fontSize:40 dimensions:CGSizeMake(viewSize.width, 50) hAlignment:kCCTextAlignmentCenter lineBreakMode:kCCLineBreakModeWordWrap];
+        CCLabelTTF *_lb = [CCLabelTTF labelWithString:@"Click to start" fontName:FONT fontSize:[self calculateFontSizeForString:@"Click to start" fontName:FONT] dimensions:CGSizeMake(self.contentSize.width, 50) hAlignment:kCCTextAlignmentCenter lineBreakMode:kCCLineBreakModeWordWrap];
         _lb.color = ccc3(0, 0, 0);
         _clickToStartMenuItem = [CCMenuItemLabel itemWithLabel:_lb target:self selector:@selector(didTouchStart:)];
         _menu = [CCMenu menuWithItems:_clickToStartMenuItem, nil];
@@ -37,7 +37,17 @@
     }
     return self;
 }
-
+- (int) calculateFontSizeForString:(NSString*)string fontName:(NSString*)usedFontName
+{
+    int fontSize = 40; // it seems to be the biggest font we can use
+    while (--fontSize > 0) {
+        CGSize size = [string sizeWithFont:[UIFont fontWithName:usedFontName size:fontSize]];
+        if (size.width <= self.contentSize.width-10 && size.height <= self.contentSize.height -10)
+            break;
+    }
+    
+    return fontSize;
+}
 -(void)didTouchStart:(id)sender
 {
     if(_delegate)

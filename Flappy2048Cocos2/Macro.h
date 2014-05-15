@@ -20,4 +20,6 @@
 #define game [Game sharedInstance]
 #define viewSize  [CCDirector sharedDirector].winSize
 
+#define FONT @"Helvetica-Bold"
+
 #endif

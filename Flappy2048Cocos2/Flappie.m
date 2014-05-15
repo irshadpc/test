@@ -10,8 +10,8 @@
 #import "SimpleAudioEngine.h"
 #import "UIColor+Cocos.h"
 
-static const float GRAVITY = -1080.0f;
-static const float IMPULSE = 330.0f;
+static const float GRAVITY = -780.0f;
+static const float IMPULSE = 230.0f;
 @implementation Flappie
 
 @synthesize _angle;
@@ -44,15 +44,22 @@ static const float IMPULSE = 330.0f;
 -(void)updateNumber:(long)number
 {
     _valueNumber=number;
-    [_valueLabel setFontSize:[self calculateFontSizeForString:[NSString stringWithFormat:@"%ld", _valueNumber] fontName:@"Helvetica"]];
+    [_valueLabel setFontSize:[self calculateFontSizeForString:[NSString stringWithFormat:@"%ld", _valueNumber] fontName:FONT]];
     _valueLabel.string = [NSString stringWithFormat:@"%ld", _valueNumber];
+    
+    if(number < 8){
+        _valueLabel.color = [[UIColor colorWithHexString:@"#606060"] c3b];
+    }
+    else{
+        _valueLabel.color = [[UIColor colorWithHexString:@"#ffffff"] c3b];
+    }
 }
 - (int) calculateFontSizeForString:(NSString*)string fontName:(NSString*)usedFontName
 {
     int fontSize = 40; // it seems to be the biggest font we can use
     while (--fontSize > 0) {
         CGSize size = [string sizeWithFont:[UIFont fontWithName:usedFontName size:fontSize]];
-        if (size.width <= sprite.contentSize.width-10 && size.height <= sprite.contentSize.height -10)
+        if (size.width <= _blockContent.contentSize.width - 10 && size.height <= _blockContent.contentSize.height - 10)
             break;
     }
     
@@ -79,14 +86,14 @@ static const float IMPULSE = 330.0f;
                 if(vel_y >0){
                     if(_angle+(vel_y * delta)< 60)
                     {
-                        _angle += (vel_y * delta)*1.5 ;
+                        _angle += vel_y * delta * 2;
                     }
                 }
                 if(vel_y <0)
                 {
-                    if(_angle+(vel_y * delta)>- 120)
+                    if(_angle+(vel_y * delta)> -90)
                     {
-                        _angle += (vel_y * delta);
+                        _angle += vel_y * delta;
                     }
                 }
                 [sprite setRotation:-_angle/2 ];
@@ -163,13 +170,12 @@ static const float IMPULSE = 330.0f;
     _blockFrame = [CCSprite spriteWithSpriteFrameName:@"block-frame"];
     _blockContent = [CCSprite spriteWithSpriteFrameName:@"block-content"];
     _valueLabel = [CCLabelTTF labelWithString:@"1"
-                                     fontName:@"Helvetica"
-                                     fontSize:40
+                                     fontName:FONT
+                                     fontSize:[self calculateFontSizeForString:@"1" fontName:FONT]
                                    dimensions:_blockContent.contentSize
-                                   hAlignment:kCCTextAlignmentCenter
-                                   vAlignment:kCCTextAlignmentCenter
-                                lineBreakMode:kCCLabelAutomaticWidth];
+                                   hAlignment:kCCTextAlignmentCenter];
     _valueLabel.color = [[UIColor colorWithHexString:@"#606060"] c3b];
+    _valueLabel.verticalAlignment = kCCVerticalTextAlignmentCenter;
     sprite = [CCSprite node];
     [sprite addChild:_blockContent];
     [sprite addChild:_valueLabel];

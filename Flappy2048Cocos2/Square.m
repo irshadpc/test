@@ -51,7 +51,7 @@
     _valueNumber = number;
     if(!_valueLabel)
     {
-        _valueLabel = [CCLabelTTF labelWithString:@"Hi" fontName:@"Helvetica" fontSize:40
+        _valueLabel = [CCLabelTTF labelWithString:@"1" fontName:FONT fontSize:40
                                        dimensions:sprite.contentSize
                                        hAlignment:kCCTextAlignmentCenter lineBreakMode:kCCLineBreakModeClip];
         _valueLabel.verticalAlignment = kCCVerticalTextAlignmentCenter;
@@ -60,7 +60,7 @@
         [_valueLabel setContentSize:sprite.contentSize];
         [sprite addChild:_valueLabel];
     }
-    int fontsize = [self calculateFontSizeForString:[NSString stringWithFormat:@"%ld", _valueNumber] fontName:@"Helvetica"];
+    int fontsize = [self calculateFontSizeForString:[NSString stringWithFormat:@"%ld", _valueNumber] fontName:FONT];
     _valueLabel.fontSize = fontsize;
     [_valueLabel setString:[NSString stringWithFormat:@"%ld", _valueNumber]];
 
@@ -77,15 +77,18 @@
     {
         tci -= _tileColor.count;
         tci %= _tileColor2.count;
-        DLog(@"Color2 index : %d", tci);
         colorString = [_tileColor2 objectAtIndex:tci];
+        _valueLabel.color = [[UIColor colorWithHexString:@"#ffffff"] c3b];
     }
     else
     {
-        DLog(@"Color index : %d", tci);
         colorString = [_tileColor objectAtIndex:tci];
+        if(tci < 3)
+            _valueLabel.color = [[UIColor colorWithHexString:@"#606060"] c3b];
+        else
+            _valueLabel.color = [[UIColor colorWithHexString:@"#ffffff"] c3b];
     }
-    
+
     c = [[UIColor colorWithHexString:[NSString stringWithFormat:@"#%@",colorString]] copy];
     _content.color = [c c3b];
 }
@@ -99,12 +102,10 @@
     {
         tci -= _tileColor.count;
         tci %= _tileColor2.count;
-        DLog(@"Color2 index : %d", tci);
         colorString = [_tileColor2 objectAtIndex:tci];
     }
     else
     {
-        DLog(@"Color index : %d", tci);
         colorString = [_tileColor objectAtIndex:tci];
     }
     
@@ -116,9 +117,11 @@
     _valueNumber = number;
     if(!_valueLabel)
     {
-        _valueLabel = [CCLabelTTF labelWithString:@"Hi" fontName:@"Helvetica" fontSize:40
+        _valueLabel = [CCLabelTTF labelWithString:@"a"
+                                         fontName:FONT
+                                         fontSize:[self calculateFontSizeForString:@"1" fontName:FONT]
                                        dimensions:sprite.contentSize
-                                       hAlignment:kCCTextAlignmentCenter lineBreakMode:kCCLineBreakModeClip];
+                                       hAlignment:kCCTextAlignmentCenter];
         _valueLabel.verticalAlignment = kCCVerticalTextAlignmentCenter;
         _valueLabel.color = ccc3(0, 0, 0);
         _valueLabel.anchorPoint = ccp(0.5, 0);
@@ -128,7 +131,6 @@
     int fontsize = [self calculateFontSizeForString:[NSString stringWithFormat:@"%ld", _valueNumber] fontName:@"Helvetica"];
     _valueLabel.fontSize = fontsize;
     [_valueLabel setString:[NSString stringWithFormat:@"%ld", _valueNumber]];
-    
     [self setColor];
     
 }

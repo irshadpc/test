@@ -18,7 +18,7 @@
 #import "Game.h"
 #import "GAI.h"
 #import "SimpleAudioEngine.h"
-
+#import "UIColor+Cocos.h"
 
 @interface MainScene()<ColumnLayerDelegate, MenuLayerDelegate, GameOverMenuDelegate>
 
@@ -130,6 +130,7 @@
     _sprites = [[NSMutableArray alloc] init];
     _flap = [[Flappie alloc] initWithGameLayer:self];
     [_flap updatePosition:ccp(self.contentSize.width/4, 3*self.contentSize.height/5)];
+    [_flap setColor:[UIColor colorWithHexString:@"#eeeeee"]];
     [_flap putOn];
     [_sprites addObject:_flap];
 }
@@ -220,6 +221,7 @@
     [game setGameState:GAME_RUNNING];
     [_starMenuLayer removeFromParentAndCleanup:YES];
     [_flap setFlappieStatus:FLAPPYNG];
+    _flap.vel_y = 000;
     [_col activate];
     [_colBuffer activate];
     [self addChild:_hudLayer z:10];
@@ -235,7 +237,8 @@
     [_flap updatePosition:ccp(self.contentSize.width/4, 3*self.contentSize.height/5)];
     [_flap setFlappieStatus:FLAPPYNG];
     [_flap updateNumber:1];
-    _flap.vel_y = 400;
+    [_flap setColor:[UIColor colorWithHexString:@"#eeeeee"]];
+    _flap.vel_y = 000;
     
     CCSprite* groundTemp = [CCSprite spriteWithFile:@"ground.png"];
     Square* sqtemp = [[Square alloc] initWithGameLayer:self];
@@ -302,7 +305,7 @@
         }else if(disX==0 && _impacted){
             [_col removeTargetBlock];
         }
-        if (_impacted && _col._scrollable){
+        if (_impacted && _col._scrollEnable){
             [_flap updatePosition:ccp(_flap.pos_x, _col.y_pos + _col.position.y + _flap.sprite.contentSize.height)];
         }
         if(abs(disX)<_flap.sprite.contentSize.width && _impacted==NO){
@@ -333,7 +336,7 @@
         }else if(disX==0 && _impacted){
             [_colBuffer removeTargetBlock];
         }
-        if (_impacted && _colBuffer._scrollable){
+        if (_impacted && _colBuffer._scrollEnable){
             [_flap updatePosition:ccp(_flap.pos_x, _colBuffer.y_pos + _colBuffer.position.y + _flap.sprite.contentSize.height)];
         }
         if(abs(disX)<_flap.sprite.contentSize.width && _impacted==NO){

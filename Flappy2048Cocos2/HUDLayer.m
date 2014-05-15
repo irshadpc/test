@@ -15,7 +15,7 @@
     if(self = [super init]){
         _hightScore = [game highestScore];
         [self setContentSize:viewSize];
-        _scoreLabel = [CCLabelTTF labelWithString:@"0" fontName:@"Helvetica" fontSize:40];
+        _scoreLabel = [CCLabelTTF labelWithString:@"0" fontName:FONT fontSize:40];
         _scoreLabel.position = ccp(viewSize.width/2, viewSize.height - 50);
         _scoreLabel.color = ccc3(0, 0, 0);
         [self addChild:_scoreLabel];

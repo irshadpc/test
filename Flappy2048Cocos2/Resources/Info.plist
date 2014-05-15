@@ -50,6 +50,11 @@
 	<string>Flappy 2048</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>KGNexttoMeSolid.ttf</string>
+		<string>KBbubblegum.ttf</string>
+	</array>
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>

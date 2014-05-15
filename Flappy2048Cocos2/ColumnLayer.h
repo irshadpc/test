@@ -10,8 +10,15 @@
 #import "cocos2d.h"
 #import "Square.h"
 
+typedef enum {
+    SCROLL_NONE,
+    SCROOL_UP,
+    SCROLL_DOWN,
+}
+ScrollDirection;
 
 @protocol ColumnLayerDelegate;
+
 @interface ColumnLayer : CCLayer {
     long _value;
     CCLayer *_parentLayer;
@@ -24,10 +31,11 @@
     id<ColumnLayerDelegate> delegate;
     Square *_targetBlock;
     float y_pos;
-    BOOL _scrollable;
+    BOOL _scrollEnable;
     float highest_y;
     float lowest_y;
     int level;
+    ScrollDirection _scrollStatus;
 }
 
 
@@ -36,7 +44,7 @@
 @property (assign, nonatomic) id<ColumnLayerDelegate> delegate;
 @property (strong, nonatomic) Square *_targetBlock;
 @property (assign, nonatomic) float y_pos;
-@property (assign, nonatomic)BOOL _scrollable;
+@property (assign, nonatomic) BOOL _scrollEnable;
 -(id)initBlocksWitnValue:(NSInteger)value parentLayer:(CCLayer*)aLayer;
 -(void)activate;
 -(void)deActivate;
