@@ -20,7 +20,7 @@ ScrollDirection;
 @protocol ColumnLayerDelegate;
 
 @interface ColumnLayer : CCLayer {
-    long _value;
+    unsigned long _value;
     CCLayer *_parentLayer;
     float pos_x;
     float pos_y;
@@ -39,7 +39,7 @@ ScrollDirection;
 }
 
 
-@property (assign, nonatomic) long _value;
+@property (assign, nonatomic) unsigned long _value;
 @property (assign, nonatomic) int _columIndex;
 @property (assign, nonatomic) id<ColumnLayerDelegate> delegate;
 @property (strong, nonatomic) Square *_targetBlock;
@@ -51,12 +51,10 @@ ScrollDirection;
 -(void)updatePosition:(CGPoint)pos;
 -(void)layerDidTouched:(UITouch*)touch;
 -(void)removeTargetBlock;
--(void)resetWithValue:(long)number;
+-(void)resetWithValue:(unsigned long)number;
 -(UIColor*)getTargetBlockColor;
 @end
 
 @protocol ColumnLayerDelegate<NSObject>
-//@required
--(void)columnDidImpactFlappie:(NSNumber*)pos_y;
 -(void)columnFlappieDidOut;
 @end

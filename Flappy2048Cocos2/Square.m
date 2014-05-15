@@ -46,7 +46,7 @@
 }
 
 #pragma mark public methods
--(void)setNumber:(long)number
+-(void)setNumber:(unsigned long)number
 {
     _valueNumber = number;
     if(!_valueLabel)
@@ -112,7 +112,7 @@
     return [[UIColor colorWithHexString:[NSString stringWithFormat:@"#%@",colorString]] copy];
 }
 
--(void)setNumberWithOldColor:(long)number
+-(void)setNumberWithOldColor:(unsigned long)number
 {
     _valueNumber = number;
     if(!_valueLabel)

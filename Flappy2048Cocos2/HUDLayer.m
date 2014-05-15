@@ -19,10 +19,6 @@
         _scoreLabel.position = ccp(viewSize.width/2, viewSize.height - 50);
         _scoreLabel.color = ccc3(0, 0, 0);
         [self addChild:_scoreLabel];
-//        _hightScoreLabel = [CCLabelTTF labelWithString:@"Best Score" fontName:@"Helvetica" fontSize:30];
-//        _hightScoreLabel.color = ccc3(0, 0, 0);
-//        _hightScoreLabel.position = ccp(3*viewSize.width/4, viewSize.height - 100);
-//        [self addChild:_hightScoreLabel];
 
     }
     return self;
@@ -34,8 +30,9 @@
 }
 -(void)increseScore{
     [self setScore:_score+1];
-    if(game.highestScore < _score){
-        [game updateHightScore:_score];
+    if(_score > _hightScore){
+        _hightScore = _score;
+        [game updateHightScore:_hightScore];
     }
 }
 -(void)setScore:(int)score{
@@ -46,6 +43,11 @@
     id action = [CCRepeat actionWithAction:sequence times:1];
     [_scoreLabel setString:[NSString stringWithFormat:@"%d", _score]];
     [_scoreLabel runAction:action];
+    
+    if(_score > _hightScore){
+        _hightScore = _score;
+        [game updateHightScore:_hightScore];
+    }
     
 }
 
@@ -62,4 +64,9 @@
     [_hightScoreLabel setString:[NSString stringWithFormat:@"%d", _hightScore]];
 }
 
+-(void)resetScore
+{
+    [self setScore:0];
+    DLog(@"High score: %d", _hightScore);
+}
 @end

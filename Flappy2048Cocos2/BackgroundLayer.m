@@ -32,10 +32,10 @@
     _ground.position  = ccp(viewSize.width/2, 0);
     [_parentLayer addChild:_ground z:4];
     _groundLine.anchorPoint = ccp(0.5, 1.0);
-    _groundLine.position  = ccp(viewSize.width/2, _ground.contentSize.height -5 );
+    _groundLine.position  = ccp(viewSize.width/2, _ground.contentSize.height -3 );
     [_parentLayer addChild:_groundLine z:4];
     _groundLineBuffer.anchorPoint = ccp(0.5, 1.0);
-    _groundLineBuffer.position  = ccp(_groundLine.position.x + _groundLine.contentSize.width/2 + _groundLineBuffer.contentSize.width/2, _ground.contentSize.height -5);
+    _groundLineBuffer.position  = ccp(_groundLine.position.x + _groundLine.contentSize.width/2 + _groundLineBuffer.contentSize.width/2, _ground.contentSize.height -3);
     [_parentLayer addChild:_groundLineBuffer z:4];
     [self scheduleUpdate];
 }

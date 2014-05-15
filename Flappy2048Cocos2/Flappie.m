@@ -9,12 +9,11 @@
 #import "Flappie.h"
 #import "SimpleAudioEngine.h"
 #import "UIColor+Cocos.h"
+static const float IMPULSE = 250.0f;
 
-static const float GRAVITY = -780.0f;
-static const float IMPULSE = 230.0f;
 @implementation Flappie
 
-@synthesize _angle;
+@synthesize _angle, _status;
 
 -(id)initWithGameLayer:(CCLayer *)aLayer
 {
@@ -22,9 +21,9 @@ static const float IMPULSE = 230.0f;
         pos_x = viewSize.width / 2;
         pos_y = 3*viewSize.height / 5;
         vel_x = 0;
-        vel_y = pos_y;
+        vel_y = 200;
         acc_x = 0;
-        acc_y = GRAVITY;
+        acc_y = -600;
         _status = STANDING;
         _prevStatus = STANDING;
         _sinceTouch = 0.0f;
@@ -41,7 +40,7 @@ static const float IMPULSE = 230.0f;
     return self;
 }
 
--(void)updateNumber:(long)number
+-(void)updateNumber:(unsigned long)number
 {
     _valueNumber=number;
     [_valueLabel setFontSize:[self calculateFontSizeForString:[NSString stringWithFormat:@"%ld", _valueNumber] fontName:FONT]];
@@ -84,9 +83,9 @@ static const float IMPULSE = 230.0f;
                 
                 [sprite setPosition:ccp(pos_x, pos_y)];
                 if(vel_y >0){
-                    if(_angle+(vel_y * delta)< 60)
+                    if(_angle+(vel_y * delta)< 40)
                     {
-                        _angle += vel_y * delta * 2;
+                        _angle += vel_y * delta * 1.5;
                     }
                 }
                 if(vel_y <0)
@@ -96,7 +95,7 @@ static const float IMPULSE = 230.0f;
                         _angle += vel_y * delta;
                     }
                 }
-                [sprite setRotation:-_angle/2 ];
+                [sprite setRotation:-_angle/2];
             }
             break;
         case SLIDING:
@@ -176,16 +175,17 @@ static const float IMPULSE = 230.0f;
                                    hAlignment:kCCTextAlignmentCenter];
     _valueLabel.color = [[UIColor colorWithHexString:@"#606060"] c3b];
     _valueLabel.verticalAlignment = kCCVerticalTextAlignmentCenter;
-    sprite = [CCSprite node];
-    [sprite addChild:_blockContent];
-    [sprite addChild:_valueLabel];
-    [sprite addChild:_blockFrame];
+    _wingFrame.position = ccp(-2*_blockFrame.contentSize.width/8, _blockFrame.contentSize.height/4);
+    _wingContent.position = ccp(-2*_blockFrame.contentSize.width/8,_blockFrame.contentSize.height/4);
 
-    _wingFrame.position = ccp(-_blockFrame.contentSize.width/4, _blockFrame.contentSize.height/4);
-    _wingContent.position = ccp(-_blockFrame.contentSize.width/4, _blockFrame.contentSize.height/4);
-    
-    [sprite addChild:_wingContent];
-    [sprite addChild:_wingFrame];
+    sprite = [CCSprite node];
+    [sprite addChild:_wingContent z:4];
+    [sprite addChild:_wingFrame z:4];
+    [sprite addChild:_blockContent z:0];
+    [sprite addChild:_valueLabel z:5];
+    [sprite addChild:_blockFrame z:1];
+
+
     sprite.anchorPoint = ccp(0, 0.5);
     sprite.contentSize = _blockContent.contentSize;
     [self initAction];
@@ -198,15 +198,15 @@ static const float IMPULSE = 230.0f;
 
 -(void)initAction
 {
-    _actionFlapUp = [CCRotateTo actionWithDuration:.2f angle:-15.0f];
-    _actionFlapDown = [CCRotateTo actionWithDuration:.2f angle:30.0f];
+    _actionFlapUp = [CCRotateTo actionWithDuration:.75f angle:-20.0f];
+    _actionFlapDown = [CCRotateTo actionWithDuration:.2f angle:45.0f];
    
     _actionScaleUp =  [CCScaleTo actionWithDuration:0.3 scale:2.0];
     _actionScaleDown = [CCScaleTo actionWithDuration:0.3 scale:1.0];
     _actionSquenceScale = [CCSequence actionOne:_actionScaleUp two:_actionScaleDown];
     
-    [_wingFrame runAction:[CCRepeatForever actionWithAction:[CCSequence actionOne:_actionFlapUp two:_actionFlapDown]]];
-    [_wingContent runAction:[CCRepeatForever actionWithAction:[CCSequence actionOne:[_actionFlapUp copy] two:[_actionFlapDown copy]]]];
+//    [_wingFrame runAction:[CCRepeatForever actionWithAction:[CCSequence actionOne:_actionFlapUp two:_actionFlapDown]]];
+//    [_wingContent runAction:[CCRepeatForever actionWithAction:[CCSequence actionOne:[_actionFlapUp copy] two:[_actionFlapDown copy]]]];
 }
 
 -(void)setFlappieStatus:(FlappieStatus)status
@@ -217,18 +217,28 @@ static const float IMPULSE = 230.0f;
     switch (_status)
     {
         case FLAPPYNG:
+            [_wingContent stopAllActions];
+            [_wingFrame stopAllActions];
+            _actionFlapUp = [CCRotateTo actionWithDuration:.2f angle:sprite.rotation-20.0f];
+            _actionFlapDown = [CCRotateTo actionWithDuration:.1f angle:sprite.rotation+45.0f];
+            [_wingFrame runAction:[CCRepeatForever actionWithAction:[CCSequence actionOne:_actionFlapDown two:_actionFlapUp]]];
+            [_wingContent runAction:[CCRepeatForever actionWithAction:[CCSequence actionOne:[_actionFlapDown copy] two:[_actionFlapUp copy]]]];
             _isSliding = NO;
             _affectByGravity = YES;
             _affectByTouch = YES;
             _prevStatus = FLAPPYNG;
             break;
         case STANDING:
+            [_wingContent stopAllActions];
+            [_wingFrame stopAllActions];
             _isSliding = NO;
             _affectByTouch = NO;
             _affectByGravity = NO;
             _prevStatus = STANDING;
             break;
         case SLIDING:
+            [_wingContent stopAllActions];
+            [_wingFrame stopAllActions];
             _affectByTouch = NO;
             _affectByGravity = NO;
             _preVel_y = vel_y;
@@ -240,6 +250,8 @@ static const float IMPULSE = 230.0f;
             _prevStatus = DIE;
             _affectByGravity = YES;
             _affectByTouch = NO;
+            [_wingContent stopAllActions];
+            [_wingFrame stopAllActions];
             break;
     }
 }

@@ -106,7 +106,7 @@
     lowest_y = ((Square*)[squareArray objectAtIndex:0])._y;
 }
 
--(void)resetWithValue:(long)number
+-(void)resetWithValue:(unsigned long)number
 {
     DLog(@"Reset level : %ld", (long)log(number));
     [self removeAllChildrenWithCleanup:YES];

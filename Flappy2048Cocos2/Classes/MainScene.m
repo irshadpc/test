@@ -252,6 +252,8 @@
     
     [_col activate];
     [_colBuffer activate];
+    
+    [_hudLayer resetScore];
 }
 
 

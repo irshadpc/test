@@ -22,4 +22,5 @@
 -(void)setScore:(int)score;
 -(void)setHightScore:(int)score;
 -(void)increseScore;
+-(void)resetScore;
 @end

@@ -38,6 +38,7 @@ static Game *instance = nil;
         
         isFbLoggedIn = false;
         facebookUserDetail = [[NSMutableDictionary alloc] init];
+        [self loadCurrentUserInfo];
         [[GAI sharedInstance] defaultTracker];
     }
     return self;

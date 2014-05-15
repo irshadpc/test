@@ -43,7 +43,7 @@ typedef enum {
     BOOL _affectByTouch;
     float _preVel_y;
     BOOL _isSliding;
-    long _valueNumber;
+    unsigned long _valueNumber;
     FlappieStatus _status;
     FlappieStatus _prevStatus;
 }
@@ -55,10 +55,9 @@ typedef enum {
 @property (assign, nonatomic) FlappieStatus _status;
 
 -(id)initWithGameLayer:(CCLayer *)aLayer;
--(id)init;
 -(void)updateFlappi;
 -(void)flap:(float)height;
 -(void)setFlappieStatus:(FlappieStatus)status;
--(void)updateNumber:(long)number;
+-(void)updateNumber:(unsigned long)number;
 -(void)setColor:(UIColor*)color;
 @end
