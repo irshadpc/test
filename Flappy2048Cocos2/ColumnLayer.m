@@ -108,9 +108,7 @@
 
 -(void)resetWithValue:(unsigned long)number
 {
-    DLog(@"Reset level : %ld", (long)log(number));
     [self removeAllChildrenWithCleanup:YES];
-//    [_targetBlock.sprite removeFromParentAndCleanup:YES];
     _targetBlock = [[Square alloc] initWithGameLayer:self];
     [_targetBlock setNumber:number];
     [_targetBlock.sprite setVisible:YES];
@@ -143,7 +141,6 @@
     int i = 0;
     while (squareArray.count < valuesArray.count)
     {
-        DLog(@"%d",i);
         if(i ==_indexOfTarget)
         {
             y_pos = y;
@@ -151,7 +148,6 @@
             [_targetBlock updatePosition:ccp(0, y)];
             [_targetBlock putOn];
             [squareArray addObject:_targetBlock];
-            DLog(@"Add target");
         }
         else
         {
@@ -166,7 +162,6 @@
         y = i*_targetBlock.sprite.contentSize.width;
         i++;
     }
-    DLog(@"New Squares: %@", squareArray);
     highest_y = ((Square*)[squareArray lastObject])._y;
     lowest_y = ((Square*)[squareArray objectAtIndex:0])._y;
     
@@ -180,6 +175,13 @@
     if(_value >= NUM_START_SCROLL){
         _scrollEnable = YES;
     }
+    int count = squareArray.count;
+    int randomIndex = arc4random_uniform(count - 4) + 2;
+    Square *sq = [squareArray objectAtIndex:randomIndex];
+    CGPoint ranPos = ccp(sq._x, sq._y);
+    [sq updatePosition:ccp(_targetBlock._x, _targetBlock._y)];
+    [_targetBlock updatePosition:ranPos];
+    y_pos = ranPos.y;
     for (int i = 0 ; i < squareArray.count; i++)
     {
         Square *sq = [squareArray objectAtIndex:i];
