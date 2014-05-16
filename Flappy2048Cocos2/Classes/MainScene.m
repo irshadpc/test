@@ -20,6 +20,7 @@
 #import "SimpleAudioEngine.h"
 #import "UIColor+Cocos.h"
 
+
 @interface MainScene()<ColumnLayerDelegate, MenuLayerDelegate, GameOverMenuDelegate>
 
 @end
@@ -44,6 +45,7 @@
     //------------------------------
     BOOL _impacted;
     BOOL _checkCol;
+    BOOL _soundOn;
     
     CCLayerColor *colorLayer;
 }
@@ -76,6 +78,7 @@
         [self scheduleUpdate];
         _impacted = NO;
         _checkCol = YES;
+        _soundOn = [[NSUserDefaults standardUserDefaults] boolForKey:@"game_sound"];
     }
     return self;
 }
@@ -174,7 +177,8 @@
     [_flap.sprite stopAllActions];
     [_flap.sprite runAction:[CCRepeat actionWithAction:acitonSequene times:1]];
     
-    [[SimpleAudioEngine sharedEngine] playEffect:@"sfx_pass.mp3"];
+    if([game soundOn])
+        [[SimpleAudioEngine sharedEngine] playEffect:@"sfx_pass.mp3"];
 }
 
 -(void)columnFlappieDidOut
@@ -192,8 +196,11 @@
 -(void)overTheGame
 {
     [game setGameState:GAME_OVER];
-    [[SimpleAudioEngine sharedEngine] playEffect:@"sfx_hit.caf"];
-    [[SimpleAudioEngine sharedEngine] playEffect:@"sfx_die.caf"];
+    if([game soundOn])
+    {
+        [[SimpleAudioEngine sharedEngine] playEffect:@"sfx_hit.caf"];
+        [[SimpleAudioEngine sharedEngine] playEffect:@"sfx_die.caf"];
+    }
     [_col deActivate];
     [_colBuffer deActivate];
     [_flap setFlappieStatus:DIE];
@@ -207,6 +214,7 @@
     [self runAction:[CCRepeat actionWithAction:se times:3]];
     
     if(![self getChildByTag:99]){
+        [_gameOverLayer reloadBestScore];
         [self addChild:_gameOverLayer z:10 tag:99];
     }else{
     }

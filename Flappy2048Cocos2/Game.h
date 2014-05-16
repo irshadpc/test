@@ -34,6 +34,7 @@ typedef enum {
 @property (assign, nonatomic) GameState gameState;
 
 @property(assign, nonatomic) bool isFbLoggedIn;
+@property(assign, nonatomic) BOOL soundOn;
 @property(strong, nonatomic) NSMutableDictionary *facebookUserDetail;
 @property(strong, nonatomic) id<GAITracker> tracker;
 
@@ -47,6 +48,8 @@ typedef enum {
 -(UIColor*)getColorFor:(long)number;
 -(CCSprite*)loadSpriteFile:(NSString*)imageName;
 
+#pragma mark Game Logic
+-(void)turnSound:(BOOL)on;
 #pragma mark Facebook Implement;
 -(void)createFbSession;
 -(void)openFbSession:(void(^)(bool))callback;

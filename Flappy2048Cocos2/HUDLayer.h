@@ -15,8 +15,10 @@
     
     CCLabelTTF *_scoreLabel;
     CCLabelTTF *_hightScoreLabel;
-    CCMenu *_menu;
-    CCMenuItemSprite *_soundMenuItem;
+    CCMenu *_soundMenu;
+    CCMenuItemSprite *_soundOnMenuItem;
+    CCMenuItemSprite *_soundOffMenuItem;
+    CCMenuItemToggle *_soundMenuToggle;
 }
 -(void)setContentSize:(CGSize)contentSize;
 -(void)setScore:(int)score;

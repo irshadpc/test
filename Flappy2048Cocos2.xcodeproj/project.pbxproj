@@ -176,6 +176,7 @@
 		F7202703191CC62B008A1EFB /* MenuLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F7202702191CC62B008A1EFB /* MenuLayer.m */; };
 		F7202706191CCBC3008A1EFB /* GameObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F7202705191CCBC3008A1EFB /* GameObject.m */; };
 		F7202709191CD8B8008A1EFB /* BackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F7202708191CD8B8008A1EFB /* BackgroundLayer.m */; };
+		F7579DFF1925EDAC00CC1E11 /* share-buttons.png in Resources */ = {isa = PBXBuildFile; fileRef = F7579DFE1925EDAC00CC1E11 /* share-buttons.png */; };
 		F769DEA91921EC6B00C52815 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F769DE451921EC6A00C52815 /* libGoogleAnalyticsServices.a */; };
 		F769DEAB1921EC6B00C52815 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F769DE5A1921EC6B00C52815 /* libGoogleAdMobAds.a */; };
 		F769DEB41921ECA200C52815 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F769DEB31921ECA200C52815 /* AdSupport.framework */; };
@@ -568,6 +569,7 @@
 		F7202705191CCBC3008A1EFB /* GameObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameObject.m; path = Classes/GameObject.m; sourceTree = "<group>"; };
 		F7202707191CD8B8008A1EFB /* BackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundLayer.h; sourceTree = "<group>"; };
 		F7202708191CD8B8008A1EFB /* BackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundLayer.m; sourceTree = "<group>"; };
+		F7579DFE1925EDAC00CC1E11 /* share-buttons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share-buttons.png"; sourceTree = "<group>"; };
 		F769DDC01921C36C00C52815 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = Flappy2048Cocos2/FacebookSDK.framework; sourceTree = "<group>"; };
 		F769DDC71921EC6A00C52815 /* DFPBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPBannerView.h; sourceTree = "<group>"; };
 		F769DDC81921EC6A00C52815 /* DFPExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPExtras.h; sourceTree = "<group>"; };
@@ -1213,6 +1215,7 @@
 		F72026BD191C92D4008A1EFB /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				F7579DFE1925EDAC00CC1E11 /* share-buttons.png */,
 				F769DF431922231D00C52815 /* share.jpg */,
 				F72026BE191C92D4008A1EFB /* bg-hd.png */,
 				F72026BF191C92D4008A1EFB /* bg-ipad.png */,
@@ -1604,6 +1607,7 @@
 				F72026ED191C92D4008A1EFB /* wing-content-ipad.png in Resources */,
 				F72026FE191CBA07008A1EFB /* flappy2048.plist in Resources */,
 				F72026E4191C92D4008A1EFB /* sound-off-hd.png in Resources */,
+				F7579DFF1925EDAC00CC1E11 /* share-buttons.png in Resources */,
 				F7202528191C900A008A1EFB /* Icon-Small.png in Resources */,
 				F7809090192466DE004E9878 /* KGNexttoMeSolid.ttf in Resources */,
 				F7202524191C900A008A1EFB /* Icon-72.png in Resources */,
@@ -1871,6 +1875,7 @@
 				GCC_PREFIX_HEADER = Flappy2048Cocos2/Prefix.pch;
 				HEADER_SEARCH_PATHS = "\"Flappy2048Cocos2/libs/kazmath/include\"";
 				INFOPLIST_FILE = Flappy2048Cocos2/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flappy2048Cocos2/GoogleAdMobAdsSdkiOS-6.5.1/Add-ons/GoogleAnalyticsServicesiOS_3.0/GoogleAnalytics/Library",
@@ -1884,7 +1889,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1904,6 +1909,7 @@
 				GCC_PREFIX_HEADER = Flappy2048Cocos2/Prefix.pch;
 				HEADER_SEARCH_PATHS = "\"Flappy2048Cocos2/libs/kazmath/include\"";
 				INFOPLIST_FILE = Flappy2048Cocos2/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flappy2048Cocos2/GoogleAdMobAdsSdkiOS-6.5.1/Add-ons/GoogleAnalyticsServicesiOS_3.0/GoogleAnalytics/Library",
@@ -1917,7 +1923,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};

@@ -7,12 +7,15 @@
 //
 
 #import "GameOverLayer.h"
+#import "Game.h"
 
 @implementation GameOverLayer
 {
     CCMenu *menu;
+    CCLabelTTF *_bestScoreLabel;
+    CCLabelTTF *_bestScoreValueLabel;
     CCMenuItemLabel *_playAgainLabel;
-    CCMenuItemLabel *_shareFbLabel;
+    CCMenuItemSprite *_shareFbSprite;
     CCMenu *_menu;
 }
 @synthesize delegate;
@@ -24,19 +27,42 @@
 }
 
 -(void)initControl{
-    float fontSize = [self calculateFontSizeForString:@"Play Again" fontName:FONT];
-    CCLabelTTF *_lb = [CCLabelTTF labelWithString:@"Play Again" fontName:FONT fontSize:fontSize dimensions:CGSizeMake(viewSize.width, 80) hAlignment:kCCTextAlignmentCenter lineBreakMode:kCCLineBreakModeWordWrap];
+    float fontSize;
+    _bestScoreLabel = [CCLabelTTF labelWithString:@"Best Score"
+                                         fontName:FONT
+                                         fontSize:30
+                                       dimensions:CGSizeMake(viewSize.width-40, 40)
+                                       hAlignment:kCCTextAlignmentCenter lineBreakMode:kCCLineBreakModeWordWrap];
+    _bestScoreLabel.position = ccp(self.contentSize.width/2, self.contentSize.height - 60);
+    [self addChild:_bestScoreLabel];
+    
+    _bestScoreValueLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%ld",[game highestScore]]
+                                              fontName:FONT
+                                              fontSize:30
+                                            dimensions:CGSizeMake(viewSize.width-40, 40)
+                                            hAlignment:kCCTextAlignmentCenter lineBreakMode:kCCLineBreakModeWordWrap];
+    _bestScoreValueLabel.position = ccp(self.contentSize.width/2, self.contentSize.height - 120);
+    [self addChild:_bestScoreValueLabel];
+    _bestScoreValueLabel.color = ccc3(0, 0, 0);
+    _bestScoreLabel.color = ccc3(0, 0, 0);
+    
+    fontSize = [self calculateFontSizeForString:@"Play Again" fontName:FONT];
+    CCLabelTTF *_lb = [CCLabelTTF labelWithString:@"Play Again" fontName:FONT fontSize:fontSize dimensions:CGSizeMake(viewSize.width-40, 80) hAlignment:kCCTextAlignmentCenter lineBreakMode:kCCLineBreakModeWordWrap];
     _lb.color = ccc3(0, 0, 0);
     _playAgainLabel = [CCMenuItemLabel itemWithLabel:_lb target:self selector:@selector(didTouchPlayAgain:)];
     _playAgainLabel.position = ccp(self.contentSize.width/2, self.contentSize.height/2 - 60);
     
-    fontSize = [self calculateFontSizeForString:@"Share to Facebook" fontName:FONT];
-    CCLabelTTF *_lbShare = [CCLabelTTF labelWithString:@"Share to Facebook" fontName:FONT fontSize:fontSize dimensions:CGSizeMake(viewSize.width, 80) hAlignment:kCCTextAlignmentCenter lineBreakMode:kCCLineBreakModeWordWrap];
-    _lbShare.color = ccc3(0, 0, 0);
-    _shareFbLabel = [CCMenuItemLabel itemWithLabel:_lbShare target:self selector:@selector(didTouchShareFacebook:)];
-    _shareFbLabel.position = ccp(self.contentSize.width/2, self.contentSize.height/2 + 60);
+//    fontSize = [self calculateFontSizeForString:@"Share to Facebook" fontName:FONT];
+//    CCLabelTTF *_lbShare = [CCLabelTTF labelWithString:@"Share to Facebook" fontName:FONT fontSize:fontSize dimensions:CGSizeMake(viewSize.width, 80) hAlignment:kCCTextAlignmentCenter lineBreakMode:kCCLineBreakModeWordWrap];
+//    _lbShare.color = ccc3(0, 0, 0);
+    CCSprite * s = [CCSprite spriteWithFile:@"share-buttons.png"];
+    CCSprite * s2 = [CCSprite spriteWithFile:@"share-buttons.png"];
+    s.anchorPoint = ccp(0.5, 0.5);
+    s2.anchorPoint = ccp(0.5, 0.5);
+    _shareFbSprite = [CCMenuItemSprite itemWithNormalSprite:s selectedSprite:s2 target:self selector:@selector(didTouchShareFacebook:)];
+    _shareFbSprite.position = ccp(self.contentSize.width/2, self.contentSize.height/2 + 60);
     
-    _menu = [CCMenu menuWithItems:_playAgainLabel, _shareFbLabel, nil];
+    _menu = [CCMenu menuWithItems:_playAgainLabel, _shareFbSprite, nil];
     _menu.position = ccp(self.contentSize.width/2, self.contentSize.height/2);
     [_menu alignItemsVertically];
 
@@ -74,6 +100,10 @@
             [delegate performSelector:@selector(gameOverDidTouchPlayAgain) withObject:nil];
         }
     }
+}
+
+-(void)reloadBestScore{
+    _bestScoreValueLabel.string =  [NSString stringWithFormat:@"%ld",[game highestScore]];
 }
 
 @end

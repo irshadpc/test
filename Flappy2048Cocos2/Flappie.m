@@ -40,11 +40,11 @@ static const float IMPULSE = 250.0f;
     return self;
 }
 
--(void)updateNumber:(unsigned long)number
+-(void)updateNumber:(long long)number
 {
     _valueNumber=number;
-    [_valueLabel setFontSize:[self calculateFontSizeForString:[NSString stringWithFormat:@"%ld", _valueNumber] fontName:FONT]];
-    _valueLabel.string = [NSString stringWithFormat:@"%ld", _valueNumber];
+    [_valueLabel setFontSize:[self calculateFontSizeForString:[NSString stringWithFormat:@"%lli", _valueNumber] fontName:FONT]];
+    _valueLabel.string = [NSString stringWithFormat:@"%lli", _valueNumber];
     
     if(number < 8){
         _valueLabel.color = [[UIColor colorWithHexString:@"#606060"] c3b];
@@ -134,7 +134,9 @@ static const float IMPULSE = 250.0f;
 {
     if(_affectByTouch)
     {
-        [[SimpleAudioEngine sharedEngine] playEffect:@"sfx_wing.caf"];
+        if([game soundOn]){
+            [[SimpleAudioEngine sharedEngine] playEffect:@"sfx_wing.caf"];
+        }
         vel_y = IMPULSE;
         if(_sinceTouch == 0)
             _sinceTouch = 1.0f;

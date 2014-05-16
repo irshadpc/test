@@ -33,7 +33,7 @@
     return self;
 }
 
--(id)initBlocksWitnValue:(NSInteger)value parentLayer:(CCLayer*)aLayer
+-(id)initBlocksWitnValue:(long long)value parentLayer:(CCLayer*)aLayer
 {
     if(self = [super init]){
         _value = value; // 1,2 4 8 16 ....
@@ -106,7 +106,7 @@
     lowest_y = ((Square*)[squareArray objectAtIndex:0])._y;
 }
 
--(void)resetWithValue:(unsigned long)number
+-(void)resetWithValue:(long long)number
 {
     [self removeAllChildrenWithCleanup:YES];
     _targetBlock = [[Square alloc] initWithGameLayer:self];
@@ -209,7 +209,6 @@
 }
 
 -(void)layerDidTouched:(UITouch*)touch{
-    
 }
 
 -(void)updatePosition:(CGPoint)pos{

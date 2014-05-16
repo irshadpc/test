@@ -16,13 +16,41 @@
         _hightScore = [game highestScore];
         [self setContentSize:viewSize];
         _scoreLabel = [CCLabelTTF labelWithString:@"0" fontName:FONT fontSize:40];
-        _scoreLabel.position = ccp(viewSize.width/2, viewSize.height - 50);
+        _scoreLabel.position = ccp(viewSize.width - 20 - _scoreLabel.contentSize.width / 2, 20);
         _scoreLabel.color = ccc3(0, 0, 0);
         [self addChild:_scoreLabel];
-
+        
+        _soundOnMenuItem = [CCMenuItemSprite itemWithNormalSprite:[CCSprite spriteWithSpriteFrameName:@"sound-on"]
+                                                 selectedSprite:[CCSprite spriteWithSpriteFrameName:@"sound-on"]];
+        _soundOffMenuItem = [CCMenuItemSprite itemWithNormalSprite:[CCSprite spriteWithSpriteFrameName:@"sound-off"]
+                                                   selectedSprite:[CCSprite spriteWithSpriteFrameName:@"sound-off"]];
+        _soundMenuToggle = [CCMenuItemToggle itemWithTarget:self selector:@selector(toggleSound) items:_soundOnMenuItem, _soundOffMenuItem, nil];
+        
+        BOOL soundOn = [game soundOn];
+        if(!soundOn){
+            [_soundMenuToggle setSelectedIndex:1];
+        }
+        _soundMenu  = [CCMenu menuWithItems:_soundMenuToggle, nil];
+        [_soundMenu alignItemsVertically];
+        [_soundMenu setPosition:ccp(50, 25)];
+        
+        [self addChild:_soundMenu];
     }
     return self;
 }
+
+
+-(void)toggleSound
+{
+    if(_soundMenuToggle.selectedIndex==0){
+        DLog(@"Toggle On");
+        [game  turnSound:YES];
+    }else{
+        DLog(@"Toggle Off");
+        [game  turnSound:NO];
+    }
+}
+
 
 -(void)setContentSize:(CGSize)contentSize{
     [super setContentSize:contentSize];
@@ -34,6 +62,7 @@
         _hightScore = _score;
         [game updateHightScore:_hightScore];
     }
+    _scoreLabel.position = ccp(viewSize.width - 20 - _scoreLabel.contentSize.width / 2, 20);
 }
 -(void)setScore:(int)score{
     _score = score;

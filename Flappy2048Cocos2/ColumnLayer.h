@@ -20,7 +20,7 @@ ScrollDirection;
 @protocol ColumnLayerDelegate;
 
 @interface ColumnLayer : CCLayer {
-    unsigned long _value;
+    long long _value;
     CCLayer *_parentLayer;
     float pos_x;
     float pos_y;
@@ -39,19 +39,19 @@ ScrollDirection;
 }
 
 
-@property (assign, nonatomic) unsigned long _value;
+@property (assign, nonatomic) long long _value;
 @property (assign, nonatomic) int _columIndex;
 @property (assign, nonatomic) id<ColumnLayerDelegate> delegate;
 @property (strong, nonatomic) Square *_targetBlock;
 @property (assign, nonatomic) float y_pos;
 @property (assign, nonatomic) BOOL _scrollEnable;
--(id)initBlocksWitnValue:(NSInteger)value parentLayer:(CCLayer*)aLayer;
+-(id)initBlocksWitnValue:(long long)value parentLayer:(CCLayer*)aLayer;
 -(void)activate;
 -(void)deActivate;
 -(void)updatePosition:(CGPoint)pos;
 -(void)layerDidTouched:(UITouch*)touch;
 -(void)removeTargetBlock;
--(void)resetWithValue:(unsigned long)number;
+-(void)resetWithValue:(long long)number;
 -(UIColor*)getTargetBlockColor;
 @end
 

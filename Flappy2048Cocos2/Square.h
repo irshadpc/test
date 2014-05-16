@@ -19,7 +19,7 @@
     __unsafe_unretained CCArray *_textColor;
     __unsafe_unretained UIColor *c;
 }
-@property (assign, nonatomic) unsigned long _valueNumber;
+@property (assign, nonatomic) long long _valueNumber;
 @property (assign, nonatomic) float _x;
 @property (assign, nonatomic) float _y;
 @property (strong, nonatomic) CCArray *_tileColor;
@@ -30,8 +30,8 @@
 
 -(void)updatePosition:(CGPoint)newPoint;
 -(void)moveLeft:(float)deltaX;
--(void)setNumber:(unsigned long)number;
--(void)setNumberWithOldColor:(unsigned long)number;
+-(void)setNumber:(long long)number;
+-(void)setNumberWithOldColor:(long long)number;
 -(float)width;
 -(float)height;
 -(UIColor*)color;

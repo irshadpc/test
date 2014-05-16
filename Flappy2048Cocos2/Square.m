@@ -46,7 +46,7 @@
 }
 
 #pragma mark public methods
--(void)setNumber:(unsigned long)number
+-(void)setNumber:(long long)number
 {
     _valueNumber = number;
     if(!_valueLabel)
@@ -60,9 +60,9 @@
         [_valueLabel setContentSize:sprite.contentSize];
         [sprite addChild:_valueLabel];
     }
-    int fontsize = [self calculateFontSizeForString:[NSString stringWithFormat:@"%ld", _valueNumber] fontName:FONT];
+    int fontsize = [self calculateFontSizeForString:[NSString stringWithFormat:@"%lli", _valueNumber] fontName:FONT];
     _valueLabel.fontSize = fontsize;
-    [_valueLabel setString:[NSString stringWithFormat:@"%ld", _valueNumber]];
+    [_valueLabel setString:[NSString stringWithFormat:@"%lli", _valueNumber]];
 
     [self setColor];
 }
@@ -112,7 +112,7 @@
     return [[UIColor colorWithHexString:[NSString stringWithFormat:@"#%@",colorString]] copy];
 }
 
--(void)setNumberWithOldColor:(unsigned long)number
+-(void)setNumberWithOldColor:(long long)number
 {
     _valueNumber = number;
     if(!_valueLabel)
@@ -128,9 +128,9 @@
         [_valueLabel setContentSize:sprite.contentSize];
         [sprite addChild:_valueLabel];
     }
-    int fontsize = [self calculateFontSizeForString:[NSString stringWithFormat:@"%ld", _valueNumber] fontName:@"Helvetica"];
+    int fontsize = [self calculateFontSizeForString:[NSString stringWithFormat:@"%lli", _valueNumber] fontName:@"Helvetica"];
     _valueLabel.fontSize = fontsize;
-    [_valueLabel setString:[NSString stringWithFormat:@"%ld", _valueNumber]];
+    [_valueLabel setString:[NSString stringWithFormat:@"%lli", _valueNumber]];
     [self setColor];
     
 }

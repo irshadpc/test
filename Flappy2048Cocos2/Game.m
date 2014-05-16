@@ -14,8 +14,10 @@
 #define kGAIScreenName @"Scene Name"
 
 static Game *instance = nil;
-@implementation Game
-@synthesize currentValue, currentScore, highestScore, valueColorMapsDictionary, colorMap, gameState, isFbLoggedIn, facebookUserDetail, tracker;
+@implementation Game{
+
+}
+@synthesize currentValue, currentScore, highestScore, valueColorMapsDictionary, colorMap, gameState, isFbLoggedIn, facebookUserDetail, tracker, soundOn;
 
 -(id)init
 {
@@ -54,6 +56,12 @@ static Game *instance = nil;
     }
 }
 
+-(void)turnSound:(BOOL)on{
+    if(soundOn == on) return;
+    soundOn = on;
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:soundOn] forKey:@"soundOn"];
+}
+
 -(void)updateHightScore:(long)newHigheScore;
 {
     highestScore = newHigheScore;
@@ -66,8 +74,16 @@ static Game *instance = nil;
     highestScore = (long)highScore;
     currentScore = 0;
     currentValue = 1;
-    
+    NSNumber *soundOnId = [[NSUserDefaults standardUserDefaults] objectForKey:@"soundOn"];
+    if(!soundOnId)
+    {
+        soundOn = YES;
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:soundOn] forKey:@"soundOn"];
+    }
+    soundOn = [[[NSUserDefaults standardUserDefaults] objectForKey:@"soundOn"] boolValue];
 }
+
+
 -(void)updateNewUserInfo{
 //    @synchronized(self)
     [[NSUserDefaults standardUserDefaults] setInteger:highestScore forKey:KEY_HIGHT_SCORE];

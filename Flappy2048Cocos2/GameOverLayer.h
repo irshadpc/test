@@ -13,10 +13,12 @@
     id<GameOverMenuDelegate> delegate;
 }
 @property (assign, nonatomic) id<GameOverMenuDelegate> delegate;
+-(void)reloadBestScore;
 @end
 
 @protocol GameOverMenuDelegate <NSObject>
 @required
 -(void)gameOverDidTouchPlayAgain;
 -(void)gameOverDidTouchShareFacebook;
+
 @end

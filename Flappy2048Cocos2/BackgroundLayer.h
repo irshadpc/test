@@ -15,6 +15,7 @@
     CCSprite * _groundLine;
     CCSprite * _groundLineBuffer;
     CCLayer *_parentLayer;
+
 }
 
 -(id)initWithParentLayer:(CCLayer*)aLayer;
